@@ -13,6 +13,11 @@
 		B5C3252621065A3E00A88FDB /* WorkoutTimer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B5C3252421065A3E00A88FDB /* WorkoutTimer.xcdatamodeld */; };
 		B5C3252821065A4100A88FDB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5C3252721065A4100A88FDB /* Assets.xcassets */; };
 		B5C3252B21065A4100A88FDB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5C3252921065A4100A88FDB /* LaunchScreen.storyboard */; };
+		B5C3253321065DDF00A88FDB /* Keywords.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C3253221065DDF00A88FDB /* Keywords.swift */; };
+		B5C3253521065FD300A88FDB /* TimeAndNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C3253421065FD300A88FDB /* TimeAndNumberViewController.swift */; };
+		B5C3253821066B3000A88FDB /* SetsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C3253621066B3000A88FDB /* SetsCollectionViewCell.swift */; };
+		B5C3253921066B3000A88FDB /* SetsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C3253721066B3000A88FDB /* SetsCollectionViewCell.xib */; };
+		B5C3253B21068B5800A88FDB /* WorkoutModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C3253A21068B5800A88FDB /* WorkoutModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +29,11 @@
 		B5C3252721065A4100A88FDB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B5C3252A21065A4100A88FDB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B5C3252C21065A4100A88FDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B5C3253221065DDF00A88FDB /* Keywords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keywords.swift; sourceTree = "<group>"; };
+		B5C3253421065FD300A88FDB /* TimeAndNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeAndNumberViewController.swift; sourceTree = "<group>"; };
+		B5C3253621066B3000A88FDB /* SetsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetsCollectionViewCell.swift; sourceTree = "<group>"; };
+		B5C3253721066B3000A88FDB /* SetsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SetsCollectionViewCell.xib; sourceTree = "<group>"; };
+		B5C3253A21068B5800A88FDB /* WorkoutModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +68,11 @@
 			children = (
 				B5C3251D21065A3E00A88FDB /* AppDelegate.swift */,
 				B5C3251F21065A3E00A88FDB /* ViewController.swift */,
+				B5C3253421065FD300A88FDB /* TimeAndNumberViewController.swift */,
+				B5C3253621066B3000A88FDB /* SetsCollectionViewCell.swift */,
+				B5C3253721066B3000A88FDB /* SetsCollectionViewCell.xib */,
+				B5C3253221065DDF00A88FDB /* Keywords.swift */,
+				B5C3253A21068B5800A88FDB /* WorkoutModel.swift */,
 				B5C3252121065A3E00A88FDB /* Main.storyboard */,
 				B5C3252721065A4100A88FDB /* Assets.xcassets */,
 				B5C3252921065A4100A88FDB /* LaunchScreen.storyboard */,
@@ -126,6 +141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5C3252B21065A4100A88FDB /* LaunchScreen.storyboard in Resources */,
+				B5C3253921066B3000A88FDB /* SetsCollectionViewCell.xib in Resources */,
 				B5C3252821065A4100A88FDB /* Assets.xcassets in Resources */,
 				B5C3252321065A3E00A88FDB /* Main.storyboard in Resources */,
 			);
@@ -138,7 +154,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5C3253521065FD300A88FDB /* TimeAndNumberViewController.swift in Sources */,
+				B5C3253821066B3000A88FDB /* SetsCollectionViewCell.swift in Sources */,
 				B5C3252021065A3E00A88FDB /* ViewController.swift in Sources */,
+				B5C3253B21068B5800A88FDB /* WorkoutModel.swift in Sources */,
+				B5C3253321065DDF00A88FDB /* Keywords.swift in Sources */,
 				B5C3252621065A3E00A88FDB /* WorkoutTimer.xcdatamodeld in Sources */,
 				B5C3251E21065A3E00A88FDB /* AppDelegate.swift in Sources */,
 			);
