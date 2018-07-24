@@ -37,9 +37,15 @@ class TimeAndNumberViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     @IBAction func setNumberButton(_ sender: UIButton) {
         
-        delegate?.setSets(numberOfSets: numberOfSets)
-        
-        delegate?.setTime(minutes: minutes, seconds: seconds)
+        if isTime {
+            
+            delegate?.setTime(minutes: minutes, seconds: seconds)
+            
+        } else if !isTime {
+            
+            delegate?.setSets(numberOfSets: numberOfSets)
+            
+        }
         
         dismiss(animated: true, completion: nil)
         

@@ -12,6 +12,13 @@ import CoreData
 
 class Workout {
     
+    enum CurrentTimer {
+        
+        case interval
+        case transition
+        
+    }
+    
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     var workoutInfo = [WorkoutInfo]()

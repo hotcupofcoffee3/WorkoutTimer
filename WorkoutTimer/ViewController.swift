@@ -30,6 +30,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     let keywords = Keywords()
     
+    let workoutModel = Workout()
+    
+    var currentTimer = Workout.CurrentTimer.interval
+    
+    var mainTimer = Timer()
+    
     var timerForInterval = Timer()
     
     var timerForTransition = Timer()
@@ -53,6 +59,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var setTransitionMinutes = 0
     
     var setTransitionSeconds = 0
+    
+    var setTotalIntervalSeconds = 0
+    
+    var setTotalTransitionSeconds = 0
+    
+    var totalSecondsForProgress = 10
     
     @IBOutlet weak var navBar: UINavigationBar!
     
@@ -87,6 +99,20 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
     }
     
+    @objc func runTimer() {
+        
+        if currentTimer == .interval {
+            
+            intervalTimer()
+            
+        } else if currentTimer == .transition {
+            
+            transitionTimer()
+            
+        }
+        
+    }
+    
     @IBOutlet weak var setCollectionView: UICollectionView!
     
     @IBOutlet weak var timerProgress: UIProgressView!
@@ -102,12 +128,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBAction func startButton(_ sender: UIButton) {
         
         if !timerIsStarted {
-        
-            timerForProgress = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(animateProgress), userInfo: nil, repeats: true)
             
-            timerForInterval = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(intervalTimer), userInfo: nil, repeats: true)
+            mainTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(runTimer), userInfo: nil, repeats: true)
             
-            timerForTransition = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(transitionTimer), userInfo: nil, repeats: true)
+            timerForProgress = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(animateProgress), userInfo: nil, repeats: true)
             
         }
         
@@ -117,29 +141,87 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     @IBAction func stopButton(_ sender: UIButton) {
         
-        timerForProgress.invalidate()
+        mainTimer.invalidate()
         
-        timerForInterval.invalidate()
+        timerForProgress.invalidate()
         
         timerIsStarted = false
         
     }
     
-    @objc func intervalTimer() {
+    func intervalTimer() {
         
-        print("Dog")
+        if setIntervalMinutes > 0 {
+            
+            if setIntervalSeconds > 0 {
+                
+                setIntervalSeconds -= 1
+                
+            } else {
+                
+                setIntervalMinutes -= 1
+                
+                setIntervalSeconds = 59
+                
+            }
+            
+        } else if setIntervalMinutes == 0 {
+            
+            if setIntervalSeconds > 0 {
+                
+                setIntervalSeconds -= 1
+                
+            } else {
+                
+                timerForInterval.invalidate()
+                
+                currentTimer = .transition
+                
+            }
+            
+        }
         
     }
     
-    @objc func transitionTimer() {
+    func transitionTimer() {
         
-        print("Cat")
+        if setTransitionMinutes > 0 {
+            
+            if setTransitionSeconds > 0 {
+                
+                setTransitionSeconds -= 1
+                
+            } else {
+                
+                setTransitionMinutes -= 1
+                
+                setTransitionSeconds = 59
+                
+            }
+            
+        } else if setTransitionMinutes == 0 {
+            
+            if setTransitionSeconds > 0 {
+                
+                setTransitionSeconds -= 1
+                
+            } else {
+                
+                timerForTransition.invalidate()
+                
+                currentTimer = .interval
+                
+            }
+            
+        }
         
     }
     
     @objc func animateProgress() {
         
-        timerProgress.setProgress(timerProgress.progress + 0.0005, animated: true)
+        let increment: Float = (1 / (Float(totalSecondsForProgress) * 10))
+        
+        timerProgress.setProgress(timerProgress.progress + increment, animated: true)
         
     }
     
