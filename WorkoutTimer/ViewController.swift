@@ -6,19 +6,46 @@
 //  Copyright © 2018 Adam Moore. All rights reserved.
 //
 
+// ******
+// *** TODO:
+// ******
+
+// Set the delegate to take on the collection view amount of cells based on the chosen number from the Time and Number VC.
+// Set up the timer to run based on the minutes and seconds.
+// Set up the progress bar to go across based on the amount of time left based on the number of seconds times the number of minutes, which means a new variable that totals the total interval seconds and total transition seconds.
+// Alternate between the two, of interval and transition, for the progress bar.
+
+
+
+
+
+
+
+
+
 import UIKit
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, SetNumberDelegate {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SetNumberDelegate {
+    
+    let viewWidth = UIScreen.main.bounds.maxX
     
     let keywords = Keywords()
     
-    let timer = Timer()
+    var timerForInterval = Timer()
+    
+    var timerForTransition = Timer()
+    
+    var timerForProgress = Timer()
+    
+    var timerIsStarted = false
     
     var isTime = Bool()
     
     var isInterval = Bool()
     
-    var setNumberOfSets = 1
+    var setNumberOfSets = 10
+    
+    var currentSet = 1
     
     var setIntervalMinutes = 0
     
@@ -50,9 +77,46 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     @IBAction func startButton(_ sender: UIButton) {
         
+        if !timerIsStarted {
+        
+            timerForProgress = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(animateProgress), userInfo: nil, repeats: true)
+            
+            timerForInterval = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(intervalTimer), userInfo: nil, repeats: true)
+            
+            timerForTransition = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(transitionTimer), userInfo: nil, repeats: true)
+            
+        }
+        
+        timerIsStarted = true
+        
     }
     
     @IBAction func stopButton(_ sender: UIButton) {
+        
+        timerForProgress.invalidate()
+        
+        timerForInterval.invalidate()
+        
+        timerIsStarted = false
+        
+    }
+    
+    @objc func intervalTimer() {
+        
+        print("Dog")
+        
+    }
+    
+    @objc func transitionTimer() {
+        
+        print("Cat")
+        
+    }
+    
+    @objc func animateProgress() {
+        
+        timerProgress.setProgress(timerProgress.progress + 0.0005, animated: true)
+        
     }
     
     @objc func setsTap() {
@@ -87,8 +151,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
             let destinationVC = segue.destination as! TimeAndNumberViewController
             
-            print(isTime)
-            
             destinationVC.isTime = isTime
             
             destinationVC.isInterval = isInterval
@@ -101,7 +163,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     
                     destinationVC.minutes = setIntervalMinutes
                     
-                    destinationVC.seconds = setTransitionSeconds
+                    destinationVC.seconds = setIntervalSeconds
                     
                 } else if !isInterval {
                     
@@ -137,11 +199,26 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         intervalView.addGestureRecognizer(intervalTapGesture)
         transitionView.addGestureRecognizer(transitionTapGesture)
         
+        intervalLabel.text = "\(zero(unit: setIntervalMinutes))\(setIntervalMinutes):\(zero(unit: setIntervalSeconds))\(setIntervalSeconds)"
+        
+        transitionLabel.text = "\(zero(unit: setTransitionMinutes))\(setTransitionMinutes):\(zero(unit: setTransitionSeconds))\(setTransitionSeconds)"
+        
+        timerProgress.progress = 0.0
+        
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func zero(unit: Int) -> String {
+        
+        var zero = ""
+        
+        if unit <= 9 {
+            
+            zero = "0"
+            
+        }
+        
+        return zero
+        
     }
 
 }
@@ -155,6 +232,8 @@ extension ViewController {
     func setSets(numberOfSets: Int) {
         
         setNumberOfSets = numberOfSets
+        
+        setCollectionView.reloadData()
         
     }
     
@@ -174,6 +253,10 @@ extension ViewController {
             
         }
         
+        intervalLabel.text = "\(zero(unit: setIntervalMinutes))\(setIntervalMinutes):\(zero(unit: setIntervalSeconds))\(setIntervalSeconds)"
+        
+        transitionLabel.text = "\(zero(unit: setTransitionMinutes))\(setTransitionMinutes):\(zero(unit: setTransitionSeconds))\(setTransitionSeconds)"
+        
     }
     
 }
@@ -185,7 +268,7 @@ extension ViewController {
 extension ViewController {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return setNumberOfSets
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -196,5 +279,21 @@ extension ViewController {
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let size = viewWidth / CGFloat(setNumberOfSets)
+        
+        return CGSize(width: size, height: 50)
+        
+    }
+    
 }
+
+
+
+
+
+
+
+
 

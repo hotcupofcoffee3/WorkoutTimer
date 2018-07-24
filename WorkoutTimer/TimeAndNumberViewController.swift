@@ -48,8 +48,34 @@ class TimeAndNumberViewController: UIViewController, UIPickerViewDelegate, UIPic
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        chosenPickerInfoLabel.text = isTime ? "--:--" : "\(numberOfSets)"
+        if isTime {
+            
+            numberPicker.selectRow(minutes, inComponent: 0, animated: true)
+            
+            numberPicker.selectRow(seconds, inComponent: 1, animated: true)
+            
+        } else if !isTime {
+            
+            numberPicker.selectRow(numberOfSets - 1, inComponent: 0, animated: true)
+            
+        }
+        
+        chosenPickerInfoLabel.text = isTime ? "\(zero(unit: minutes))\(minutes):\(zero(unit: seconds))\(seconds)" : "\(numberOfSets)"
 
+    }
+    
+    func zero(unit: Int) -> String {
+        
+        var zero = ""
+        
+        if unit <= 9 {
+            
+            zero = "0"
+            
+        }
+        
+        return zero
+        
     }
     
 }
@@ -70,49 +96,42 @@ extension TimeAndNumberViewController {
         
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-
-        return isTime ? "\(row)" : "\(row + 1)"
-
+//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//
+//        return isTime ? "\(row)" : "\(row + 1)"
+//
+//    }
+    
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        let titleString = isTime ? "\(row)" : "\(row + 1)"
+        let title = NSAttributedString(string: titleString, attributes: [NSAttributedStringKey.foregroundColor:UIColor.white, NSAttributedStringKey.font:UIFont(name: "Chalkduster", size: 18.0)!])
+        return title
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
+
         if isTime {
-            
+
             if component == 0 {
-                
+
                 minutes = row
-                
+
             } else if component == 1 {
-                
+
                 seconds = row
-                
+
             }
-            
-            
-            
-            var minutesZero = ""
-            
-            var secondsZero = ""
-            
-            if minutes <= 9 {
-                minutesZero = "0"
-            }
-            if seconds <= 9 {
-                secondsZero = "0"
-            }
-            
-            
-            
-            chosenPickerInfoLabel.text = "\(minutesZero)\(minutes):\(secondsZero)\(seconds)"
-            
+
+            chosenPickerInfoLabel.text = "\(zero(unit: minutes))\(minutes):\(zero(unit: seconds))\(seconds)"
+
         } else {
             
+            numberOfSets = row + 1
+
             chosenPickerInfoLabel.text = "\(numberOfSets)"
-            
+
         }
-            
+
     }
     
 }
