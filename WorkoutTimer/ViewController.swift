@@ -10,7 +10,6 @@
 // *** TODO:
 // ******
 
-// Set the delegate to take on the collection view amount of cells based on the chosen number from the Time and Number VC.
 // Set up the timer to run based on the minutes and seconds.
 // Set up the progress bar to go across based on the amount of time left based on the number of seconds times the number of minutes, which means a new variable that totals the total interval seconds and total transition seconds.
 // Alternate between the two, of interval and transition, for the progress bar.
@@ -59,7 +58,32 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     @IBAction func resetButton(_ sender: UIBarButtonItem) {
         
-        performSegue(withIdentifier: keywords.mainToPickerSegue, sender: self)
+        let alert = UIAlertController(title: "Reset everything?", message: "This will reset all values.", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Reset", style: .destructive, handler: { (action) in
+            
+            self.reset()
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+        
+    }
+    func reset() {
+        
+        setNumberOfSets = 1
+        
+        currentSet = 1
+        
+        setIntervalMinutes = 0
+        
+        setIntervalSeconds = 0
+        
+        setTransitionMinutes = 0
+        
+        setTransitionSeconds = 0
         
     }
     
