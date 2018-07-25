@@ -11,6 +11,9 @@
 // ******
 
 
+// Only can start or stop once interval and transition set.
+// Only reset once interval and transition are set.
+// When 'Reset' is hit after everything has started, it says that 'isTime' wasn't set in 'resetEverythingAlert()', so this has to be taken care of.
 
 // Convert everything to the CoreData workout model.
 
@@ -65,9 +68,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var totalSecondsForProgress = 10
     
     
+    
     // ******
     // *** MARK: - IBOutlets
     // ******
+    
     
     
     @IBOutlet weak var navBar: UINavigationBar!
@@ -83,6 +88,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var transitionView: UIView!
     
     @IBOutlet weak var transitionLabel: UILabel!
+    
+    @IBOutlet weak var startButtonOutlet: UIButton!
+    
+    @IBOutlet weak var stopButtonOutlet: UIButton!
     
     
     
@@ -114,6 +123,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         timerIsStarted = true
         
+        toggleButtonColors()
+        
     }
     
     @IBAction func stopButton(_ sender: UIButton) {
@@ -123,6 +134,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         timerForProgress.invalidate()
         
         timerIsStarted = false
+        
+        toggleButtonColors()
         
     }
     
@@ -346,6 +359,16 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         timerProgress.progress = 0.0
         
+        startButtonOutlet.layer.borderColor = UIColor.white.cgColor
+        startButtonOutlet.layer.borderWidth = 2
+        startButtonOutlet.layer.cornerRadius = 45
+        
+        stopButtonOutlet.layer.borderColor = UIColor.white.cgColor
+        stopButtonOutlet.layer.borderWidth = 2
+        stopButtonOutlet.layer.cornerRadius = 45
+        
+        toggleButtonColors()
+        
     }
     
 }
@@ -358,7 +381,7 @@ extension ViewController {
     
     
     // ******
-    // *** MARK: - Alert, Zero, and Reset Functions
+    // *** MARK: - Alert, Zero, Reset, and Toggle Button Colors Functions
     // ******
     
     
@@ -389,19 +412,25 @@ extension ViewController {
             
             if self.beganWorkout {
                 
-                self.resetInfoToStartingSetAmounts()
-                
                 guard let time = isTime else { return print("'isTime' wasn't set in 'resetEverythingAlert()") }
                 
                 guard let interval = isInterval else { return print("'isInterval' wasn't set in 'resetEverythingAlert()") }
                 
                 self.setAndTimeTapSegue(isTime: time, isInterval: interval)
                 
+                self.timerIsStarted = false
+                
                 self.beganWorkout = false
+                
+                self.resetInfoToStartingSetAmounts()
                 
             } else {
                 
                 self.reset()
+                
+                self.timerIsStarted = false
+                
+                self.beganWorkout = false
                 
             }
             
@@ -477,6 +506,8 @@ extension ViewController {
         
         setRemainingToSet()
         
+        toggleButtonColors()
+        
     }
     
     func setAndTimeTapSegue(isTime: Bool, isInterval: Bool) {
@@ -485,6 +516,40 @@ extension ViewController {
         self.isInterval = isInterval
         
         performSegue(withIdentifier: keywords.mainToPickerSegue, sender: self)
+        
+    }
+    
+    func toggleButtonColors() {
+        
+        if !beganWorkout {
+            
+            startButtonOutlet.layer.backgroundColor = keywords.mainBackgroundColor.cgColor
+            startButtonOutlet.setTitleColor(UIColor.white, for: .normal)
+            
+            stopButtonOutlet.layer.backgroundColor = keywords.mainBackgroundColor.cgColor
+            stopButtonOutlet.setTitleColor(UIColor.white, for: .normal)
+            
+        } else {
+            
+            if timerIsStarted {
+                
+                startButtonOutlet.layer.backgroundColor = UIColor.white.cgColor
+                startButtonOutlet.setTitleColor(keywords.mainBackgroundColor, for: .normal)
+                
+                stopButtonOutlet.layer.backgroundColor = keywords.mainBackgroundColor.cgColor
+                stopButtonOutlet.setTitleColor(UIColor.white, for: .normal)
+                
+            } else {
+                
+                startButtonOutlet.layer.backgroundColor = keywords.mainBackgroundColor.cgColor
+                startButtonOutlet.setTitleColor(UIColor.white, for: .normal)
+                
+                stopButtonOutlet.layer.backgroundColor = UIColor.white.cgColor
+                stopButtonOutlet.setTitleColor(keywords.mainBackgroundColor, for: .normal)
+                
+            }
+            
+        }
         
     }
  
@@ -628,13 +693,14 @@ extension ViewController {
         
         if currentSet > 1 && indexPath.row < (currentSet - 1) {
             
-            cell.backgroundColor = UIColor.green
-            cell.setNumberLabel.textColor = UIColor.black
+            cell.backgroundColor = UIColor.white
+            cell.setNumberLabel.textColor = keywords.mainBackgroundColor
 
         } else {
             
             cell.backgroundColor = UIColor.clear
             cell.setNumberLabel.textColor = UIColor.white
+            
             
         }
         

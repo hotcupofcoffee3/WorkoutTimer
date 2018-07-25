@@ -7,9 +7,12 @@
 //
 
 import Foundation
+import UIKit
 
 class Keywords {
     
     let mainToPickerSegue = "mainToPickerSegue"
+    
+    let mainBackgroundColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 1.0)
     
 }
