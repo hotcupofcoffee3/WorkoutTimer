@@ -21,7 +21,7 @@ class Workout {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    var workoutInfo = [WorkoutInfo]()
+    var workoutInfoArray = [WorkoutInfo]()
     
     func saveData() {
         
@@ -43,13 +43,40 @@ class Workout {
         
         do {
             
-            workoutInfo = try context.fetch(request)
+            workoutInfoArray = try context.fetch(request)
             
         } catch {
             
             print("Error loading Workout Info: \(error)")
             
         }
+        
+        if workoutInfoArray.isEmpty || workoutInfoArray.count > 1 {
+            
+            return print("Something went wrong loading the 'workoutInfoArray' because it had no object or more than 1 object in it.")
+            
+        }
+        
+    }
+    
+    func getWorkoutInfo() -> WorkoutInfo {
+        
+        loadData()
+        
+        return workoutInfoArray[0]
+        
+    }
+    
+    init() {
+        
+//        self.loadData()
+//        if self.workoutInfoArray.count == 0 {
+//            
+//            let newWorkout = WorkoutInfo(context: context)
+////            newWorkout.intervalMinutes = 0
+//            self.saveData()
+//            
+//        }
         
     }
     

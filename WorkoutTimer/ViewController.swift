@@ -31,7 +31,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     let viewWidth = UIScreen.main.bounds.maxX
     
     let keywords = Keywords()
-    let workoutModel = Workout()
+    let workout = Workout()
     
     var currentTimer = Workout.CurrentTimer.interval
     
