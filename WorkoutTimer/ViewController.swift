@@ -259,7 +259,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 
                 remainingIntervalSeconds -= 1
                 
-            } else if remainingIntervalSeconds == 0 {
+                if remainingIntervalSeconds <= 3 && remainingIntervalSeconds > 0 {
+                    
+                    AudioServicesPlaySystemSound(1057)
+                    
+                }
+                
+            }
+            
+            if remainingIntervalSeconds == 0 {
                 
                 currentSet += 1
                 
@@ -323,8 +331,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         if remainingTransitionMinutes > 0 {
             
-            AudioServicesPlaySystemSound(1057)
-            
             if remainingTransitionSeconds > 0 {
                 
                 remainingTransitionSeconds -= 1
@@ -341,11 +347,17 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
             if remainingTransitionSeconds > 0 {
                 
-                AudioServicesPlaySystemSound(1057)
-                
                 remainingTransitionSeconds -= 1
                 
-            } else if remainingTransitionSeconds == 0 {
+                if remainingTransitionSeconds <= 3 && remainingTransitionSeconds > 0 {
+                    
+                    AudioServicesPlaySystemSound(1057)
+                    
+                }
+                
+            }
+            
+            if remainingTransitionSeconds == 0 {
                 
                 currentTimer = .interval
                 
@@ -353,7 +365,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 
                 totalSecondsForProgress = setTotalIntervalSeconds
                 
-                AudioServicesPlaySystemSound(1256)
+                AudioServicesPlaySystemSound(1255)
                 
             }
             
