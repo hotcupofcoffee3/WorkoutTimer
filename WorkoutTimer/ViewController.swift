@@ -12,9 +12,6 @@
 
 
 
-// Do an alert that shows when the workout is complete.
-// Have the sets only light up when they are completed, with the last set lite up at the completion of it.
-// Add a 'workoutBegan' variable to check to see if the popup for resetting everything needs to be done for when the person hits 'stop', as this will reset the workout.
 // Convert everything to the CoreData workout model.
 
 
@@ -43,10 +40,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var timerForTransition = Timer()
     var timerForProgress = Timer()
     
-    var timerIsStarted = false
-    
     var isTime = Bool()
     var isInterval = Bool()
+    
+    var timerIsStarted = false
+    var beganWorkout = false
     
     var setNumberOfSets = 10
     var currentSet = 1
@@ -96,13 +94,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     @IBAction func resetButton(_ sender: UIBarButtonItem) {
         
-        resetEverythingAlert()
+        resetEverythingAlert(isTime: nil, isInterval: nil)
         
     }
     
     @IBAction func startButton(_ sender: UIButton) {
         
         if !timerIsStarted {
+            
+            beganWorkout = true
             
             totalSecondsForProgress = (currentTimer == .interval) ? setTotalIntervalSeconds : setTotalTransitionSeconds
             
@@ -234,19 +234,23 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
             if remainingIntervalSeconds == 0 {
                 
+                currentSet += 1
+                
+                setCollectionView.reloadData()
+                
                 currentTimer = .transition
                 
                 timerProgress.progress = 0.0
                 
                 totalSecondsForProgress = setTotalTransitionSeconds
                 
-                if currentSet == setNumberOfSets {
+                if currentSet > setNumberOfSets {
                     
                     mainTimer.invalidate()
                     
                     timerForProgress.invalidate()
                     
-                    resetInfoToStartingSetAmounts()
+                    finishedWorkoutAlert()
                     
                 }
                 
@@ -304,10 +308,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 
                 totalSecondsForProgress = setTotalIntervalSeconds
                 
-                currentSet += 1
-                
-                setCollectionView.reloadData()
-                
             }
             
         }
@@ -362,13 +362,48 @@ extension ViewController {
     // ******
     
     
-    func resetEverythingAlert() {
+    
+    func finishedWorkoutAlert() {
+        
+        let alert = UIAlertController(title: "Finished!", message: "You did it!", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "I feel great!", style: .default, handler: { (action) in
+            
+            self.timerIsStarted = false
+            
+            self.beganWorkout = false
+            
+            self.resetInfoToStartingSetAmounts()
+        
+        }))
+        
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
+    func resetEverythingAlert(isTime: Bool?, isInterval: Bool?) {
         
         let alert = UIAlertController(title: "Reset?", message: "This will reset all values.", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Reset", style: .destructive, handler: { (action) in
             
-            self.reset()
+            if self.beganWorkout {
+                
+                self.resetInfoToStartingSetAmounts()
+                
+                guard let time = isTime else { return print("'isTime' wasn't set in 'resetEverythingAlert()") }
+                
+                guard let interval = isInterval else { return print("'isInterval' wasn't set in 'resetEverythingAlert()") }
+                
+                self.setAndTimeTapSegue(isTime: time, isInterval: interval)
+                
+                self.beganWorkout = false
+                
+            } else {
+                
+                self.reset()
+                
+            }
             
         }))
         
@@ -394,7 +429,15 @@ extension ViewController {
     
     func reset() {
         
-        setNumberOfSets = 1
+        setInfoToNil()
+        
+        resetInfoToStartingSetAmounts()
+        
+    }
+    
+    func setInfoToNil() {
+        
+        setNumberOfSets = 10
         
         setIntervalMinutes = 0
         
@@ -404,21 +447,9 @@ extension ViewController {
         
         setTransitionSeconds = 0
         
-        timerProgress.progress = 0.0
-        
-        resetInfoToStartingSetAmounts()
-        
     }
     
-    func resetInfoToStartingSetAmounts() {
-        
-        currentSet = 1
-        
-        setCollectionView.reloadData()
-        
-        intervalLabel.text = "\(zero(unit: setIntervalMinutes)):\(zero(unit: setIntervalSeconds))"
-        
-        transitionLabel.text = "\(zero(unit: setTransitionMinutes)):\(zero(unit: setTransitionSeconds))"
+    func setRemainingToSet() {
         
         remainingIntervalMinutes = setIntervalMinutes
         
@@ -427,6 +458,33 @@ extension ViewController {
         remainingTransitionMinutes = setTransitionMinutes
         
         remainingTransitionSeconds = setIntervalSeconds
+        
+    }
+    
+    func resetInfoToStartingSetAmounts() {
+        
+        currentSet = 1
+        
+        currentTimer = .interval
+        
+        setCollectionView.reloadData()
+        
+        timerProgress.progress = 0.0
+        
+        intervalLabel.text = "\(zero(unit: setIntervalMinutes)):\(zero(unit: setIntervalSeconds))"
+        
+        transitionLabel.text = "\(zero(unit: setTransitionMinutes)):\(zero(unit: setTransitionSeconds))"
+        
+        setRemainingToSet()
+        
+    }
+    
+    func setAndTimeTapSegue(isTime: Bool, isInterval: Bool) {
+        
+        self.isTime = isTime
+        self.isInterval = isInterval
+        
+        performSegue(withIdentifier: keywords.mainToPickerSegue, sender: self)
         
     }
  
@@ -442,10 +500,16 @@ extension ViewController {
         
         if !timerIsStarted {
             
-            isTime = false
-            
-            performSegue(withIdentifier: keywords.mainToPickerSegue, sender: self)
-            
+            if beganWorkout {
+                
+                resetEverythingAlert(isTime: false, isInterval: false)
+                
+            } else {
+                
+                setAndTimeTapSegue(isTime: false, isInterval: false)
+                
+            }
+           
         }
         
     }
@@ -454,10 +518,15 @@ extension ViewController {
         
         if !timerIsStarted {
             
-            isTime = true
-            isInterval = true
-            
-            performSegue(withIdentifier: keywords.mainToPickerSegue, sender: self)
+            if beganWorkout {
+                
+                resetEverythingAlert(isTime: true, isInterval: true)
+                
+            } else {
+                
+                setAndTimeTapSegue(isTime: true, isInterval: true)
+                
+            }
             
         }
         
@@ -467,10 +536,15 @@ extension ViewController {
         
         if !timerIsStarted {
             
-            isTime = true
-            isInterval = false
-            
-            performSegue(withIdentifier: keywords.mainToPickerSegue, sender: self)
+            if beganWorkout {
+                
+                resetEverythingAlert(isTime: true, isInterval: false)
+                
+            } else {
+                
+                setAndTimeTapSegue(isTime: true, isInterval: false)
+                
+            }
             
         }
         
@@ -552,7 +626,7 @@ extension ViewController {
         
         cell.setNumberLabel.text = "\(indexPath.row + 1)"
         
-        if indexPath.row <= (currentSet - 1) {
+        if currentSet > 1 && indexPath.row < (currentSet - 1) {
             
             cell.backgroundColor = UIColor.green
             cell.setNumberLabel.textColor = UIColor.black
