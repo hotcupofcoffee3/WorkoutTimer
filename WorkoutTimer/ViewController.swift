@@ -12,6 +12,13 @@
 
 
 
+// Do an alert that shows when the workout is complete.
+// Have the sets only light up when they are completed, with the last set lite up at the completion of it.
+// Add a 'workoutBegan' variable to check to see if the popup for resetting everything needs to be done for when the person hits 'stop', as this will reset the workout.
+// Convert everything to the CoreData workout model.
+
+
+
 import UIKit
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SetNumberDelegate {
