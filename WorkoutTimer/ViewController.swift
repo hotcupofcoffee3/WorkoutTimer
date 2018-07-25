@@ -11,15 +11,27 @@
 // ******
 
 
-// Only can start or stop once interval and transition set.
-// Only reset once interval and transition are set.
-// When 'Reset' is hit after everything has started, it says that 'isTime' wasn't set in 'resetEverythingAlert()', so this has to be taken care of.
 
 // Convert everything to the CoreData workout model.
 
 
 
+// 1306 - Tock clicking sound (Keyboard click)
+// 1072 - Kinda like a busy tone
+// 1013 - Sounds kind of like a symbol or chime.
+// 1057 - Sounds like a Dark-eyed Junco chirp.
+// 1255 - Double beep for starting.
+// 1256 - Low to high quick beeps for starting.
+// 1330 - Sherwood Forest
+
+// let systemSoundID: SystemSoundID = 1330
+
+// AudioServicesPlaySystemSound(systemSoundID)
+
+
+
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SetNumberDelegate {
     
@@ -111,13 +123,17 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         if !timerIsStarted {
             
-            beganWorkout = true
-            
-            totalSecondsForProgress = (currentTimer == .interval) ? setTotalIntervalSeconds : setTotalTransitionSeconds
-            
-            mainTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(runTimer), userInfo: nil, repeats: true)
-            
-            timerForProgress = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(animateProgress), userInfo: nil, repeats: true)
+            if setTotalIntervalSeconds > 0 {
+                
+                beganWorkout = true
+                
+                totalSecondsForProgress = (currentTimer == .interval) ? setTotalIntervalSeconds : setTotalTransitionSeconds
+                
+                mainTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(runTimer), userInfo: nil, repeats: true)
+                
+                timerForProgress = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(animateProgress), userInfo: nil, repeats: true)
+                
+            }
             
         }
         
@@ -243,21 +259,35 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 
                 remainingIntervalSeconds -= 1
                 
-            }
-            
-            if remainingIntervalSeconds == 0 {
+            } else if remainingIntervalSeconds == 0 {
                 
                 currentSet += 1
                 
-                setCollectionView.reloadData()
-                
-                currentTimer = .transition
-                
-                timerProgress.progress = 0.0
-                
-                totalSecondsForProgress = setTotalTransitionSeconds
-                
-                if currentSet > setNumberOfSets {
+                if currentSet <= setNumberOfSets {
+                    
+                    AudioServicesPlaySystemSound(1256)
+                    
+                    setCollectionView.reloadData()
+                    
+                    if setTotalTransitionSeconds > 0 {
+                        
+                        currentTimer = .transition
+                        
+                        totalSecondsForProgress = setTotalTransitionSeconds
+                        
+                    } else {
+                        
+                        totalSecondsForProgress = setTotalIntervalSeconds
+                        
+                        remainingIntervalMinutes = setIntervalMinutes
+                        
+                        remainingIntervalSeconds = setIntervalSeconds
+                        
+                    }
+                    
+                    timerProgress.progress = 0.0
+                    
+                } else if currentSet > setNumberOfSets {
                     
                     mainTimer.invalidate()
                     
@@ -293,6 +323,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         if remainingTransitionMinutes > 0 {
             
+            AudioServicesPlaySystemSound(1057)
+            
             if remainingTransitionSeconds > 0 {
                 
                 remainingTransitionSeconds -= 1
@@ -309,17 +341,19 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
             if remainingTransitionSeconds > 0 {
                 
+                AudioServicesPlaySystemSound(1057)
+                
                 remainingTransitionSeconds -= 1
                 
-            }
-            
-            if remainingTransitionSeconds == 0 {
+            } else if remainingTransitionSeconds == 0 {
                 
                 currentTimer = .interval
                 
                 timerProgress.progress = 0.0
                 
                 totalSecondsForProgress = setTotalIntervalSeconds
+                
+                AudioServicesPlaySystemSound(1256)
                 
             }
             
@@ -388,6 +422,8 @@ extension ViewController {
     
     func finishedWorkoutAlert() {
         
+        AudioServicesPlaySystemSound(1330)
+        
         let alert = UIAlertController(title: "Finished!", message: "You did it!", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "I feel great!", style: .default, handler: { (action) in
@@ -412,11 +448,11 @@ extension ViewController {
             
             if self.beganWorkout {
                 
-                guard let time = isTime else { return print("'isTime' wasn't set in 'resetEverythingAlert()") }
-                
-                guard let interval = isInterval else { return print("'isInterval' wasn't set in 'resetEverythingAlert()") }
-                
-                self.setAndTimeTapSegue(isTime: time, isInterval: interval)
+                if let time = isTime, let interval = isInterval {
+                    
+                    self.setAndTimeTapSegue(isTime: time, isInterval: interval)
+                    
+                }
                 
                 self.timerIsStarted = false
                 
@@ -486,7 +522,7 @@ extension ViewController {
         
         remainingTransitionMinutes = setTransitionMinutes
         
-        remainingTransitionSeconds = setIntervalSeconds
+        remainingTransitionSeconds = setTransitionSeconds
         
     }
     
