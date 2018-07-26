@@ -51,9 +51,13 @@ class Workout {
             
         }
         
-        if workoutInfoArray.isEmpty || workoutInfoArray.count > 1 {
+        if workoutInfoArray.isEmpty {
             
-            return print("Something went wrong loading the 'workoutInfoArray' because it had no object or more than 1 object in it.")
+            return print("Something went wrong: 'workoutInfoArray' had no object in it.")
+            
+        } else if workoutInfoArray.count > 1 {
+            
+            return print("Something went wrong: 'workoutInfoArray' had more than 1 object in it.")
             
         }
         
@@ -71,11 +75,27 @@ class Workout {
         
 //        self.loadData()
 //        if self.workoutInfoArray.count == 0 {
-//            
-//            let newWorkout = WorkoutInfo(context: context)
-////            newWorkout.intervalMinutes = 0
-//            self.saveData()
-//            
+//
+////            let newWorkout = WorkoutInfo(context: context)
+////            newWorkout.sets = 5
+////            self.saveData()
+//            print("Nothing")
+//            print(workoutInfoArray.count)
+//
+//        } else {
+//
+//            print(workoutInfoArray.count)
+//
+////            let newWorkout = WorkoutInfo(context: context)
+////            newWorkout.sets = 5
+//
+////            for item in workoutInfoArray {
+////
+////                context.delete(item)
+////                saveData()
+////
+////            }
+//
 //        }
         
     }
