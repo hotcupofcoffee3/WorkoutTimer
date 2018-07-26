@@ -23,6 +23,12 @@ class Workout {
     
     var workoutInfoArray = [WorkoutInfo]()
     
+    var setIntervalMinutes: Int = 0
+    var setIntervalSeconds: Int = 0
+    var setNumberOfSets: Int = 0
+    var setTransitionMinutes: Int = 0
+    var setTransitionSeconds: Int = 0
+    
     func saveData() {
         
         do {
@@ -57,7 +63,7 @@ class Workout {
             
         } else if workoutInfoArray.count > 1 {
             
-            return print("Something went wrong: 'workoutInfoArray' had more than 1 object in it.")
+            return print("'workoutInfoArray' has \(workoutInfoArray.count)")
             
         }
         
@@ -65,38 +71,89 @@ class Workout {
     
     func getWorkoutInfo() -> WorkoutInfo {
         
+        return workoutInfoArray[0]
+        
+    }
+    
+    func saveIntervalTime(minutes: Int, seconds: Int) {
+        
+        let workoutInfo = getWorkoutInfo()
+        
+        workoutInfo.intervalMinutes = Int64(minutes)
+        workoutInfo.intervalSeconds = Int64(seconds)
+        
+        saveData()
+        
+    }
+    
+    func saveTransitionTime(minutes: Int, seconds: Int) {
+        
+        let workoutInfo = getWorkoutInfo()
+        
+        workoutInfo.transitionMinutes = Int64(minutes)
+        workoutInfo.transitionSeconds = Int64(seconds)
+        
+        saveData()
+        
+    }
+    
+    func saveSets(sets: Int) {
+        
+        let workoutInfo = getWorkoutInfo()
+        
+        workoutInfo.sets = Int64(sets)
+        
+        saveData()
+        
+    }
+    
+    func saveNewWorkoutInfoObject() {
+        
+        let newWorkout = WorkoutInfo(context: context)
+        
+        newWorkout.intervalMinutes = 0
+        newWorkout.intervalSeconds = 0
+        newWorkout.sets = 10
+        newWorkout.transitionMinutes = 0
+        newWorkout.transitionSeconds = 0
+        
+        self.saveData()
+        
+    }
+    
+    func deleteAllSavedWorkoutInfoObjects() {
+        
         loadData()
         
-        return workoutInfoArray[0]
+        for item in workoutInfoArray {
+            
+            context.delete(item)
+            
+        }
+        
+        saveData()
         
     }
     
     init() {
         
-//        self.loadData()
-//        if self.workoutInfoArray.count == 0 {
-//
-////            let newWorkout = WorkoutInfo(context: context)
-////            newWorkout.sets = 5
-////            self.saveData()
-//            print("Nothing")
-//            print(workoutInfoArray.count)
-//
-//        } else {
-//
-//            print(workoutInfoArray.count)
-//
-////            let newWorkout = WorkoutInfo(context: context)
-////            newWorkout.sets = 5
-//
-////            for item in workoutInfoArray {
-////
-////                context.delete(item)
-////                saveData()
-////
-////            }
-//
-//        }
+//        deleteAllSavedWorkoutInfoObjects()
+        
+        self.loadData()
+
+        if self.workoutInfoArray.count == 0 {
+
+            saveNewWorkoutInfoObject()
+
+        }
+
+        let workoutInfo = getWorkoutInfo()
+
+        self.setIntervalMinutes = Int(workoutInfo.intervalMinutes)
+        self.setIntervalSeconds = Int(workoutInfo.intervalSeconds)
+        self.setNumberOfSets = Int(workoutInfo.sets)
+        self.setTransitionMinutes = Int(workoutInfo.transitionMinutes)
+        self.setTransitionSeconds = Int(workoutInfo.transitionSeconds)
         
     }
     

@@ -406,6 +406,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         toggleButtonColors()
         
+        print(workout.setIntervalMinutes)
+        print(workout.setIntervalSeconds)
+        print(workout.setNumberOfSets)
+        print(workout.setTransitionMinutes)
+        print(workout.setTransitionSeconds)
+        
     }
     
 }
@@ -568,36 +574,22 @@ extension ViewController {
             stopButtonOutlet.layer.backgroundColor = UIColor.clear.cgColor
             stopButtonOutlet.setTitleColor(UIColor.white, for: .normal)
             
-//            startButtonOutlet.layer.backgroundColor = keywords.mainBackgroundColor.cgColor
-//            startButtonOutlet.setTitleColor(UIColor.white, for: .normal)
-//
-//            stopButtonOutlet.layer.backgroundColor = keywords.mainBackgroundColor.cgColor
-//            stopButtonOutlet.setTitleColor(UIColor.white, for: .normal)
-            
         } else {
             
             if timerIsStarted {
                 
                 startButtonOutlet.layer.backgroundColor = UIColor.white.cgColor
+                startButtonOutlet.setTitleColor(keywords.mainBackgroundColor, for: .normal)
                 
                 stopButtonOutlet.layer.backgroundColor = UIColor.clear.cgColor
-                
-//                startButtonOutlet.layer.backgroundColor = UIColor.white.cgColor
-                startButtonOutlet.setTitleColor(keywords.mainBackgroundColor, for: .normal)
-//
-//                stopButtonOutlet.layer.backgroundColor = keywords.mainBackgroundColor.cgColor
                 stopButtonOutlet.setTitleColor(UIColor.white, for: .normal)
                 
             } else {
                 
                 startButtonOutlet.layer.backgroundColor = UIColor.clear.cgColor
+                startButtonOutlet.setTitleColor(UIColor.white, for: .normal)
                 
                 stopButtonOutlet.layer.backgroundColor = UIColor.white.cgColor
-                
-//                startButtonOutlet.layer.backgroundColor = keywords.mainBackgroundColor.cgColor
-                startButtonOutlet.setTitleColor(UIColor.white, for: .normal)
-//
-//                stopButtonOutlet.layer.backgroundColor = UIColor.white.cgColor
                 stopButtonOutlet.setTitleColor(keywords.mainBackgroundColor, for: .normal)
                 
             }
@@ -680,6 +672,8 @@ extension ViewController {
         
         setNumberOfSets = numberOfSets
         
+        workout.saveSets(sets: numberOfSets)
+        
         timerProgress.progress = 0.0
         
         setCollectionView.reloadData()
@@ -698,6 +692,8 @@ extension ViewController {
             
             setIntervalSeconds = seconds
             
+            workout.saveIntervalTime(minutes: minutes, seconds: seconds)
+            
             remainingIntervalMinutes = minutes
             
             remainingIntervalSeconds = seconds
@@ -709,6 +705,8 @@ extension ViewController {
             setTransitionMinutes = minutes
             
             setTransitionSeconds = seconds
+            
+            workout.saveTransitionTime(minutes: minutes, seconds: seconds)
             
             remainingTransitionMinutes = minutes
             
