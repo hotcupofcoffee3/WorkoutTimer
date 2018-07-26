@@ -35,6 +35,10 @@ class TimeAndNumberViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     @IBOutlet weak var numberPicker: UIPickerView!
     
+    @IBOutlet weak var minLabel: UILabel!
+    
+    @IBOutlet weak var secLabel: UILabel!
+    
     @IBAction func setNumberButton(_ sender: UIButton) {
         
         if isTime {
@@ -60,9 +64,15 @@ class TimeAndNumberViewController: UIViewController, UIPickerViewDelegate, UIPic
             
             numberPicker.selectRow(seconds, inComponent: 1, animated: true)
             
+            minLabel.text = "min"
+            secLabel.text = "sec"
+            
         } else if !isTime {
             
             numberPicker.selectRow(numberOfSets - 1, inComponent: 0, animated: true)
+            
+            minLabel.text = ""
+            secLabel.text = ""
             
         }
         

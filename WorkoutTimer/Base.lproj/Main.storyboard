@@ -207,9 +207,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OA2-u5-1z3">
-                                <rect key="frame" x="29.5" y="226" width="236" height="216"/>
+                                <rect key="frame" x="77.5" y="226" width="220" height="216"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="236" id="kbD-te-XCM"/>
+                                    <constraint firstAttribute="width" constant="220" id="kbD-te-XCM"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="dataSource" destination="xw4-mn-naU" id="whQ-aK-SrS"/>
@@ -235,23 +235,23 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="mxg-xS-gs8" userLabel="min/sec Stack">
-                                <rect key="frame" x="97.5" y="320" width="180" height="28"/>
+                                <rect key="frame" x="157.5" y="320" width="150" height="28"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="   min" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5L9-ia-BEp">
-                                        <rect key="frame" x="0.0" y="0.0" width="90" height="28"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="75" height="28"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="24"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sec" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uTn-jj-cG9">
-                                        <rect key="frame" x="90" y="0.0" width="90" height="28"/>
+                                        <rect key="frame" x="75" y="0.0" width="75" height="28"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="24"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="180" id="3Qa-E9-s6S"/>
+                                    <constraint firstAttribute="width" constant="150" id="3Qa-E9-s6S"/>
                                 </constraints>
                             </stackView>
                         </subviews>
@@ -263,8 +263,8 @@
                             <constraint firstItem="ZQg-hg-XdP" firstAttribute="leading" secondItem="rFq-ck-5J5" secondAttribute="leading" id="CtL-lM-1m3"/>
                             <constraint firstItem="iiQ-hb-59v" firstAttribute="leading" secondItem="rFq-ck-5J5" secondAttribute="leading" id="Q00-ay-XJ9"/>
                             <constraint firstItem="mxg-xS-gs8" firstAttribute="centerY" secondItem="12U-wR-VmJ" secondAttribute="centerY" id="QAV-Ff-iFb"/>
-                            <constraint firstItem="OA2-u5-1z3" firstAttribute="centerX" secondItem="12U-wR-VmJ" secondAttribute="centerX" constant="-40" id="d4K-Ls-8yM"/>
-                            <constraint firstItem="mxg-xS-gs8" firstAttribute="centerX" secondItem="12U-wR-VmJ" secondAttribute="centerX" id="dFE-ON-Amk"/>
+                            <constraint firstItem="OA2-u5-1z3" firstAttribute="centerX" secondItem="12U-wR-VmJ" secondAttribute="centerX" id="d4K-Ls-8yM"/>
+                            <constraint firstItem="mxg-xS-gs8" firstAttribute="centerX" secondItem="12U-wR-VmJ" secondAttribute="centerX" constant="45" id="dFE-ON-Amk"/>
                             <constraint firstItem="OA2-u5-1z3" firstAttribute="top" secondItem="ZQg-hg-XdP" secondAttribute="bottom" constant="60" id="fPT-l8-f3o"/>
                             <constraint firstItem="iiQ-hb-59v" firstAttribute="top" secondItem="OA2-u5-1z3" secondAttribute="bottom" constant="60" id="tCx-Ek-Beu"/>
                         </constraints>
@@ -272,7 +272,9 @@
                     </view>
                     <connections>
                         <outlet property="chosenPickerInfoLabel" destination="ZQg-hg-XdP" id="Jha-Vr-niN"/>
+                        <outlet property="minLabel" destination="5L9-ia-BEp" id="HAu-5X-jaU"/>
                         <outlet property="numberPicker" destination="OA2-u5-1z3" id="H7i-PV-hO0"/>
+                        <outlet property="secLabel" destination="uTn-jj-cG9" id="Hz6-m2-LDe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d5U-fF-kRw" userLabel="First Responder" sceneMemberID="firstResponder"/>

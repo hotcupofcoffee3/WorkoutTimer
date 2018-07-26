@@ -24,11 +24,6 @@
 // 1256 - Low to high quick beeps for starting.
 // 1330 - Sherwood Forest
 
-// let systemSoundID: SystemSoundID = 1330
-
-// AudioServicesPlaySystemSound(systemSoundID)
-
-
 
 import UIKit
 import AVFoundation
@@ -271,11 +266,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 
                 currentSet += 1
                 
+                setCollectionView.reloadData()
+                
                 if currentSet <= setNumberOfSets {
                     
                     AudioServicesPlaySystemSound(1256)
-                    
-                    setCollectionView.reloadData()
                     
                     if setTotalTransitionSeconds > 0 {
                         
