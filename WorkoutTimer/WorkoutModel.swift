@@ -23,11 +23,23 @@ class Workout {
     
     var workoutInfoArray = [WorkoutInfo]()
     
+    var currentSet = 1
+    
     var setIntervalMinutes: Int = 0
     var setIntervalSeconds: Int = 0
     var setNumberOfSets: Int = 0
     var setTransitionMinutes: Int = 0
     var setTransitionSeconds: Int = 0
+    
+    var setTotalIntervalSeconds: Int = 0
+    var setTotalTransitionSeconds: Int = 0
+    
+    var remainingIntervalMinutes: Int = 0
+    var remainingIntervalSeconds: Int = 0
+    var remainingTransitionMinutes: Int = 0
+    var remainingTransitionSeconds: Int = 0
+    
+    var totalSecondsForProgress = 0
     
     func saveData() {
         
@@ -143,6 +155,28 @@ class Workout {
         
     }
     
+    func setInfoToNil() {
+        
+        saveIntervalTime(minutes: 0, seconds: 0)
+        
+        saveTransitionTime(minutes: 0, seconds: 0)
+        
+        saveSets(sets: 10)
+        
+    }
+    
+    func setRemainingToSetAmounts() {
+        
+        remainingIntervalMinutes = setIntervalMinutes
+        
+        remainingIntervalSeconds = setIntervalSeconds
+        
+        remainingTransitionMinutes = setTransitionMinutes
+        
+        remainingTransitionSeconds = setTransitionSeconds
+        
+    }
+    
     init() {
         
 //        deleteAllSavedWorkoutInfoObjects()
@@ -162,6 +196,15 @@ class Workout {
         self.setNumberOfSets = Int(workoutInfo.sets)
         self.setTransitionMinutes = Int(workoutInfo.transitionMinutes)
         self.setTransitionSeconds = Int(workoutInfo.transitionSeconds)
+        
+        self.setTotalIntervalSeconds = (setIntervalMinutes * 60) + setIntervalSeconds
+        self.setTotalTransitionSeconds = (setTransitionMinutes * 60) + setTransitionSeconds
+        
+        self.remainingIntervalMinutes = setIntervalMinutes
+        self.remainingIntervalSeconds = setIntervalSeconds
+        
+        self.remainingTransitionMinutes = setTransitionMinutes
+        self.remainingTransitionSeconds = setTransitionSeconds
         
     }
     

@@ -12,10 +12,6 @@
 
 
 
-// Convert everything to the CoreData workout model.
-
-
-
 // 1306 - Tock clicking sound (Keyboard click)
 // 1072 - Kinda like a busy tone
 // 1013 - Sounds kind of like a symbol or chime.
@@ -23,6 +19,7 @@
 // 1255 - Double beep for starting.
 // 1256 - Low to high quick beeps for starting.
 // 1330 - Sherwood Forest
+
 
 
 import UIKit
@@ -55,18 +52,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     var timerIsStarted = false
     var beganWorkout = false
-    
-    var currentSet = 1
-    
-    var setTotalIntervalSeconds = 0
-    var setTotalTransitionSeconds = 0
-    
-    var remainingIntervalMinutes = 0
-    var remainingIntervalSeconds = 0
-    var remainingTransitionMinutes = 0
-    var remainingTransitionSeconds = 0
-    
-    var totalSecondsForProgress = 10
     
     
     
@@ -110,15 +95,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     @IBAction func startButton(_ sender: UIButton) {
         
-        if !timerIsStarted && setTotalIntervalSeconds > 0 {
+        if !timerIsStarted && workout.setTotalIntervalSeconds > 0 {
                 
             beganWorkout = true
             
             timerIsStarted = true
             
-            toggleButtonColors()
+            toggleButtonColors(reset: false)
                 
-            totalSecondsForProgress = (currentTimer == .interval) ? setTotalIntervalSeconds : setTotalTransitionSeconds
+            workout.totalSecondsForProgress = (currentTimer == .interval) ? workout.setTotalIntervalSeconds : workout.setTotalTransitionSeconds
             
             mainTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(runTimer), userInfo: nil, repeats: true)
             
@@ -136,7 +121,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         timerIsStarted = false
         
-        toggleButtonColors()
+        toggleButtonColors(reset: false)
         
     }
     
@@ -210,7 +195,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     @objc func animateProgress() {
         
-        let increment: Float = (1 / (Float(totalSecondsForProgress) * 10))
+        let increment: Float = (1 / (Float(workout.totalSecondsForProgress) * 10))
         
         timerProgress.setProgress(timerProgress.progress + increment, animated: true)
         
@@ -218,33 +203,33 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func intervalTimer() {
         
-        if workout.setIntervalMinutes == remainingIntervalMinutes && workout.setIntervalSeconds == remainingIntervalSeconds {
+        if workout.setIntervalMinutes == workout.remainingIntervalMinutes && workout.setIntervalSeconds == workout.remainingIntervalSeconds {
             
-            transitionLabel.text = "\(zero(unit: remainingTransitionMinutes)):\(zero(unit: remainingTransitionSeconds))"
+            transitionLabel.text = "\(zero(unit: workout.remainingTransitionMinutes)):\(zero(unit: workout.remainingTransitionSeconds))"
             
         }
         
-        if remainingIntervalMinutes > 0 {
+        if workout.remainingIntervalMinutes > 0 {
             
-            if remainingIntervalSeconds > 0 {
+            if workout.remainingIntervalSeconds > 0 {
                 
-                remainingIntervalSeconds -= 1
+                workout.remainingIntervalSeconds -= 1
                 
             } else {
                 
-                remainingIntervalMinutes -= 1
+                workout.remainingIntervalMinutes -= 1
                 
-                remainingIntervalSeconds = 59
+                workout.remainingIntervalSeconds = 59
                 
             }
             
-        } else if remainingIntervalMinutes == 0 {
+        } else if workout.remainingIntervalMinutes == 0 {
             
-            if remainingIntervalSeconds > 0 {
+            if workout.remainingIntervalSeconds > 0 {
                 
-                remainingIntervalSeconds -= 1
+                workout.remainingIntervalSeconds -= 1
                 
-                if remainingIntervalSeconds <= 3 && remainingIntervalSeconds > 0 {
+                if workout.remainingIntervalSeconds <= 3 && workout.remainingIntervalSeconds > 0 {
                     
                     AudioServicesPlaySystemSound(1057)
                     
@@ -252,35 +237,35 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 
             }
             
-            if remainingIntervalSeconds == 0 {
+            if workout.remainingIntervalSeconds == 0 {
                 
-                currentSet += 1
+                workout.currentSet += 1
                 
                 setCollectionView.reloadData()
                 
-                if currentSet <= workout.setNumberOfSets {
+                if workout.currentSet <= workout.setNumberOfSets {
                     
                     AudioServicesPlaySystemSound(1256)
                     
-                    if setTotalTransitionSeconds > 0 {
+                    if workout.setTotalTransitionSeconds > 0 {
                         
                         currentTimer = .transition
                         
-                        totalSecondsForProgress = setTotalTransitionSeconds
+                        workout.totalSecondsForProgress = workout.setTotalTransitionSeconds
                         
                     } else {
                         
-                        totalSecondsForProgress = setTotalIntervalSeconds
+                        workout.totalSecondsForProgress = workout.setTotalIntervalSeconds
                         
-                        remainingIntervalMinutes = workout.setIntervalMinutes
+                        workout.remainingIntervalMinutes = workout.setIntervalMinutes
                         
-                        remainingIntervalSeconds = workout.setIntervalSeconds
+                        workout.remainingIntervalSeconds = workout.setIntervalSeconds
                         
                     }
                     
                     timerProgress.progress = 0.0
                     
-                } else if currentSet > workout.setNumberOfSets {
+                } else if workout.currentSet > workout.setNumberOfSets {
                     
                     mainTimer.invalidate()
                     
@@ -294,13 +279,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
         }
         
-        intervalLabel.text = "\(zero(unit: remainingIntervalMinutes)):\(zero(unit: remainingIntervalSeconds))"
+        intervalLabel.text = "\(zero(unit: workout.remainingIntervalMinutes)):\(zero(unit: workout.remainingIntervalSeconds))"
         
         if currentTimer == .transition {
             
-            remainingIntervalMinutes = workout.setIntervalMinutes
+            workout.remainingIntervalMinutes = workout.setIntervalMinutes
             
-            remainingIntervalSeconds = workout.setIntervalSeconds
+            workout.remainingIntervalSeconds = workout.setIntervalSeconds
             
         }
         
@@ -308,33 +293,33 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func transitionTimer() {
         
-        if workout.setTransitionMinutes == remainingTransitionMinutes && workout.setTransitionSeconds == remainingTransitionSeconds {
+        if workout.setTransitionMinutes == workout.remainingTransitionMinutes && workout.setTransitionSeconds == workout.remainingTransitionSeconds {
             
-            intervalLabel.text = "\(zero(unit: remainingTransitionMinutes)):\(zero(unit: remainingIntervalSeconds))"
+            intervalLabel.text = "\(zero(unit: workout.remainingTransitionMinutes)):\(zero(unit: workout.remainingIntervalSeconds))"
             
         }
         
-        if remainingTransitionMinutes > 0 {
+        if workout.remainingTransitionMinutes > 0 {
             
-            if remainingTransitionSeconds > 0 {
+            if workout.remainingTransitionSeconds > 0 {
                 
-                remainingTransitionSeconds -= 1
+                workout.remainingTransitionSeconds -= 1
                 
             } else {
                 
-                remainingTransitionMinutes -= 1
+                workout.remainingTransitionMinutes -= 1
                 
-                remainingTransitionSeconds = 59
+                workout.remainingTransitionSeconds = 59
                 
             }
             
-        } else if remainingTransitionMinutes == 0 {
+        } else if workout.remainingTransitionMinutes == 0 {
             
-            if remainingTransitionSeconds > 0 {
+            if workout.remainingTransitionSeconds > 0 {
                 
-                remainingTransitionSeconds -= 1
+                workout.remainingTransitionSeconds -= 1
                 
-                if remainingTransitionSeconds <= 3 && remainingTransitionSeconds > 0 {
+                if workout.remainingTransitionSeconds <= 3 && workout.remainingTransitionSeconds > 0 {
                     
                     AudioServicesPlaySystemSound(1057)
                     
@@ -342,13 +327,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 
             }
             
-            if remainingTransitionSeconds == 0 {
+            if workout.remainingTransitionSeconds == 0 {
                 
                 currentTimer = .interval
                 
                 timerProgress.progress = 0.0
                 
-                totalSecondsForProgress = setTotalIntervalSeconds
+                workout.totalSecondsForProgress = workout.setTotalIntervalSeconds
                 
                 AudioServicesPlaySystemSound(1255)
                 
@@ -356,13 +341,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
         }
         
-        transitionLabel.text = "\(zero(unit: remainingTransitionMinutes)):\(zero(unit: remainingTransitionSeconds))"
+        transitionLabel.text = "\(zero(unit: workout.remainingTransitionMinutes)):\(zero(unit: workout.remainingTransitionSeconds))"
         
         if currentTimer == .interval {
             
-            remainingTransitionMinutes = workout.setTransitionMinutes
+            workout.remainingTransitionMinutes = workout.setTransitionMinutes
             
-            remainingTransitionSeconds = workout.setTransitionSeconds
+            workout.remainingTransitionSeconds = workout.setTransitionSeconds
             
         }
         
@@ -398,7 +383,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         stopButtonOutlet.layer.borderWidth = 2
         stopButtonOutlet.layer.cornerRadius = 45
         
-        toggleButtonColors()
+        toggleButtonColors(reset: true)
         
     }
     
@@ -451,21 +436,23 @@ extension ViewController {
                     
                 }
                 
-                self.timerIsStarted = false
-                
-                self.beganWorkout = false
-                
                 self.resetInfoToStartingSetAmounts()
                 
             } else {
                 
-                self.reset()
+//                self.workout.setInfoToNil()
                 
-                self.timerIsStarted = false
-                
-                self.beganWorkout = false
+                self.resetInfoToStartingSetAmounts()
                 
             }
+            
+            self.timerIsStarted = false
+            
+            self.beganWorkout = false
+            
+            self.mainTimer.invalidate()
+            
+            self.timerForProgress.invalidate()
             
         }))
         
@@ -489,49 +476,9 @@ extension ViewController {
         
     }
     
-    func reset() {
-        
-        setInfoToNil()
-        
-        resetInfoToStartingSetAmounts()
-        
-    }
-    
-    func setInfoToNil() {
-        
-        workout.setNumberOfSets = 10
-        
-        workout.setIntervalMinutes = 0
-        
-        workout.setIntervalSeconds = 0
-        
-        workout.setTransitionMinutes = 0
-        
-        workout.setTransitionSeconds = 0
-        
-        workout.saveIntervalTime(minutes: 0, seconds: 0)
-        
-        workout.saveTransitionTime(minutes: 0, seconds: 0)
-        
-        workout.saveSets(sets: 10)
-        
-    }
-    
-    func setRemainingToSet() {
-        
-        remainingIntervalMinutes = workout.setIntervalMinutes
-        
-        remainingIntervalSeconds = workout.setIntervalSeconds
-        
-        remainingTransitionMinutes = workout.setTransitionMinutes
-        
-        remainingTransitionSeconds = workout.setTransitionSeconds
-        
-    }
-    
     func resetInfoToStartingSetAmounts() {
         
-        currentSet = 1
+        workout.currentSet = 1
         
         currentTimer = .interval
         
@@ -543,9 +490,9 @@ extension ViewController {
         
         transitionLabel.text = "\(zero(unit: workout.setTransitionMinutes)):\(zero(unit: workout.setTransitionSeconds))"
         
-        setRemainingToSet()
+        workout.setRemainingToSetAmounts()
         
-        toggleButtonColors()
+        toggleButtonColors(reset: true)
         
     }
     
@@ -558,9 +505,9 @@ extension ViewController {
         
     }
     
-    func toggleButtonColors() {
+    func toggleButtonColors(reset: Bool) {
         
-        if !beganWorkout {
+        if reset {
             
             startButtonOutlet.layer.backgroundColor = UIColor.clear.cgColor
             startButtonOutlet.setTitleColor(UIColor.white, for: .normal)
@@ -688,11 +635,11 @@ extension ViewController {
             
             workout.saveIntervalTime(minutes: minutes, seconds: seconds)
             
-            remainingIntervalMinutes = minutes
+            workout.remainingIntervalMinutes = minutes
             
-            remainingIntervalSeconds = seconds
+            workout.remainingIntervalSeconds = seconds
             
-            setTotalIntervalSeconds = (minutes * 60) + seconds
+            workout.setTotalIntervalSeconds = (minutes * 60) + seconds
             
         } else if !isInterval {
             
@@ -702,11 +649,11 @@ extension ViewController {
             
             workout.saveTransitionTime(minutes: minutes, seconds: seconds)
             
-            remainingTransitionMinutes = minutes
+            workout.remainingTransitionMinutes = minutes
             
-            remainingTransitionSeconds = seconds
+            workout.remainingTransitionSeconds = seconds
             
-            setTotalTransitionSeconds = (minutes * 60) + seconds
+            workout.setTotalTransitionSeconds = (minutes * 60) + seconds
             
         }
         
@@ -736,7 +683,7 @@ extension ViewController {
         
         cell.setNumberLabel.text = "\(indexPath.row + 1)"
         
-        if currentSet > 1 && indexPath.row < (currentSet - 1) {
+        if workout.currentSet > 1 && indexPath.row < (workout.currentSet - 1) {
             
             cell.backgroundColor = UIColor.white
             cell.setNumberLabel.textColor = keywords.mainBackgroundColor
