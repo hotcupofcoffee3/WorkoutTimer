@@ -18,7 +18,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J3b-HB-qcu">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WorkoutTimer-OpeningBackground" translatesAutoresizingMaskIntoConstraints="NO" id="0yQ-b3-yOz">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J3b-HB-qcu">
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="barTintColor" red="0.2733489871" green="0.42662027479999998" blue="0.4372464418" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -165,16 +168,20 @@
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="mOB-Q6-5jh" secondAttribute="trailing" constant="20" id="3db-qs-xBu"/>
                             <constraint firstItem="J3b-HB-qcu" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="4Jx-df-vBA"/>
+                            <constraint firstItem="0yQ-b3-yOz" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Bqu-R1-OR7"/>
                             <constraint firstItem="3nI-nB-5oa" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="GIe-xu-ZQ9"/>
                             <constraint firstItem="J3b-HB-qcu" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Huk-kn-s18"/>
                             <constraint firstItem="J3b-HB-qcu" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Kma-Y6-hsX"/>
                             <constraint firstItem="jFa-JG-9TB" firstAttribute="top" secondItem="3nI-nB-5oa" secondAttribute="bottom" constant="30" id="N48-CL-Eez"/>
+                            <constraint firstItem="0yQ-b3-yOz" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="UTh-SQ-WA4"/>
                             <constraint firstAttribute="trailing" secondItem="3nI-nB-5oa" secondAttribute="trailing" id="btx-T6-ZRh"/>
+                            <constraint firstItem="0yQ-b3-yOz" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="cEP-C3-Hf2"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="jFa-JG-9TB" secondAttribute="trailing" id="dfu-0n-NLN"/>
                             <constraint firstItem="3nI-nB-5oa" firstAttribute="top" secondItem="nkh-tL-cwp" secondAttribute="bottom" constant="12" id="gBq-63-RSR"/>
                             <constraint firstItem="jFa-JG-9TB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="gq3-fi-106"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="mOB-Q6-5jh" secondAttribute="bottom" constant="20" id="hb4-Aj-PYm"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="nkh-tL-cwp" secondAttribute="trailing" id="ita-j4-4mh"/>
+                            <constraint firstItem="0yQ-b3-yOz" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="lK1-67-QOy"/>
                             <constraint firstItem="mOB-Q6-5jh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="prV-l8-Xk2"/>
                             <constraint firstItem="nkh-tL-cwp" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="qXS-md-xFr"/>
                             <constraint firstItem="nkh-tL-cwp" firstAttribute="top" secondItem="J3b-HB-qcu" secondAttribute="bottom" constant="12" id="s10-zq-CQn"/>
@@ -282,4 +289,7 @@
             <point key="canvasLocation" x="855" y="134"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="WorkoutTimer-OpeningBackground" width="1024" height="1024"/>
+    </resources>
 </document>

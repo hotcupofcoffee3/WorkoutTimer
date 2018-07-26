@@ -116,25 +116,21 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     @IBAction func startButton(_ sender: UIButton) {
         
-        if !timerIsStarted {
+        if !timerIsStarted && setTotalIntervalSeconds > 0 {
+                
+            beganWorkout = true
             
-            if setTotalIntervalSeconds > 0 {
+            timerIsStarted = true
+            
+            toggleButtonColors()
                 
-                beganWorkout = true
-                
-                totalSecondsForProgress = (currentTimer == .interval) ? setTotalIntervalSeconds : setTotalTransitionSeconds
-                
-                mainTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(runTimer), userInfo: nil, repeats: true)
-                
-                timerForProgress = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(animateProgress), userInfo: nil, repeats: true)
-                
-            }
+            totalSecondsForProgress = (currentTimer == .interval) ? setTotalIntervalSeconds : setTotalTransitionSeconds
+            
+            mainTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(runTimer), userInfo: nil, repeats: true)
+            
+            timerForProgress = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(animateProgress), userInfo: nil, repeats: true)
             
         }
-        
-        timerIsStarted = true
-        
-        toggleButtonColors()
         
     }
     
@@ -566,28 +562,42 @@ extension ViewController {
         
         if !beganWorkout {
             
-            startButtonOutlet.layer.backgroundColor = keywords.mainBackgroundColor.cgColor
+            startButtonOutlet.layer.backgroundColor = UIColor.clear.cgColor
             startButtonOutlet.setTitleColor(UIColor.white, for: .normal)
             
-            stopButtonOutlet.layer.backgroundColor = keywords.mainBackgroundColor.cgColor
+            stopButtonOutlet.layer.backgroundColor = UIColor.clear.cgColor
             stopButtonOutlet.setTitleColor(UIColor.white, for: .normal)
+            
+//            startButtonOutlet.layer.backgroundColor = keywords.mainBackgroundColor.cgColor
+//            startButtonOutlet.setTitleColor(UIColor.white, for: .normal)
+//
+//            stopButtonOutlet.layer.backgroundColor = keywords.mainBackgroundColor.cgColor
+//            stopButtonOutlet.setTitleColor(UIColor.white, for: .normal)
             
         } else {
             
             if timerIsStarted {
                 
                 startButtonOutlet.layer.backgroundColor = UIColor.white.cgColor
-                startButtonOutlet.setTitleColor(keywords.mainBackgroundColor, for: .normal)
                 
-                stopButtonOutlet.layer.backgroundColor = keywords.mainBackgroundColor.cgColor
+                stopButtonOutlet.layer.backgroundColor = UIColor.clear.cgColor
+                
+//                startButtonOutlet.layer.backgroundColor = UIColor.white.cgColor
+                startButtonOutlet.setTitleColor(keywords.mainBackgroundColor, for: .normal)
+//
+//                stopButtonOutlet.layer.backgroundColor = keywords.mainBackgroundColor.cgColor
                 stopButtonOutlet.setTitleColor(UIColor.white, for: .normal)
                 
             } else {
                 
-                startButtonOutlet.layer.backgroundColor = keywords.mainBackgroundColor.cgColor
-                startButtonOutlet.setTitleColor(UIColor.white, for: .normal)
+                startButtonOutlet.layer.backgroundColor = UIColor.clear.cgColor
                 
                 stopButtonOutlet.layer.backgroundColor = UIColor.white.cgColor
+                
+//                startButtonOutlet.layer.backgroundColor = keywords.mainBackgroundColor.cgColor
+                startButtonOutlet.setTitleColor(UIColor.white, for: .normal)
+//
+//                stopButtonOutlet.layer.backgroundColor = UIColor.white.cgColor
                 stopButtonOutlet.setTitleColor(keywords.mainBackgroundColor, for: .normal)
                 
             }
