@@ -56,13 +56,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var timerIsStarted = false
     var beganWorkout = false
     
-    var setNumberOfSets = 10
     var currentSet = 1
-    
-    var setIntervalMinutes = 0
-    var setIntervalSeconds = 0
-    var setTransitionMinutes = 0
-    var setTransitionSeconds = 0
     
     var setTotalIntervalSeconds = 0
     var setTotalTransitionSeconds = 0
@@ -170,21 +164,21 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 
                 if isInterval {
                     
-                    destinationVC.minutes = setIntervalMinutes
+                    destinationVC.minutes = workout.setIntervalMinutes
                     
-                    destinationVC.seconds = setIntervalSeconds
+                    destinationVC.seconds = workout.setIntervalSeconds
                     
                 } else if !isInterval {
                     
-                    destinationVC.minutes = setTransitionMinutes
+                    destinationVC.minutes = workout.setTransitionMinutes
                     
-                    destinationVC.seconds = setTransitionSeconds
+                    destinationVC.seconds = workout.setTransitionSeconds
                     
                 }
                 
             } else if !isTime {
                 
-                destinationVC.numberOfSets = setNumberOfSets
+                destinationVC.numberOfSets = workout.setNumberOfSets
                 
             }
             
@@ -224,7 +218,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func intervalTimer() {
         
-        if setIntervalMinutes == remainingIntervalMinutes && setIntervalSeconds == remainingIntervalSeconds {
+        if workout.setIntervalMinutes == remainingIntervalMinutes && workout.setIntervalSeconds == remainingIntervalSeconds {
             
             transitionLabel.text = "\(zero(unit: remainingTransitionMinutes)):\(zero(unit: remainingTransitionSeconds))"
             
@@ -264,7 +258,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 
                 setCollectionView.reloadData()
                 
-                if currentSet <= setNumberOfSets {
+                if currentSet <= workout.setNumberOfSets {
                     
                     AudioServicesPlaySystemSound(1256)
                     
@@ -278,15 +272,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                         
                         totalSecondsForProgress = setTotalIntervalSeconds
                         
-                        remainingIntervalMinutes = setIntervalMinutes
+                        remainingIntervalMinutes = workout.setIntervalMinutes
                         
-                        remainingIntervalSeconds = setIntervalSeconds
+                        remainingIntervalSeconds = workout.setIntervalSeconds
                         
                     }
                     
                     timerProgress.progress = 0.0
                     
-                } else if currentSet > setNumberOfSets {
+                } else if currentSet > workout.setNumberOfSets {
                     
                     mainTimer.invalidate()
                     
@@ -304,9 +298,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         if currentTimer == .transition {
             
-            remainingIntervalMinutes = setIntervalMinutes
+            remainingIntervalMinutes = workout.setIntervalMinutes
             
-            remainingIntervalSeconds = setIntervalSeconds
+            remainingIntervalSeconds = workout.setIntervalSeconds
             
         }
         
@@ -314,7 +308,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func transitionTimer() {
         
-        if setTransitionMinutes == remainingTransitionMinutes && setTransitionSeconds == remainingTransitionSeconds {
+        if workout.setTransitionMinutes == remainingTransitionMinutes && workout.setTransitionSeconds == remainingTransitionSeconds {
             
             intervalLabel.text = "\(zero(unit: remainingTransitionMinutes)):\(zero(unit: remainingIntervalSeconds))"
             
@@ -366,9 +360,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         if currentTimer == .interval {
             
-            remainingTransitionMinutes = setTransitionMinutes
+            remainingTransitionMinutes = workout.setTransitionMinutes
             
-            remainingTransitionSeconds = setTransitionSeconds
+            remainingTransitionSeconds = workout.setTransitionSeconds
             
         }
         
@@ -390,9 +384,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         intervalView.addGestureRecognizer(intervalTapGesture)
         transitionView.addGestureRecognizer(transitionTapGesture)
         
-        intervalLabel.text = "\(zero(unit: setIntervalMinutes)):\(zero(unit: setIntervalSeconds))"
+        intervalLabel.text = "\(zero(unit: workout.setIntervalMinutes)):\(zero(unit: workout.setIntervalSeconds))"
         
-        transitionLabel.text = "\(zero(unit: setTransitionMinutes)):\(zero(unit: setTransitionSeconds))"
+        transitionLabel.text = "\(zero(unit: workout.setTransitionMinutes)):\(zero(unit: workout.setTransitionSeconds))"
         
         timerProgress.progress = 0.0
         
@@ -405,12 +399,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         stopButtonOutlet.layer.cornerRadius = 45
         
         toggleButtonColors()
-        
-        print(workout.setIntervalMinutes)
-        print(workout.setIntervalSeconds)
-        print(workout.setNumberOfSets)
-        print(workout.setTransitionMinutes)
-        print(workout.setTransitionSeconds)
         
     }
     
@@ -511,27 +499,33 @@ extension ViewController {
     
     func setInfoToNil() {
         
-        setNumberOfSets = 10
+        workout.setNumberOfSets = 10
         
-        setIntervalMinutes = 0
+        workout.setIntervalMinutes = 0
         
-        setIntervalSeconds = 0
+        workout.setIntervalSeconds = 0
         
-        setTransitionMinutes = 0
+        workout.setTransitionMinutes = 0
         
-        setTransitionSeconds = 0
+        workout.setTransitionSeconds = 0
+        
+        workout.saveIntervalTime(minutes: 0, seconds: 0)
+        
+        workout.saveTransitionTime(minutes: 0, seconds: 0)
+        
+        workout.saveSets(sets: 10)
         
     }
     
     func setRemainingToSet() {
         
-        remainingIntervalMinutes = setIntervalMinutes
+        remainingIntervalMinutes = workout.setIntervalMinutes
         
-        remainingIntervalSeconds = setIntervalSeconds
+        remainingIntervalSeconds = workout.setIntervalSeconds
         
-        remainingTransitionMinutes = setTransitionMinutes
+        remainingTransitionMinutes = workout.setTransitionMinutes
         
-        remainingTransitionSeconds = setTransitionSeconds
+        remainingTransitionSeconds = workout.setTransitionSeconds
         
     }
     
@@ -545,9 +539,9 @@ extension ViewController {
         
         timerProgress.progress = 0.0
         
-        intervalLabel.text = "\(zero(unit: setIntervalMinutes)):\(zero(unit: setIntervalSeconds))"
+        intervalLabel.text = "\(zero(unit: workout.setIntervalMinutes)):\(zero(unit: workout.setIntervalSeconds))"
         
-        transitionLabel.text = "\(zero(unit: setTransitionMinutes)):\(zero(unit: setTransitionSeconds))"
+        transitionLabel.text = "\(zero(unit: workout.setTransitionMinutes)):\(zero(unit: workout.setTransitionSeconds))"
         
         setRemainingToSet()
         
@@ -670,7 +664,7 @@ extension ViewController {
     
     func setSets(numberOfSets: Int) {
         
-        setNumberOfSets = numberOfSets
+        workout.setNumberOfSets = numberOfSets
         
         workout.saveSets(sets: numberOfSets)
         
@@ -688,9 +682,9 @@ extension ViewController {
         
         if isInterval {
             
-            setIntervalMinutes = minutes
+            workout.setIntervalMinutes = minutes
             
-            setIntervalSeconds = seconds
+            workout.setIntervalSeconds = seconds
             
             workout.saveIntervalTime(minutes: minutes, seconds: seconds)
             
@@ -702,9 +696,9 @@ extension ViewController {
             
         } else if !isInterval {
             
-            setTransitionMinutes = minutes
+            workout.setTransitionMinutes = minutes
             
-            setTransitionSeconds = seconds
+            workout.setTransitionSeconds = seconds
             
             workout.saveTransitionTime(minutes: minutes, seconds: seconds)
             
@@ -716,10 +710,10 @@ extension ViewController {
             
         }
         
-        intervalLabel.text = "\(zero(unit: setIntervalMinutes)):\(zero(unit: setIntervalSeconds))"
+        intervalLabel.text = "\(zero(unit: workout.setIntervalMinutes)):\(zero(unit: workout.setIntervalSeconds))"
         
-        transitionLabel.text = "\(zero(unit: setTransitionMinutes)):\(zero(unit: setTransitionSeconds))"
-        
+        transitionLabel.text = "\(zero(unit: workout.setTransitionMinutes)):\(zero(unit: workout.setTransitionSeconds))"
+
     }
  
     
@@ -732,7 +726,7 @@ extension ViewController {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return setNumberOfSets
+        return workout.setNumberOfSets
         
     }
     
@@ -760,7 +754,7 @@ extension ViewController {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let size = viewWidth / CGFloat(setNumberOfSets)
+        let size = viewWidth / CGFloat(workout.setNumberOfSets)
         
         return CGSize(width: size, height: 50)
         

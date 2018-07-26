@@ -84,6 +84,9 @@ class Workout {
         
         saveData()
         
+        setIntervalMinutes = minutes
+        setIntervalSeconds = seconds
+        
     }
     
     func saveTransitionTime(minutes: Int, seconds: Int) {
@@ -95,6 +98,9 @@ class Workout {
         
         saveData()
         
+        setTransitionMinutes = minutes
+        setTransitionSeconds = seconds
+        
     }
     
     func saveSets(sets: Int) {
@@ -104,6 +110,8 @@ class Workout {
         workoutInfo.sets = Int64(sets)
         
         saveData()
+        
+        setNumberOfSets = sets
         
     }
     
