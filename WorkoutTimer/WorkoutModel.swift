@@ -127,6 +127,18 @@ class Workout {
         
     }
     
+    func makeSureInitialWorkoutInfoObjectIsCreated() {
+        
+        if self.workoutInfoArray.count == 0 {
+            
+            saveNewWorkoutInfoObject()
+            
+            loadData()
+            
+        }
+        
+    }
+    
     func saveNewWorkoutInfoObject() {
         
         let newWorkout = WorkoutInfo(context: context)
@@ -183,11 +195,7 @@ class Workout {
         
         self.loadData()
 
-        if self.workoutInfoArray.count == 0 {
-
-            saveNewWorkoutInfoObject()
-
-        }
+        self.makeSureInitialWorkoutInfoObjectIsCreated()
 
         let workoutInfo = getWorkoutInfo()
 
