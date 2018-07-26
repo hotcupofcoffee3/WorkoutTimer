@@ -110,7 +110,7 @@ extension TimeAndNumberViewController {
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         let titleString = isTime ? "\(row)" : "\(row + 1)"
-        let title = NSAttributedString(string: titleString, attributes: [NSAttributedStringKey.foregroundColor:UIColor.white, NSAttributedStringKey.font:UIFont(name: "Chalkduster", size: 18.0)!])
+        let title = NSAttributedString(string: titleString, attributes: [NSAttributedStringKey.foregroundColor:UIColor.white])
         return title
     }
     
