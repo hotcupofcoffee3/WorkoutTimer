@@ -65,6 +65,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     @IBOutlet weak var setCollectionView: UICollectionView!
     
+    @IBOutlet weak var exerciseCollectionView: UICollectionView!
+    
     @IBOutlet weak var timerProgress: UIProgressView!
     
     @IBOutlet weak var intervalView: UIView!
@@ -364,6 +366,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         navBar.shadowImage = UIImage()
         
         setCollectionView.register(UINib(nibName: "SetsCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "setCell")
+        
+        exerciseCollectionView.register(UINib(nibName: "ExerciseCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "exerciseCell")
         
         let setsTapGesture = UITapGestureRecognizer(target: self, action: #selector(setsTap))
         let intervalTapGesture = UITapGestureRecognizer(target: self, action: #selector(intervalTap))
@@ -678,37 +682,73 @@ extension ViewController {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return workout.setNumberOfSets
-        
+        if collectionView == self.setCollectionView {
+            
+            return workout.setNumberOfSets
+            
+        } else {
+            
+            return 3
+            
+        }
+
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "setCell", for: indexPath) as! SetsCollectionViewCell
+        // Sets Collection
         
-        cell.setNumberLabel.text = "\(indexPath.row + 1)"
-        
-        if workout.currentSet > 1 && indexPath.row < (workout.currentSet - 1) {
+        if collectionView == self.setCollectionView {
             
-            cell.backgroundColor = UIColor.white
-            cell.setNumberLabel.textColor = keywords.mainBackgroundColor
-
+            let cell = setCollectionView.dequeueReusableCell(withReuseIdentifier: "setCell", for: indexPath) as! SetsCollectionViewCell
+            
+            cell.setNumberLabel.text = "\(indexPath.row + 1)"
+            
+            if workout.currentSet > 1 && indexPath.row < (workout.currentSet - 1) {
+                
+                cell.backgroundColor = UIColor.white
+                cell.setNumberLabel.textColor = keywords.mainBackgroundColor
+                
+            } else {
+                
+                cell.backgroundColor = UIColor.clear
+                cell.setNumberLabel.textColor = UIColor.white
+                
+            }
+            
+            return cell
+            
+        // Exercise Collection
+            
         } else {
             
-            cell.backgroundColor = UIColor.clear
-            cell.setNumberLabel.textColor = UIColor.white
+            let cell = exerciseCollectionView.dequeueReusableCell(withReuseIdentifier: "exerciseCell", for: indexPath) as! ExerciseCollectionViewCell
+            
+            return cell
             
         }
         
-        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let size = viewWidth / CGFloat(workout.setNumberOfSets)
+        // Sets Collection
         
-        return CGSize(width: size, height: 50)
-        
+        if collectionView == self.setCollectionView {
+            
+            let size = viewWidth / CGFloat(workout.setNumberOfSets)
+            
+            return CGSize(width: size, height: 50)
+            
+        // Exercise Collection
+        } else {
+            
+            let size = viewWidth / CGFloat(3)
+            
+            return CGSize(width: size, height: 50)
+            
+        }
+
     }
     
 }

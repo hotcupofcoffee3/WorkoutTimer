@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B529CB77210BA50C005A0488 /* ExerciseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B529CB75210BA50C005A0488 /* ExerciseCollectionViewCell.swift */; };
+		B529CB78210BA50C005A0488 /* ExerciseCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B529CB76210BA50C005A0488 /* ExerciseCollectionViewCell.xib */; };
 		B5C3251E21065A3E00A88FDB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C3251D21065A3E00A88FDB /* AppDelegate.swift */; };
 		B5C3252021065A3E00A88FDB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C3251F21065A3E00A88FDB /* ViewController.swift */; };
 		B5C3252321065A3E00A88FDB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5C3252121065A3E00A88FDB /* Main.storyboard */; };
@@ -21,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B529CB75210BA50C005A0488 /* ExerciseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCollectionViewCell.swift; sourceTree = "<group>"; };
+		B529CB76210BA50C005A0488 /* ExerciseCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExerciseCollectionViewCell.xib; sourceTree = "<group>"; };
 		B5C3251A21065A3E00A88FDB /* WorkoutTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkoutTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5C3251D21065A3E00A88FDB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5C3251F21065A3E00A88FDB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -70,6 +74,8 @@
 				B5C3251F21065A3E00A88FDB /* ViewController.swift */,
 				B5C3253421065FD300A88FDB /* TimeAndNumberViewController.swift */,
 				B5C3253621066B3000A88FDB /* SetsCollectionViewCell.swift */,
+				B529CB75210BA50C005A0488 /* ExerciseCollectionViewCell.swift */,
+				B529CB76210BA50C005A0488 /* ExerciseCollectionViewCell.xib */,
 				B5C3253721066B3000A88FDB /* SetsCollectionViewCell.xib */,
 				B5C3253221065DDF00A88FDB /* Keywords.swift */,
 				B5C3253A21068B5800A88FDB /* WorkoutModel.swift */,
@@ -143,6 +149,7 @@
 				B5C3252B21065A4100A88FDB /* LaunchScreen.storyboard in Resources */,
 				B5C3253921066B3000A88FDB /* SetsCollectionViewCell.xib in Resources */,
 				B5C3252821065A4100A88FDB /* Assets.xcassets in Resources */,
+				B529CB78210BA50C005A0488 /* ExerciseCollectionViewCell.xib in Resources */,
 				B5C3252321065A3E00A88FDB /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -158,6 +165,7 @@
 				B5C3253821066B3000A88FDB /* SetsCollectionViewCell.swift in Sources */,
 				B5C3252021065A3E00A88FDB /* ViewController.swift in Sources */,
 				B5C3253B21068B5800A88FDB /* WorkoutModel.swift in Sources */,
+				B529CB77210BA50C005A0488 /* ExerciseCollectionViewCell.swift in Sources */,
 				B5C3253321065DDF00A88FDB /* Keywords.swift in Sources */,
 				B5C3252621065A3E00A88FDB /* WorkoutTimer.xcdatamodeld in Sources */,
 				B5C3251E21065A3E00A88FDB /* AppDelegate.swift in Sources */,
