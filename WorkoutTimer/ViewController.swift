@@ -115,13 +115,17 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     @IBAction func stopButton(_ sender: UIButton) {
         
-        mainTimer.invalidate()
-        
-        timerForProgress.invalidate()
-        
-        timerIsStarted = false
-        
-        toggleButtonColors(reset: false)
+        if timerIsStarted {
+            
+            mainTimer.invalidate()
+            
+            timerForProgress.invalidate()
+            
+            timerIsStarted = false
+            
+            toggleButtonColors(reset: false)
+            
+        }
         
     }
     
