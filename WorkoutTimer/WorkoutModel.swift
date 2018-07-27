@@ -22,8 +22,10 @@ class Workout {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     var workoutInfoArray = [WorkoutInfo]()
+    var exerciseArray = [Exercise]()
     
     var currentSet = 1
+    var currentExercise = 1
     
     var setIntervalMinutes: Int = 0
     var setIntervalSeconds: Int = 0
@@ -55,7 +57,7 @@ class Workout {
         
     }
     
-    func loadData() {
+    func loadWorkoutData() {
         
         let request: NSFetchRequest<WorkoutInfo> = WorkoutInfo.fetchRequest()
         
@@ -81,23 +83,60 @@ class Workout {
         
     }
     
+    func loadExercises() {
+        
+        let request: NSFetchRequest<Exercise> = Exercise.fetchRequest()
+        
+        do {
+            
+            exerciseArray = try context.fetch(request)
+            
+        } catch {
+            
+            print("Error loading Workout Info: \(error)")
+            
+        }
+        
+        if exerciseArray.isEmpty {
+            
+            return print("Something went wrong: 'exerciseArray' had no object in it.")
+            
+        }
+        
+    }
+    
     func getWorkoutInfo() -> WorkoutInfo {
         
         return workoutInfoArray[0]
         
     }
     
-    func saveIntervalTime(minutes: Int, seconds: Int) {
+    func getExercise(named: String) -> Exercise? {
         
-        let workoutInfo = getWorkoutInfo()
+        var exerciseToReturn: Exercise?
         
-        workoutInfo.intervalMinutes = Int64(minutes)
-        workoutInfo.intervalSeconds = Int64(seconds)
+        for exercise in exerciseArray {
+            
+            if exercise.name == named {
+                
+                exerciseToReturn = exercise
+                
+            }
+            
+        }
+        
+        return exerciseToReturn
+        
+    }
+    
+    func saveIntervalTime(exerciseName: String, minutes: Int, seconds: Int) {
+        
+        guard let exercise = getExercise(named: exerciseName) else { return }
+        
+        exercise.intervalMinutes = Int64(minutes)
+        exercise.intervalSeconds = Int64(seconds)
         
         saveData()
-        
-        setIntervalMinutes = minutes
-        setIntervalSeconds = seconds
         
     }
     
@@ -131,20 +170,20 @@ class Workout {
         
         if self.workoutInfoArray.count == 0 {
             
-            saveNewWorkoutInfoObject()
+            saveNewWorkoutInfo()
             
-            loadData()
+            loadWorkoutData()
             
         }
         
     }
     
-    func saveNewWorkoutInfoObject() {
+    func saveNewWorkoutInfo() {
         
         let newWorkout = WorkoutInfo(context: context)
         
-        newWorkout.intervalMinutes = 0
-        newWorkout.intervalSeconds = 0
+        newWorkout.restMinutes = 0
+        newWorkout.restSeconds = 0
         newWorkout.sets = 10
         newWorkout.transitionMinutes = 0
         newWorkout.transitionSeconds = 0
@@ -153,9 +192,21 @@ class Workout {
         
     }
     
+    func saveNewExercise(named: String) {
+        
+        let newExercise = Exercise(context: context)
+        
+        newExercise.intervalMinutes = 0
+        newExercise.intervalSeconds = 0
+        newExercise.name = named
+        
+        self.saveData()
+        
+    }
+    
     func deleteAllSavedWorkoutInfoObjects() {
         
-        loadData()
+        loadWorkoutData()
         
         for item in workoutInfoArray {
             
@@ -164,16 +215,6 @@ class Workout {
         }
         
         saveData()
-        
-    }
-    
-    func setInfoToNil() {
-        
-        saveIntervalTime(minutes: 0, seconds: 0)
-        
-        saveTransitionTime(minutes: 0, seconds: 0)
-        
-        saveSets(sets: 10)
         
     }
     
@@ -193,14 +234,12 @@ class Workout {
         
 //        deleteAllSavedWorkoutInfoObjects()
         
-        self.loadData()
+        self.loadWorkoutData()
 
         self.makeSureInitialWorkoutInfoObjectIsCreated()
 
         let workoutInfo = getWorkoutInfo()
 
-        self.setIntervalMinutes = Int(workoutInfo.intervalMinutes)
-        self.setIntervalSeconds = Int(workoutInfo.intervalSeconds)
         self.setNumberOfSets = Int(workoutInfo.sets)
         self.setTransitionMinutes = Int(workoutInfo.transitionMinutes)
         self.setTransitionSeconds = Int(workoutInfo.transitionSeconds)

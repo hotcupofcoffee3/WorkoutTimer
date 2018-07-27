@@ -25,7 +25,7 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SetNumberDelegate {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SetSetsDelegate {
     
     
     
@@ -141,37 +141,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == keywords.mainToPickerSegue {
+        if segue.identifier == keywords.mainToExerciseSegue {
             
-            let destinationVC = segue.destination as! TimeAndNumberViewController
+//            let destinationVC = segue.destination as! ExerciseViewController
             
-            destinationVC.isTime = isTime
+        } else if segue.identifier == keywords.mainToSetsSegue {
             
-            destinationVC.isInterval = isInterval
+            let destinationVC = segue.destination as! SetsViewController
             
-            destinationVC.delegate = self
-            
-            if isTime {
-                
-                if isInterval {
-                    
-                    destinationVC.minutes = workout.setIntervalMinutes
-                    
-                    destinationVC.seconds = workout.setIntervalSeconds
-                    
-                } else if !isInterval {
-                    
-                    destinationVC.minutes = workout.setTransitionMinutes
-                    
-                    destinationVC.seconds = workout.setTransitionSeconds
-                    
-                }
-                
-            } else if !isTime {
-                
-                destinationVC.numberOfSets = workout.setNumberOfSets
-                
-            }
+            destinationVC.numberOfSets = workout.setNumberOfSets
             
         }
         
@@ -510,7 +488,7 @@ extension ViewController {
         self.isTime = isTime
         self.isInterval = isInterval
         
-        performSegue(withIdentifier: keywords.mainToPickerSegue, sender: self)
+        performSegue(withIdentifier: keywords.mainToExerciseSegue, sender: self)
         
     }
     
@@ -642,7 +620,7 @@ extension ViewController {
             
             workout.setIntervalSeconds = seconds
             
-            workout.saveIntervalTime(minutes: minutes, seconds: seconds)
+//            workout.saveIntervalTime(minutes: minutes, seconds: seconds)
             
             workout.remainingIntervalMinutes = minutes
             

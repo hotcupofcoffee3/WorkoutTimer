@@ -11,7 +11,11 @@ import UIKit
 
 class Keywords {
     
-    let mainToPickerSegue = "mainToPickerSegue"
+    let mainToExerciseSegue = "mainToExerciseSegue"
+    
+    let mainToSetsSegue = "mainToSetsSegue"
+    
+    let exerciseToPickerSegue = "exerciseToPickerSegue"
     
     let mainBackgroundColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 1.0)
     
