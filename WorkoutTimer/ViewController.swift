@@ -396,6 +396,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 extension ViewController {
     
     
+    
     // ******
     // *** MARK: - Alert, Zero, Reset, and Toggle Button Colors Functions
     // ******
