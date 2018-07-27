@@ -694,7 +694,6 @@ extension ViewController {
             cell.backgroundColor = UIColor.clear
             cell.setNumberLabel.textColor = UIColor.white
             
-            
         }
         
         return cell
