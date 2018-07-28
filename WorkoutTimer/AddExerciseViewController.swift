@@ -10,7 +10,7 @@ import UIKit
 
 protocol SetExerciseDelegate {
 
-    func setExercise(named: String, newName: String, minutes: Int, seconds: Int, isNew: Bool)
+    func setExercise(oldName: String, newName: String, minutes: Int, seconds: Int, isNew: Bool)
     
 }
 
@@ -52,7 +52,7 @@ class AddExerciseViewController: UIViewController, UIPickerViewDelegate, UIPicke
         
         newExerciseName = exerciseNameTextField.text!
         
-        delegate?.setExercise(named: exerciseName, newName: newExerciseName, minutes: minutes, seconds: seconds, isNew: isNew)
+        delegate?.setExercise(oldName: exerciseName, newName: newExerciseName, minutes: minutes, seconds: seconds, isNew: isNew)
         
         dismiss(animated: true, completion: nil)
         

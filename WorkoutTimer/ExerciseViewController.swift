@@ -115,17 +115,17 @@ extension ExerciseViewController {
         
     }
     
-    func setExercise(named: String, newName: String, minutes: Int, seconds: Int, isNew: Bool) {
+    func setExercise(oldName: String, newName: String, minutes: Int, seconds: Int, isNew: Bool) {
         
-        setExerciseVariables(named: named, minutes: minutes, seconds: seconds)
+        setExerciseVariables(named: newName, minutes: minutes, seconds: seconds)
         
         if isNew {
             
-            workout.saveNewExercise(named: named, minutes: minutes, seconds: seconds)
+            workout.saveNewExercise(named: newName, minutes: minutes, seconds: seconds)
             
         } else {
             
-            workout.updateExercise(named: named, newName: newName, newMinutes: minutes, newSeconds: seconds)
+            workout.updateExercise(named: oldName, newName: newName, newMinutes: minutes, newSeconds: seconds)
             
         }
         

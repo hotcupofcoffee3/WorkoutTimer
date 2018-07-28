@@ -54,6 +54,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var timerIsStarted = false
     var beganWorkout = false
     
+    var usedExerciseIndices = [Int]()
+    
     
     
     // ******
@@ -109,12 +111,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             timerIsStarted = true
             
             toggleButtonColors(reset: false)
-                
-            workout.totalSecondsForProgress = (currentTimer == .interval) ? workout.setTotalIntervalSeconds : workout.setTotalTransitionSeconds
             
             mainTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(runTimer), userInfo: nil, repeats: true)
             
             timerForProgress = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(animateProgress), userInfo: nil, repeats: true)
+            
+            exerciseCollectionView.reloadData()
             
         }
         
@@ -214,12 +216,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func intervalTimer() {
         
+        // The first time it is called, it resets the labels of the others.
+        
         if Int(workout.exerciseArray[workout.currentExerciseIndex].intervalMinutes) == workout.remainingIntervalMinutes && Int(workout.exerciseArray[workout.currentExerciseIndex].intervalSeconds) == workout.remainingIntervalSeconds {
 
             transitionLabel.text = "\(zero(unit: workout.remainingTransitionMinutes)):\(zero(unit: workout.remainingTransitionSeconds))"
             
             restLabel.text = "\(zero(unit: workout.remainingRestMinutes)):\(zero(unit: workout.remainingRestSeconds))"
-
+            
         }
         
         if workout.remainingIntervalMinutes > 0 {
@@ -261,50 +265,50 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 
                 exerciseCollectionView.reloadData()
                 
-                if workout.currentSet <= workout.setNumberOfSets {
+                AudioServicesPlaySystemSound(1256)
+                
+                if workout.setTotalTransitionSeconds > 0 && workout.exerciseArray.count > workout.currentExerciseIndex {
                     
-                    AudioServicesPlaySystemSound(1256)
+                    currentTimer = .transition
                     
-                    if workout.setTotalTransitionSeconds > 0 && workout.exerciseArray.count > workout.currentExerciseIndex {
-                        
-                        currentTimer = .transition
-                        
-                        workout.totalSecondsForProgress = workout.setTotalTransitionSeconds
-                        
-                    } else if workout.setTotalTransitionSeconds == 0 && workout.exerciseArray.count > workout.currentExerciseIndex {
-                        
-                        workout.totalSecondsForProgress = workout.setTotalIntervalSeconds
-                        
-                        
-                    // End of Set
-                        
-                    } else if workout.exerciseArray.count == workout.currentExerciseIndex {
-                        
-                        workout.currentSet += 1
-                        
-                        workout.currentExerciseIndex = 0
+                    workout.totalSecondsForProgress = workout.setTotalTransitionSeconds
+                    
+                } else if workout.setTotalTransitionSeconds == 0 && workout.exerciseArray.count > workout.currentExerciseIndex {
+                    
+                    workout.totalSecondsForProgress = workout.setTotalIntervalSeconds
+                    
+                    
+                // End of Set
+                    
+                } else if workout.exerciseArray.count == workout.currentExerciseIndex {
+                    
+                    workout.currentSet += 1
+                    
+                    workout.currentExerciseIndex = 0
+                    
+                    if workout.currentSet <= workout.setNumberOfSets {
                         
                         currentTimer = .rest
                         
                         workout.totalSecondsForProgress = workout.setTotalRestSeconds
                         
+                    } else if workout.currentSet > workout.setNumberOfSets {
+                        
+                        mainTimer.invalidate()
+                        
+                        timerForProgress.invalidate()
+                        
+                        finishedWorkoutAlert()
+                        
                     }
-                    
-                    workout.remainingIntervalMinutes = Int(workout.exerciseArray[workout.currentExerciseIndex].intervalMinutes)
-                    
-                    workout.remainingIntervalSeconds = Int(workout.exerciseArray[workout.currentExerciseIndex].intervalSeconds)
-                    
-                    timerProgress.progress = 0.0
-                    
-                } else if workout.currentSet > workout.setNumberOfSets {
-                    
-                    mainTimer.invalidate()
-                    
-                    timerForProgress.invalidate()
-                    
-                    finishedWorkoutAlert()
-                    
+
                 }
+                
+                workout.remainingIntervalMinutes = Int(workout.exerciseArray[workout.currentExerciseIndex].intervalMinutes)
+                
+                workout.remainingIntervalSeconds = Int(workout.exerciseArray[workout.currentExerciseIndex].intervalSeconds)
+                
+                timerProgress.progress = 0.0
                 
             }
             
@@ -571,12 +575,6 @@ extension ViewController {
                     
                 }
                 
-                self.resetInfoToStartingSetAmounts()
-                
-            } else {
-                
-                self.resetInfoToStartingSetAmounts()
-                
             }
             
             self.timerIsStarted = false
@@ -586,6 +584,8 @@ extension ViewController {
             self.mainTimer.invalidate()
             
             self.timerForProgress.invalidate()
+            
+            self.resetInfoToStartingSetAmounts()
             
         }))
         
@@ -626,6 +626,8 @@ extension ViewController {
         currentTimer = .interval
         
         setCollectionView.reloadData()
+        
+        exerciseCollectionView.reloadData()
         
         timerProgress.progress = 0.0
         
@@ -799,8 +801,6 @@ extension ViewController {
     
     func setSets(numberOfSets: Int) {
         
-        workout.setNumberOfSets = numberOfSets
-        
         workout.saveSets(sets: numberOfSets)
         
         timerProgress.progress = 0.0
@@ -811,10 +811,6 @@ extension ViewController {
     
     func setTransition(minutes: Int, seconds: Int) {
         
-        workout.setTransitionMinutes = minutes
-        
-        workout.setTransitionSeconds = seconds
-        
         workout.saveTransitionTime(minutes: minutes, seconds: seconds)
         
         transitionLabel.text = "\(zero(unit: workout.setTransitionMinutes)):\(zero(unit: workout.setTransitionSeconds))"
@@ -822,10 +818,6 @@ extension ViewController {
     }
     
     func setRest(minutes: Int, seconds: Int) {
-        
-        workout.setRestMinutes = minutes
-        
-        workout.setRestSeconds = seconds
         
         workout.saveRestTime(minutes: minutes, seconds: seconds)
         
@@ -838,6 +830,8 @@ extension ViewController {
         intervalLabel.text = "\(zero(unit: Int(firstExercise.intervalMinutes))):\(zero(unit: Int(firstExercise.intervalSeconds)))"
         
         workout.loadExercises()
+        
+        workout.setTotalAndRemainingStartingIntervalAmounts()
         
         exerciseCollectionView.reloadData()
         
@@ -899,6 +893,36 @@ extension ViewController {
             
             cell.exerciseNameLabel.text = "\(currentExercise.name!)"
             cell.exerciseTimeLabel.text = "\(zero(unit: Int(currentExercise.intervalMinutes))):\(zero(unit: Int(currentExercise.intervalSeconds)))"
+            
+            if beganWorkout {
+                
+                if workout.currentExerciseIndex == indexPath.row {
+                    
+                    cell.backgroundColor = keywords.currentExerciseColor
+                    cell.exerciseNameLabel.textColor = UIColor.white
+                    cell.exerciseTimeLabel.textColor = UIColor.white
+                    
+                } else if workout.currentExerciseIndex > indexPath.row {
+                    
+                    cell.backgroundColor = UIColor.white
+                    cell.exerciseNameLabel.textColor = keywords.mainBackgroundColor
+                    cell.exerciseTimeLabel.textColor = keywords.mainBackgroundColor
+                    
+                } else {
+                    
+                    cell.backgroundColor = keywords.mainBackgroundColor
+                    cell.exerciseNameLabel.textColor = UIColor.white
+                    cell.exerciseTimeLabel.textColor = UIColor.white
+                    
+                }
+                
+            } else {
+                
+                cell.backgroundColor = keywords.mainBackgroundColor
+                cell.exerciseNameLabel.textColor = UIColor.white
+                cell.exerciseTimeLabel.textColor = UIColor.white
+                
+            }
             
             return cell
             

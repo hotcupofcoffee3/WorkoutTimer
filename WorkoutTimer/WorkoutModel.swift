@@ -160,6 +160,9 @@ class Workout {
         setTransitionMinutes = minutes
         setTransitionSeconds = seconds
         
+        remainingTransitionMinutes = minutes
+        remainingTransitionSeconds = seconds
+        
     }
     
     func saveRestTime(minutes: Int, seconds: Int) {
@@ -173,6 +176,9 @@ class Workout {
         
         setRestMinutes = minutes
         setRestSeconds = seconds
+        
+        remainingRestMinutes = minutes
+        remainingRestSeconds = seconds
         
     }
     
@@ -308,11 +314,20 @@ class Workout {
         
     }
     
+    func setTotalAndRemainingStartingIntervalAmounts() {
+        
+        let firstExercise = exerciseArray[0]
+        
+        setTotalIntervalSeconds = (Int(firstExercise.intervalMinutes * 60)) + Int(firstExercise.intervalSeconds)
+        
+        remainingIntervalMinutes = Int(firstExercise.intervalMinutes)
+        remainingIntervalSeconds = Int(firstExercise.intervalSeconds)
+        
+    }
+
     func setRemainingToSetAmounts() {
         
-//        remainingIntervalMinutes = setIntervalMinutes
-//        
-//        remainingIntervalSeconds = setIntervalSeconds
+        setTotalAndRemainingStartingIntervalAmounts()
         
         remainingTransitionMinutes = setTransitionMinutes
         
