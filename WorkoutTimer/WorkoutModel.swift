@@ -238,13 +238,43 @@ class Workout {
         
     }
     
-    func saveNewExercise(named: String) {
+    func saveNewExercise(named: String, minutes: Int = 0, seconds: Int = 0) {
         
         let newExercise = Exercise(context: context)
         
-        newExercise.intervalMinutes = 0
-        newExercise.intervalSeconds = 0
+        newExercise.intervalMinutes = Int64(minutes)
+        newExercise.intervalSeconds = Int64(seconds)
         newExercise.name = named
+        
+        self.saveData()
+        
+    }
+    
+    func updateExercise(named: String, newName: String, newMinutes: Int, newSeconds: Int) {
+        
+        var updatingExercise: Exercise?
+        
+        for exercise in exerciseArray {
+            
+            if named == exercise.name {
+                
+                updatingExercise = exercise
+                
+            }
+            
+        }
+        
+        if let updatingExercise = updatingExercise {
+            
+            updatingExercise.intervalMinutes = Int64(newMinutes)
+            updatingExercise.intervalSeconds = Int64(newSeconds)
+            updatingExercise.name = newName
+            
+        } else {
+            
+            print("Could not find exercise to update.")
+            
+        }
         
         self.saveData()
         

@@ -16,9 +16,13 @@ protocol UpdateFirstExerciseDelegate {
 
 class ExerciseViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SetExerciseDelegate {
     
+    
+    
     let keywords = Keywords()
     
     let workout = Workout()
+    
+    
     
     var exerciseName = String()
     
@@ -26,11 +30,19 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
     
     var exerciseSeconds = Int()
     
+    var isNew = Bool()
+    
+    
+    
     var delegate: UpdateFirstExerciseDelegate?
+    
+    
     
     @IBOutlet weak var exerciseTable: UITableView!
     
     @IBAction func addExercise(_ sender: UIBarButtonItem) {
+        
+        isNew = true
         
         performSegue(withIdentifier: keywords.exerciseToPickerSegue, sender: self)
         
@@ -58,47 +70,25 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        
-//        if segue.identifier == keywords.exerciseToPickerSegue {
-//            
-//            let destinationVC = segue.destination as! AddExerciseViewController
-//            
-//            destinationVC.isTime = isTime
-//            
-//            destinationVC.isInterval = isInterval
-//            
-//            destinationVC.delegate = self
-//            
-//            if isTime {
-//                
-//                if isInterval {
-//                    
-//                    destinationVC.minutes = workout.setIntervalMinutes
-//                    
-//                    destinationVC.seconds = workout.setIntervalSeconds
-//                    
-//                } else if !isInterval {
-//                    
-//                    destinationVC.minutes = workout.setTransitionMinutes
-//                    
-//                    destinationVC.seconds = workout.setTransitionSeconds
-//                    
-//                }
-//                
-//            } else if !isTime {
-//                
-//                destinationVC.numberOfSets = workout.setNumberOfSets
-//                
-//            }
-//            
-//        } else if segue.identifier == keywords.mainToSetsSegue {
-//            
-//            
-//            
-//        }
-//        
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == keywords.exerciseToPickerSegue {
+            
+            let destinationVC = segue.destination as! AddExerciseViewController
+            
+            destinationVC.delegate = self
+            
+            destinationVC.isNew = isNew
+            
+            destinationVC.exerciseName = exerciseName
+            
+            destinationVC.minutes = exerciseMinutes
+            
+            destinationVC.seconds = exerciseSeconds
+            
+        }
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -117,7 +107,7 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
 
 extension ExerciseViewController {
     
-    func setExercise(named: String, minutes: Int, seconds: Int) {
+    func setExerciseVariables(named: String, minutes: Int, seconds: Int) {
         
         exerciseName = named
         exerciseMinutes = minutes
@@ -125,21 +115,23 @@ extension ExerciseViewController {
         
     }
     
-    func setTime(minutes: Int, seconds: Int) {
+    func setExercise(named: String, newName: String, minutes: Int, seconds: Int, isNew: Bool) {
         
-//        workout.setIntervalMinutes = minutes
-//
-//        workout.setIntervalSeconds = seconds
-       
-        workout.remainingIntervalMinutes = minutes
+        setExerciseVariables(named: named, minutes: minutes, seconds: seconds)
         
-        workout.remainingIntervalSeconds = seconds
+        if isNew {
+            
+            workout.saveNewExercise(named: named, minutes: minutes, seconds: seconds)
+            
+        } else {
+            
+            workout.updateExercise(named: named, newName: newName, newMinutes: minutes, newSeconds: seconds)
+            
+        }
         
-        workout.setTotalIntervalSeconds = (minutes * 60) + seconds
+        workout.loadExercises()
         
-//        intervalLabel.text = "\(zero(unit: workout.setIntervalMinutes)):\(zero(unit: workout.setIntervalSeconds))"
-//
-//        transitionLabel.text = "\(zero(unit: workout.setTransitionMinutes)):\(zero(unit: workout.setTransitionSeconds))"
+        exerciseTable.reloadData()
         
     }
     
@@ -167,6 +159,12 @@ extension ExerciseViewController {
         
         tableView.deselectRow(at: indexPath, animated: true)
         
+        let exercise = workout.exerciseArray[indexPath.row]
+        
+        setExerciseVariables(named: exercise.name!, minutes: Int(exercise.intervalMinutes), seconds: Int(exercise.intervalSeconds))
+        
+        isNew = false
+        
         performSegue(withIdentifier: keywords.exerciseToPickerSegue, sender: self)
         
     }
@@ -178,6 +176,8 @@ extension ExerciseViewController {
             workout.deleteExercise(workout.exerciseArray[indexPath.row])
             
         }
+        
+        tableView.reloadData()
         
     }
     

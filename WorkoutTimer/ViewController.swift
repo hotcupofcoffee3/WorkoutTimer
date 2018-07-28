@@ -26,16 +26,7 @@ import UIKit
 import AVFoundation
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SetSetsTransitionsAndRestDelegate, UpdateFirstExerciseDelegate {
-    
-    func updateFirstExercise(withExercise firstExercise: Exercise) {
-        
-        intervalLabel.text = "\(zero(unit: Int(firstExercise.intervalMinutes))):\(zero(unit: Int(firstExercise.intervalSeconds)))"
-        
-        workout.loadExercises()
-        
-    }
-    
-    
+
     
     
     // ******
@@ -157,7 +148,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         if segue.identifier == keywords.mainToExerciseSegue {
             
-//            let destinationVC = segue.destination as! ExerciseViewController
+            let destinationVC = segue.destination as! ExerciseViewController
+            
+            destinationVC.delegate = self
             
         } else if segue.identifier == keywords.mainToSetsSegue {
             
@@ -712,6 +705,16 @@ extension ViewController {
         workout.saveRestTime(minutes: minutes, seconds: seconds)
         
         restLabel.text = "\(zero(unit: workout.setRestMinutes)):\(zero(unit: workout.setRestSeconds))"
+        
+    }
+    
+    func updateFirstExercise(withExercise firstExercise: Exercise) {
+        
+        intervalLabel.text = "\(zero(unit: Int(firstExercise.intervalMinutes))):\(zero(unit: Int(firstExercise.intervalSeconds)))"
+        
+        workout.loadExercises()
+        
+        exerciseCollectionView.reloadData()
         
     }
  

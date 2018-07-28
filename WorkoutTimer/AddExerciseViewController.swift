@@ -10,19 +10,23 @@ import UIKit
 
 protocol SetExerciseDelegate {
 
-    func setExercise(named: String, minutes: Int, seconds: Int)
+    func setExercise(named: String, newName: String, minutes: Int, seconds: Int, isNew: Bool)
     
 }
 
-class AddExerciseViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class AddExerciseViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
     var delegate: SetExerciseDelegate?
     
     var exerciseName = String()
     
+    var newExerciseName = String()
+    
     var minutes = Int()
     
     var seconds = Int()
+    
+    var isNew = Bool()
     
     var pickerMinutesAndSeconds = Array(0...59)
     
@@ -40,7 +44,15 @@ class AddExerciseViewController: UIViewController, UIPickerViewDelegate, UIPicke
     
     @IBAction func setNumberButton(_ sender: UIButton) {
         
-        delegate?.setExercise(named: exerciseName, minutes: minutes, seconds: seconds)
+        if exerciseNameTextField.text == "" {
+            
+            return print("You have to fill in a value for the exercise name.")
+            
+        }
+        
+        newExerciseName = exerciseNameTextField.text!
+        
+        delegate?.setExercise(named: exerciseName, newName: newExerciseName, minutes: minutes, seconds: seconds, isNew: isNew)
         
         dismiss(animated: true, completion: nil)
         
@@ -48,6 +60,8 @@ class AddExerciseViewController: UIViewController, UIPickerViewDelegate, UIPicke
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        exerciseNameTextField.text = "\(exerciseName)"
 
         numberPicker.selectRow(minutes, inComponent: 0, animated: true)
         
@@ -112,6 +126,19 @@ extension AddExerciseViewController {
 
         chosenPickerInfoLabel.text = "\(zero(unit: minutes))\(minutes):\(zero(unit: seconds))\(seconds)"
             
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        exerciseNameTextField.resignFirstResponder()
+        
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        exerciseNameTextField.endEditing(true)
+        
+        return true
     }
     
 }
