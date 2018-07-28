@@ -44,11 +44,17 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
-    func setExercise(named: String, minutes: Int, seconds: Int) {
+    func zero(unit: Int) -> String {
         
-        exerciseName = named
-        exerciseMinutes = minutes
-        exerciseSeconds = seconds
+        var zero = "\(unit)"
+        
+        if unit <= 9 {
+            
+            zero = "0\(unit)"
+            
+        }
+        
+        return zero
         
     }
     
@@ -98,6 +104,8 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        exerciseTable.register(UINib(nibName: "ExerciseTableViewCell", bundle: nil), forCellReuseIdentifier: "exerciseTableCell")
     }
 
     override func didReceiveMemoryWarning() {
@@ -108,6 +116,14 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
 }
 
 extension ExerciseViewController {
+    
+    func setExercise(named: String, minutes: Int, seconds: Int) {
+        
+        exerciseName = named
+        exerciseMinutes = minutes
+        exerciseSeconds = seconds
+        
+    }
     
     func setTime(minutes: Int, seconds: Int) {
         
@@ -128,12 +144,41 @@ extension ExerciseViewController {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return workout.exerciseArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: "exerciseTableCell") as! ExerciseTableViewCell
+        
+        let currentExercise = workout.exerciseArray[indexPath.row]
+        
+        cell.exerciseNameLabel.text = "\(currentExercise.name!)"
+        
+        cell.exerciseTimeLabel.text = "\(zero(unit: Int(currentExercise.intervalMinutes))):\(zero(unit: Int(currentExercise.intervalSeconds)))"
+        
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 48
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        performSegue(withIdentifier: keywords.exerciseToPickerSegue, sender: self)
+        
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == .delete {
+            
+            workout.deleteExercise(workout.exerciseArray[indexPath.row])
+            
+        }
+        
     }
     
 }

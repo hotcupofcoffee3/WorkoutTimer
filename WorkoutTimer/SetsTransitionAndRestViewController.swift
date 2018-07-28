@@ -74,12 +74,16 @@ class SetsTransitionAndRestViewController: UIViewController, UIPickerViewDelegat
             minLabel.text = "min"
             secLabel.text = "sec"
             
+            chosenPickerInfoTitle.text = isTransition ? "Transition Time" : "Rest Time"
+            
         } else {
             
             numberPicker.selectRow(numberOfSets - 1, inComponent: 0, animated: true)
             
             minLabel.text = ""
             secLabel.text = ""
+            
+            chosenPickerInfoTitle.text = "Number of Sets"
             
         }
         

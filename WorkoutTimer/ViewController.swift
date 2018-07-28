@@ -26,8 +26,13 @@ import UIKit
 import AVFoundation
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SetSetsTransitionsAndRestDelegate, UpdateFirstExerciseDelegate {
-    func updateFirstExercise(withExercise: Exercise) {
-        <#code#>
+    
+    func updateFirstExercise(withExercise firstExercise: Exercise) {
+        
+        intervalLabel.text = "\(zero(unit: Int(firstExercise.intervalMinutes))):\(zero(unit: Int(firstExercise.intervalSeconds)))"
+        
+        workout.loadExercises()
+        
     }
     
     
@@ -781,14 +786,24 @@ extension ViewController {
             
             let size = viewWidth / CGFloat(workout.setNumberOfSets)
             
-            return CGSize(width: size, height: 50)
+            return CGSize(width: size, height: 48)
             
         // Exercise Collection
         } else {
             
-            let size = viewWidth / CGFloat(workout.exerciseArray.count)
+            var size = CGFloat()
             
-            return CGSize(width: size, height: 50)
+            if workout.exerciseArray.count < 6 {
+                
+                size = viewWidth / CGFloat(1)
+                
+            } else {
+                
+                size = viewWidth / CGFloat(2)
+                
+            }
+            
+            return CGSize(width: size, height: 48)
             
         }
 

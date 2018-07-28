@@ -49,17 +49,17 @@
                                     <constraint firstAttribute="height" constant="60" id="oiZ-im-nRN"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="wbr-PQ-Mqz">
-                                    <size key="itemSize" width="60" height="60"/>
+                                    <size key="itemSize" width="48" height="48"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell1" id="FD4-O1-0BG">
-                                        <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </view>
                                     </collectionViewCell>
@@ -75,20 +75,20 @@
                                 <color key="trackTintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </progressView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="d6J-5j-EFY" userLabel="Exercise Collection View">
-                                <rect key="frame" x="0.0" y="179.5" width="375" height="221.5"/>
+                                <rect key="frame" x="0.0" y="161.5" width="375" height="259.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="ze9-AJ-7sU">
-                                    <size key="itemSize" width="60" height="60"/>
+                                    <size key="itemSize" width="48" height="48"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell2" id="XSR-LO-nJd">
-                                        <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </view>
                                     </collectionViewCell>
@@ -99,7 +99,7 @@
                                 </connections>
                             </collectionView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="jFa-JG-9TB" userLabel="Label Stack">
-                                <rect key="frame" x="0.0" y="431" width="375" height="96"/>
+                                <rect key="frame" x="0.0" y="441" width="375" height="96"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bv8-6d-ybd" userLabel="Interval View">
                                         <rect key="frame" x="0.0" y="0.0" width="125" height="96"/>
@@ -186,9 +186,6 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="96" id="gqN-vX-ffe"/>
-                                </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="mOB-Q6-5jh" userLabel="Start/Stop Stack">
                                 <rect key="frame" x="20" y="557" width="335" height="90"/>
@@ -228,10 +225,10 @@
                             <constraint firstItem="3nI-nB-5oa" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="GIe-xu-ZQ9"/>
                             <constraint firstItem="J3b-HB-qcu" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Huk-kn-s18"/>
                             <constraint firstItem="J3b-HB-qcu" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Kma-Y6-hsX"/>
-                            <constraint firstItem="jFa-JG-9TB" firstAttribute="top" secondItem="d6J-5j-EFY" secondAttribute="bottom" constant="30" id="MHa-35-XMf"/>
+                            <constraint firstItem="jFa-JG-9TB" firstAttribute="top" secondItem="d6J-5j-EFY" secondAttribute="bottom" constant="20" id="MHa-35-XMf"/>
                             <constraint firstItem="d6J-5j-EFY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="QCa-Gn-ZI1"/>
                             <constraint firstItem="0yQ-b3-yOz" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="UTh-SQ-WA4"/>
-                            <constraint firstItem="d6J-5j-EFY" firstAttribute="top" secondItem="3nI-nB-5oa" secondAttribute="bottom" constant="30" id="UkI-AC-KDb"/>
+                            <constraint firstItem="d6J-5j-EFY" firstAttribute="top" secondItem="3nI-nB-5oa" secondAttribute="bottom" constant="12" id="UkI-AC-KDb"/>
                             <constraint firstAttribute="trailing" secondItem="3nI-nB-5oa" secondAttribute="trailing" id="btx-T6-ZRh"/>
                             <constraint firstItem="0yQ-b3-yOz" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="cEP-C3-Hf2"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="jFa-JG-9TB" secondAttribute="trailing" id="dfu-0n-NLN"/>
@@ -240,7 +237,7 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="mOB-Q6-5jh" secondAttribute="bottom" constant="20" id="hb4-Aj-PYm"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="nkh-tL-cwp" secondAttribute="trailing" id="ita-j4-4mh"/>
                             <constraint firstItem="0yQ-b3-yOz" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="lK1-67-QOy"/>
-                            <constraint firstItem="mOB-Q6-5jh" firstAttribute="top" secondItem="jFa-JG-9TB" secondAttribute="bottom" constant="30" id="ouQ-ko-Uer"/>
+                            <constraint firstItem="mOB-Q6-5jh" firstAttribute="top" secondItem="jFa-JG-9TB" secondAttribute="bottom" constant="20" id="ouQ-ko-Uer"/>
                             <constraint firstItem="mOB-Q6-5jh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="prV-l8-Xk2"/>
                             <constraint firstItem="nkh-tL-cwp" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="qXS-md-xFr"/>
                             <constraint firstItem="nkh-tL-cwp" firstAttribute="top" secondItem="J3b-HB-qcu" secondAttribute="bottom" constant="12" id="s10-zq-CQn"/>
@@ -446,6 +443,16 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell123" id="HiD-ED-r3c">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HiD-ED-r3c" id="KCS-9p-VkP">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="Emh-bF-r0j" id="vMY-Mf-Tq7"/>
                                     <outlet property="delegate" destination="Emh-bF-r0j" id="pBV-U3-8m3"/>

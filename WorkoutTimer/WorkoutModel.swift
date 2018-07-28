@@ -77,7 +77,7 @@ class Workout {
         
         if workoutInfoArray.isEmpty {
             
-            return print("Something went wrong: 'workoutInfoArray' had no object in it.")
+            return print("'workoutInfoArray' had no object in it.")
             
         } else if workoutInfoArray.count > 1 {
             
@@ -103,7 +103,7 @@ class Workout {
         
         if exerciseArray.isEmpty {
             
-            return print("Something went wrong: 'exerciseArray' had no object in it.")
+            return print("'exerciseArray' had no object in it.")
             
         }
         
@@ -196,6 +196,34 @@ class Workout {
         
     }
     
+    func saveTestingExercise(named: String, minutes: Int, seconds: Int) {
+        
+        let test = Exercise(context: context)
+        
+        test.name = named
+        test.intervalMinutes = Int64(minutes)
+        test.intervalSeconds = Int64(seconds)
+        
+        saveData()
+        
+    }
+    
+    func makeSureInitialExerciseObjectIsCreated() {
+        
+        if self.exerciseArray.count == 0 {
+            
+//            saveNewExercise(named: "Exercise")
+            
+            saveTestingExercise(named: "Exercise 1", minutes: 1, seconds: 12)
+            saveTestingExercise(named: "Exercise 2", minutes: 2, seconds: 24)
+            saveTestingExercise(named: "Exercise 3", minutes: 3, seconds: 36)
+            
+            loadExercises()
+            
+        }
+        
+    }
+    
     func saveNewWorkoutInfo() {
         
         let newWorkout = WorkoutInfo(context: context)
@@ -219,6 +247,16 @@ class Workout {
         newExercise.name = named
         
         self.saveData()
+        
+    }
+    
+    func deleteExercise(_ exercise: Exercise) {
+        
+        context.delete(exercise)
+        
+        saveData()
+        
+        loadExercises()
         
     }
     
@@ -253,8 +291,10 @@ class Workout {
 //        deleteAllSavedWorkoutInfoObjects()
         
         self.loadWorkoutData()
+        self.loadExercises()
 
         self.makeSureInitialWorkoutInfoObjectIsCreated()
+        self.makeSureInitialExerciseObjectIsCreated()
 
         let workoutInfo = getWorkoutInfo()
 
@@ -275,21 +315,9 @@ class Workout {
         self.remainingTransitionMinutes = setTransitionMinutes
         self.remainingTransitionSeconds = setTransitionSeconds
         
-        self.loadExercises()
         
-        if exerciseArray.isEmpty {
-            
-            let defaultExercise = Exercise(context: context)
-            
-            defaultExercise.name = "Exercise"
-            defaultExercise.intervalMinutes = 0
-            defaultExercise.intervalSeconds = 0
-            
-            saveData()
-            
-            self.loadExercises()
-            
-        }
+        
+        print("Workout class loaded: Exercise array contains \(exerciseArray.count) objects.")
         
     }
     
