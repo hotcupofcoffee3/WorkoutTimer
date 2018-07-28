@@ -101,9 +101,9 @@ extension ExerciseViewController {
     
     func setTime(minutes: Int, seconds: Int) {
         
-        workout.setIntervalMinutes = minutes
-        
-        workout.setIntervalSeconds = seconds
+//        workout.setIntervalMinutes = minutes
+//
+//        workout.setIntervalSeconds = seconds
        
         workout.remainingIntervalMinutes = minutes
         

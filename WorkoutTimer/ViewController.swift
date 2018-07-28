@@ -208,11 +208,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func intervalTimer() {
         
-        if workout.setIntervalMinutes == workout.remainingIntervalMinutes && workout.setIntervalSeconds == workout.remainingIntervalSeconds {
-            
-            transitionLabel.text = "\(zero(unit: workout.remainingTransitionMinutes)):\(zero(unit: workout.remainingTransitionSeconds))"
-            
-        }
+//        if workout.setIntervalMinutes == workout.remainingIntervalMinutes && workout.setIntervalSeconds == workout.remainingIntervalSeconds {
+//            
+//            transitionLabel.text = "\(zero(unit: workout.remainingTransitionMinutes)):\(zero(unit: workout.remainingTransitionSeconds))"
+//            
+//        }
         
         if workout.remainingIntervalMinutes > 0 {
             
@@ -262,9 +262,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                         
                         workout.totalSecondsForProgress = workout.setTotalIntervalSeconds
                         
-                        workout.remainingIntervalMinutes = workout.setIntervalMinutes
-                        
-                        workout.remainingIntervalSeconds = workout.setIntervalSeconds
+//                        workout.remainingIntervalMinutes = workout.setIntervalMinutes
+//
+//                        workout.remainingIntervalSeconds = workout.setIntervalSeconds
                         
                     }
                     
@@ -288,9 +288,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         if currentTimer == .transition {
             
-            workout.remainingIntervalMinutes = workout.setIntervalMinutes
-            
-            workout.remainingIntervalSeconds = workout.setIntervalSeconds
+//            workout.remainingIntervalMinutes = workout.setIntervalMinutes
+//
+//            workout.remainingIntervalSeconds = workout.setIntervalSeconds
             
         }
         
@@ -380,7 +380,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         transitionView.addGestureRecognizer(transitionTapGesture)
         restView.addGestureRecognizer(restTapGesture)
         
-        intervalLabel.text = "\(zero(unit: workout.setIntervalMinutes)):\(zero(unit: workout.setIntervalSeconds))"
+//        intervalLabel.text = "\(zero(unit: workout.setIntervalMinutes)):\(zero(unit: workout.setIntervalSeconds))"
         
         transitionLabel.text = "\(zero(unit: workout.setTransitionMinutes)):\(zero(unit: workout.setTransitionSeconds))"
         
@@ -498,7 +498,7 @@ extension ViewController {
         
         timerProgress.progress = 0.0
         
-        intervalLabel.text = "\(zero(unit: workout.setIntervalMinutes)):\(zero(unit: workout.setIntervalSeconds))"
+//        intervalLabel.text = "\(zero(unit: workout.setIntervalMinutes)):\(zero(unit: workout.setIntervalSeconds))"
         
         transitionLabel.text = "\(zero(unit: workout.setTransitionMinutes)):\(zero(unit: workout.setTransitionSeconds))"
         
@@ -516,7 +516,7 @@ extension ViewController {
         
         if isExercise {
             
-            performSegue(withIdentifier: keywords.exerciseToPickerSegue, sender: self)
+            performSegue(withIdentifier: keywords.mainToExerciseSegue, sender: self)
             
         } else {
             
@@ -688,6 +688,8 @@ extension ViewController {
         
         workout.saveTransitionTime(minutes: minutes, seconds: seconds)
         
+        transitionLabel.text = "\(zero(unit: workout.setTransitionMinutes)):\(zero(unit: workout.setTransitionSeconds))"
+        
     }
     
     func setRest(minutes: Int, seconds: Int) {
@@ -695,6 +697,10 @@ extension ViewController {
         workout.setRestMinutes = minutes
         
         workout.setRestSeconds = seconds
+        
+        workout.saveRestTime(minutes: minutes, seconds: seconds)
+        
+        restLabel.text = "\(zero(unit: workout.setRestMinutes)):\(zero(unit: workout.setRestSeconds))"
         
     }
  
