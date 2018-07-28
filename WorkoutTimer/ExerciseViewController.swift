@@ -8,6 +8,12 @@
 
 import UIKit
 
+protocol UpdateFirstExerciseDelegate {
+    
+    func updateFirstExercise(withExercise: Exercise)
+    
+}
+
 class ExerciseViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SetExerciseDelegate {
     
     let keywords = Keywords()
@@ -20,6 +26,8 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
     
     var exerciseSeconds = Int()
     
+    var delegate: UpdateFirstExerciseDelegate?
+    
     @IBOutlet weak var exerciseTable: UITableView!
     
     @IBAction func addExercise(_ sender: UIBarButtonItem) {
@@ -29,6 +37,8 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @IBAction func back(_ sender: UIBarButtonItem) {
+        
+        delegate?.updateFirstExercise(withExercise: workout.exerciseArray[0])
         
         dismiss(animated: true, completion: nil)
         

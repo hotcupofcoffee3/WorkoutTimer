@@ -275,6 +275,22 @@ class Workout {
         self.remainingTransitionMinutes = setTransitionMinutes
         self.remainingTransitionSeconds = setTransitionSeconds
         
+        self.loadExercises()
+        
+        if exerciseArray.isEmpty {
+            
+            let defaultExercise = Exercise(context: context)
+            
+            defaultExercise.name = "Exercise"
+            defaultExercise.intervalMinutes = 0
+            defaultExercise.intervalSeconds = 0
+            
+            saveData()
+            
+            self.loadExercises()
+            
+        }
+        
     }
     
 }

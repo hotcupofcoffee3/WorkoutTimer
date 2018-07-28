@@ -25,7 +25,11 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SetSetsTransitionsAndRestDelegate {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SetSetsTransitionsAndRestDelegate, UpdateFirstExerciseDelegate {
+    func updateFirstExercise(withExercise: Exercise) {
+        <#code#>
+    }
+    
     
     
     
@@ -380,7 +384,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         transitionView.addGestureRecognizer(transitionTapGesture)
         restView.addGestureRecognizer(restTapGesture)
         
-//        intervalLabel.text = "\(zero(unit: workout.setIntervalMinutes)):\(zero(unit: workout.setIntervalSeconds))"
+        let firstExercise = workout.exerciseArray[0]
+        
+        intervalLabel.text = "\(zero(unit: Int(firstExercise.intervalMinutes))):\(zero(unit: Int(firstExercise.intervalSeconds)))"
         
         transitionLabel.text = "\(zero(unit: workout.setTransitionMinutes)):\(zero(unit: workout.setTransitionSeconds))"
         
@@ -720,7 +726,7 @@ extension ViewController {
             
         } else {
             
-            return 3
+            return workout.exerciseArray.count
             
         }
 
@@ -756,6 +762,11 @@ extension ViewController {
             
             let cell = exerciseCollectionView.dequeueReusableCell(withReuseIdentifier: "exerciseCell", for: indexPath) as! ExerciseCollectionViewCell
             
+            let currentExercise = workout.exerciseArray[indexPath.row]
+            
+            cell.exerciseNameLabel.text = "\(currentExercise.name!)"
+            cell.exerciseTimeLabel.text = "\(zero(unit: Int(currentExercise.intervalMinutes))):\(zero(unit: Int(currentExercise.intervalSeconds)))"
+            
             return cell
             
         }
@@ -775,7 +786,7 @@ extension ViewController {
         // Exercise Collection
         } else {
             
-            let size = viewWidth / CGFloat(3)
+            let size = viewWidth / CGFloat(workout.exerciseArray.count)
             
             return CGSize(width: size, height: 50)
             
