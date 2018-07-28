@@ -38,12 +38,16 @@ class Workout {
     
     var setTotalIntervalSeconds: Int = 0
     var setTotalTransitionSeconds: Int = 0
+    var setTotalRestSeconds: Int = 0
     
     var remainingIntervalMinutes: Int = 0
     var remainingIntervalSeconds: Int = 0
     
     var remainingTransitionMinutes: Int = 0
     var remainingTransitionSeconds: Int = 0
+    
+    var remainingRestMinutes: Int = 0
+    var remainingRestSeconds: Int = 0
     
     var totalSecondsForProgress = 0
     
@@ -336,14 +340,20 @@ class Workout {
         self.setRestMinutes = Int(workoutInfo.restMinutes)
         self.setRestSeconds = Int(workoutInfo.restSeconds)
         
-//        self.setTotalIntervalSeconds = (setIntervalMinutes * 60) + setIntervalSeconds
-        self.setTotalTransitionSeconds = (setTransitionMinutes * 60) + setTransitionSeconds
+        let firstExercise = exerciseArray[0]
         
-//        self.remainingIntervalMinutes = setIntervalMinutes
-//        self.remainingIntervalSeconds = setIntervalSeconds
+        self.setTotalIntervalSeconds = (Int(firstExercise.intervalMinutes * 60)) + Int(firstExercise.intervalSeconds)
+        self.setTotalTransitionSeconds = (setTransitionMinutes * 60) + setTransitionSeconds
+        self.setTotalRestSeconds = (setRestMinutes * 60) + setRestSeconds
+        
+        self.remainingIntervalMinutes = Int(firstExercise.intervalMinutes)
+        self.remainingIntervalSeconds = Int(firstExercise.intervalSeconds)
         
         self.remainingTransitionMinutes = setTransitionMinutes
         self.remainingTransitionSeconds = setTransitionSeconds
+        
+        self.remainingRestMinutes = setRestMinutes
+        self.remainingRestSeconds = setRestSeconds
         
         
         

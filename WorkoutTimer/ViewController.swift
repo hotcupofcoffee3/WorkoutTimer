@@ -190,11 +190,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         if currentTimer == .interval {
             
-            intervalTimer(forExerciseIndex: workout.currentExerciseIndex)
+            intervalTimer()
             
         } else if currentTimer == .transition {
             
-            transitionTimer(forExerciseIndex: workout.currentExerciseIndex)
+            transitionTimer()
+            
+        } else if currentTimer == .rest {
+            
+            restTimer()
             
         }
         
@@ -208,13 +212,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
     }
     
-    func intervalTimer(forExerciseIndex: Int) {
+    func intervalTimer() {
         
-//        if workout.setIntervalMinutes == workout.remainingIntervalMinutes && workout.setIntervalSeconds == workout.remainingIntervalSeconds {
-//
-//            transitionLabel.text = "\(zero(unit: workout.remainingTransitionMinutes)):\(zero(unit: workout.remainingTransitionSeconds))"
-//
-//        }
+        if Int(workout.exerciseArray[workout.currentExerciseIndex].intervalMinutes) == workout.remainingIntervalMinutes && Int(workout.exerciseArray[workout.currentExerciseIndex].intervalSeconds) == workout.remainingIntervalSeconds {
+
+            transitionLabel.text = "\(zero(unit: workout.remainingTransitionMinutes)):\(zero(unit: workout.remainingTransitionSeconds))"
+            
+            restLabel.text = "\(zero(unit: workout.remainingRestMinutes)):\(zero(unit: workout.remainingRestSeconds))"
+
+        }
         
         if workout.remainingIntervalMinutes > 0 {
             
@@ -244,31 +250,49 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 
             }
             
+            
+            // End of Exercise Interval
+            
             if workout.remainingIntervalSeconds == 0 {
                 
-                workout.currentSet += 1
+                workout.currentExerciseIndex += 1
                 
                 setCollectionView.reloadData()
+                
+                exerciseCollectionView.reloadData()
                 
                 if workout.currentSet <= workout.setNumberOfSets {
                     
                     AudioServicesPlaySystemSound(1256)
                     
-                    if workout.setTotalTransitionSeconds > 0 {
+                    if workout.setTotalTransitionSeconds > 0 && workout.exerciseArray.count > workout.currentExerciseIndex {
                         
                         currentTimer = .transition
                         
                         workout.totalSecondsForProgress = workout.setTotalTransitionSeconds
                         
-                    } else {
+                    } else if workout.setTotalTransitionSeconds == 0 && workout.exerciseArray.count > workout.currentExerciseIndex {
                         
                         workout.totalSecondsForProgress = workout.setTotalIntervalSeconds
                         
-//                        workout.remainingIntervalMinutes = workout.setIntervalMinutes
-//
-//                        workout.remainingIntervalSeconds = workout.setIntervalSeconds
+                        
+                    // End of Set
+                        
+                    } else if workout.exerciseArray.count == workout.currentExerciseIndex {
+                        
+                        workout.currentSet += 1
+                        
+                        workout.currentExerciseIndex = 0
+                        
+                        currentTimer = .rest
+                        
+                        workout.totalSecondsForProgress = workout.setTotalRestSeconds
                         
                     }
+                    
+                    workout.remainingIntervalMinutes = Int(workout.exerciseArray[workout.currentExerciseIndex].intervalMinutes)
+                    
+                    workout.remainingIntervalSeconds = Int(workout.exerciseArray[workout.currentExerciseIndex].intervalSeconds)
                     
                     timerProgress.progress = 0.0
                     
@@ -288,22 +312,22 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         intervalLabel.text = "\(zero(unit: workout.remainingIntervalMinutes)):\(zero(unit: workout.remainingIntervalSeconds))"
         
-        if currentTimer == .transition {
+        if currentTimer == .transition || currentTimer == .rest {
             
-//            workout.remainingIntervalMinutes = workout.setIntervalMinutes
-//
-//            workout.remainingIntervalSeconds = workout.setIntervalSeconds
+            workout.remainingIntervalMinutes = Int(workout.exerciseArray[workout.currentExerciseIndex].intervalMinutes)
+
+            workout.remainingIntervalSeconds = Int(workout.exerciseArray[workout.currentExerciseIndex].intervalSeconds)
             
         }
         
     }
     
-    func transitionTimer(forExerciseIndex: Int) {
+    func transitionTimer() {
         
         if workout.setTransitionMinutes == workout.remainingTransitionMinutes && workout.setTransitionSeconds == workout.remainingTransitionSeconds {
-
-            intervalLabel.text = "\(zero(unit: workout.remainingTransitionMinutes)):\(zero(unit: workout.remainingIntervalSeconds))"
-
+            
+            intervalLabel.text = "\(zero(unit: Int(workout.exerciseArray[workout.currentExerciseIndex].intervalMinutes))):\(zero(unit: Int(workout.exerciseArray[workout.currentExerciseIndex].intervalSeconds)))"
+            
         }
         
         if workout.remainingTransitionMinutes > 0 {
@@ -334,15 +358,22 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 
             }
             
+            
+            // End of Transition
+            
             if workout.remainingTransitionSeconds == 0 {
                 
-                currentTimer = .interval
-                
-                timerProgress.progress = 0.0
-                
-                workout.totalSecondsForProgress = workout.setTotalIntervalSeconds
-                
-                AudioServicesPlaySystemSound(1255)
+                if workout.exerciseArray.count > workout.currentExerciseIndex {
+                    
+                    currentTimer = .interval
+                    
+                    timerProgress.progress = 0.0
+                    
+                    workout.totalSecondsForProgress = workout.setTotalIntervalSeconds
+                    
+                    AudioServicesPlaySystemSound(1255)
+                    
+                }
                 
             }
             
@@ -359,6 +390,76 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         
     }
+    
+    func restTimer() {
+        
+        if workout.setRestMinutes == workout.remainingRestMinutes && workout.setRestSeconds == workout.remainingRestSeconds {
+            
+            intervalLabel.text = "\(zero(unit: Int(workout.exerciseArray[workout.currentExerciseIndex].intervalMinutes))):\(zero(unit: Int(workout.exerciseArray[workout.currentExerciseIndex].intervalSeconds)))"
+            
+        }
+        
+        if workout.remainingRestMinutes > 0 {
+            
+            if workout.remainingRestSeconds > 0 {
+                
+                workout.remainingRestSeconds -= 1
+                
+            } else {
+                
+                workout.remainingRestMinutes -= 1
+                
+                workout.remainingRestSeconds = 59
+                
+            }
+            
+        } else if workout.remainingRestMinutes == 0 {
+            
+            if workout.remainingRestSeconds > 0 {
+                
+                workout.remainingRestSeconds -= 1
+                
+                if workout.remainingRestSeconds <= 3 && workout.remainingRestSeconds > 0 {
+                    
+                    AudioServicesPlaySystemSound(1057)
+                    
+                }
+                
+            }
+            
+            if workout.remainingRestSeconds == 0 {
+                
+                currentTimer = .interval
+                
+                timerProgress.progress = 0.0
+                
+                workout.totalSecondsForProgress = workout.setTotalIntervalSeconds
+                
+                AudioServicesPlaySystemSound(1255)
+                
+            }
+            
+        }
+        
+        restLabel.text = "\(zero(unit: workout.remainingRestMinutes)):\(zero(unit: workout.remainingRestSeconds))"
+        
+        if currentTimer == .interval {
+            
+            workout.remainingRestMinutes = workout.setRestMinutes
+            
+            workout.remainingRestSeconds = workout.setRestSeconds
+            
+        }
+        
+    }
+    
+    
+    
+    // ******
+    // *** Loadables
+    // ******
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -403,6 +504,24 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
