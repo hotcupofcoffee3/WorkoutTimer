@@ -26,7 +26,7 @@ class Workout {
     var exerciseArray = [Exercise]()
     
     var currentSet = 1
-    var currentExercise = 1
+    var currentExerciseIndex = 0
     
     var setNumberOfSets: Int = 0
     
@@ -347,7 +347,7 @@ class Workout {
         
         
         
-        print("Workout class loaded: Exercise array contains \(exerciseArray.count) objects.")
+//        print("Workout class loaded: Exercise array contains \(exerciseArray.count) objects.")
         
     }
     

@@ -190,11 +190,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         if currentTimer == .interval {
             
-            intervalTimer()
+            intervalTimer(forExerciseIndex: workout.currentExerciseIndex)
             
         } else if currentTimer == .transition {
             
-            transitionTimer()
+            transitionTimer(forExerciseIndex: workout.currentExerciseIndex)
             
         }
         
@@ -208,12 +208,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
     }
     
-    func intervalTimer() {
+    func intervalTimer(forExerciseIndex: Int) {
         
 //        if workout.setIntervalMinutes == workout.remainingIntervalMinutes && workout.setIntervalSeconds == workout.remainingIntervalSeconds {
-//            
+//
 //            transitionLabel.text = "\(zero(unit: workout.remainingTransitionMinutes)):\(zero(unit: workout.remainingTransitionSeconds))"
-//            
+//
 //        }
         
         if workout.remainingIntervalMinutes > 0 {
@@ -298,12 +298,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
     }
     
-    func transitionTimer() {
+    func transitionTimer(forExerciseIndex: Int) {
         
         if workout.setTransitionMinutes == workout.remainingTransitionMinutes && workout.setTransitionSeconds == workout.remainingTransitionSeconds {
-            
+
             intervalLabel.text = "\(zero(unit: workout.remainingTransitionMinutes)):\(zero(unit: workout.remainingIntervalSeconds))"
-            
+
         }
         
         if workout.remainingTransitionMinutes > 0 {
@@ -382,9 +382,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         transitionView.addGestureRecognizer(transitionTapGesture)
         restView.addGestureRecognizer(restTapGesture)
         
-        let firstExercise = workout.exerciseArray[0]
-        
-        intervalLabel.text = "\(zero(unit: Int(firstExercise.intervalMinutes))):\(zero(unit: Int(firstExercise.intervalSeconds)))"
+        updateIntervalLabelToFirstExercise()
         
         transitionLabel.text = "\(zero(unit: workout.setTransitionMinutes)):\(zero(unit: workout.setTransitionSeconds))"
         
@@ -415,7 +413,7 @@ extension ViewController {
     
     
     // ******
-    // *** MARK: - Alert, Zero, Reset, and Toggle Button Colors Functions
+    // *** MARK: - Alert, Zero, Reset, Interval Label, and Toggle Button Colors Functions
     // ******
     
     
@@ -492,9 +490,19 @@ extension ViewController {
         
     }
     
+    func updateIntervalLabelToFirstExercise() {
+        
+        let firstExercise = workout.exerciseArray[0]
+        
+        intervalLabel.text = "\(zero(unit: Int(firstExercise.intervalMinutes))):\(zero(unit: Int(firstExercise.intervalSeconds)))"
+        
+    }
+    
     func resetInfoToStartingSetAmounts() {
         
         workout.currentSet = 1
+        
+        workout.currentExerciseIndex = 0
         
         currentTimer = .interval
         
@@ -502,7 +510,7 @@ extension ViewController {
         
         timerProgress.progress = 0.0
         
-//        intervalLabel.text = "\(zero(unit: workout.setIntervalMinutes)):\(zero(unit: workout.setIntervalSeconds))"
+        updateIntervalLabelToFirstExercise()
         
         transitionLabel.text = "\(zero(unit: workout.setTransitionMinutes)):\(zero(unit: workout.setTransitionSeconds))"
         
@@ -527,8 +535,6 @@ extension ViewController {
             performSegue(withIdentifier: keywords.mainToSetsSegue, sender: self)
             
         }
-        
-        
         
     }
     

@@ -21,4 +21,6 @@ class Keywords {
     
     let darkVersionOfMainBackgroundColor = UIColor.init(red: 33/255, green: 51/255, blue: 52/255, alpha: 1.0)
     
+    let currentExerciseColor = UIColor.init(red: 122/255, green: 141/255, blue: 73/255, alpha: 1.0)
+    
 }
