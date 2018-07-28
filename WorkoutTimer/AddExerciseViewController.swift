@@ -6,6 +6,32 @@
 //  Copyright © 2018 Adam Moore. All rights reserved.
 //
 
+
+
+
+
+
+
+// Add check to make sure that the name does not match an exercise already made.
+    // Just use an alert to keep it simple.
+
+// Organize the main exercise page to display the cells, with the fonts and sizes changing based on the number of exercises added.
+
+// Warning: 255/110/101
+// Purple: 146/87/173
+// Dark blue background: 44/62/80
+// Lighter teal: 22/160/133
+
+// Disable the 'Add' button when there are 10 exercises, and have an alert that pops up from the add button that lets you know that you can only add 10 exercises.
+
+
+
+
+
+
+
+
+
 import UIKit
 
 protocol SetExerciseDelegate {
