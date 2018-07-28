@@ -10,7 +10,7 @@
 		B529CB77210BA50C005A0488 /* ExerciseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B529CB75210BA50C005A0488 /* ExerciseCollectionViewCell.swift */; };
 		B529CB78210BA50C005A0488 /* ExerciseCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B529CB76210BA50C005A0488 /* ExerciseCollectionViewCell.xib */; };
 		B529CB7A210BBD32005A0488 /* ExerciseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B529CB79210BBD32005A0488 /* ExerciseViewController.swift */; };
-		B529CB7C210BC894005A0488 /* SetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B529CB7B210BC894005A0488 /* SetsViewController.swift */; };
+		B529CB7C210BC894005A0488 /* SetsTransitionAndRestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B529CB7B210BC894005A0488 /* SetsTransitionAndRestViewController.swift */; };
 		B5C3251E21065A3E00A88FDB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C3251D21065A3E00A88FDB /* AppDelegate.swift */; };
 		B5C3252021065A3E00A88FDB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C3251F21065A3E00A88FDB /* ViewController.swift */; };
 		B5C3252321065A3E00A88FDB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5C3252121065A3E00A88FDB /* Main.storyboard */; };
@@ -28,7 +28,7 @@
 		B529CB75210BA50C005A0488 /* ExerciseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCollectionViewCell.swift; sourceTree = "<group>"; };
 		B529CB76210BA50C005A0488 /* ExerciseCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExerciseCollectionViewCell.xib; sourceTree = "<group>"; };
 		B529CB79210BBD32005A0488 /* ExerciseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseViewController.swift; sourceTree = "<group>"; };
-		B529CB7B210BC894005A0488 /* SetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetsViewController.swift; sourceTree = "<group>"; };
+		B529CB7B210BC894005A0488 /* SetsTransitionAndRestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetsTransitionAndRestViewController.swift; sourceTree = "<group>"; };
 		B5C3251A21065A3E00A88FDB /* WorkoutTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkoutTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5C3251D21065A3E00A88FDB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5C3251F21065A3E00A88FDB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -91,7 +91,7 @@
 				B5C3251F21065A3E00A88FDB /* ViewController.swift */,
 				B529CB79210BBD32005A0488 /* ExerciseViewController.swift */,
 				B5C3253421065FD300A88FDB /* AddExerciseViewController.swift */,
-				B529CB7B210BC894005A0488 /* SetsViewController.swift */,
+				B529CB7B210BC894005A0488 /* SetsTransitionAndRestViewController.swift */,
 				B529CB7D210BC9D4005A0488 /* Cells */,
 				B5C3252121065A3E00A88FDB /* Main.storyboard */,
 				B5C3252721065A4100A88FDB /* Assets.xcassets */,
@@ -178,7 +178,7 @@
 				B5C3253521065FD300A88FDB /* AddExerciseViewController.swift in Sources */,
 				B5C3253821066B3000A88FDB /* SetsCollectionViewCell.swift in Sources */,
 				B5C3252021065A3E00A88FDB /* ViewController.swift in Sources */,
-				B529CB7C210BC894005A0488 /* SetsViewController.swift in Sources */,
+				B529CB7C210BC894005A0488 /* SetsTransitionAndRestViewController.swift in Sources */,
 				B5C3253B21068B5800A88FDB /* WorkoutModel.swift in Sources */,
 				B529CB77210BA50C005A0488 /* ExerciseCollectionViewCell.swift in Sources */,
 				B5C3253321065DDF00A88FDB /* Keywords.swift in Sources */,

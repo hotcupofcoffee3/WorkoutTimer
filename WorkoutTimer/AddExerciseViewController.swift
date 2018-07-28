@@ -56,7 +56,7 @@ class AddExerciseViewController: UIViewController, UIPickerViewDelegate, UIPicke
         minLabel.text = "min"
         secLabel.text = "sec"
         
-        chosenPickerInfoLabel.text = isTime ? "\(zero(unit: minutes))\(minutes):\(zero(unit: seconds))\(seconds)" : "\(numberOfSets)"
+        chosenPickerInfoLabel.text = "\(zero(unit: minutes))\(minutes):\(zero(unit: seconds))\(seconds)"
 
     }
     

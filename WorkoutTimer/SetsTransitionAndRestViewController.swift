@@ -18,11 +18,11 @@ protocol SetSetsTransitionsAndRestDelegate {
 
 class SetsTransitionAndRestViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
         
-    var delegate: SetNumberDelegate?
+    var delegate: SetSetsTransitionsAndRestDelegate?
+    
+    var currentTimer = Workout.CurrentTimer.transition
     
     var isTime = Bool()
-    
-    var isInterval = Bool()
     
     var numberOfSets = Int()
     
@@ -44,11 +44,15 @@ class SetsTransitionAndRestViewController: UIViewController, UIPickerViewDelegat
     
     @IBAction func setNumberButton(_ sender: UIButton) {
         
-        if isTime {
+        if isTime && currentTimer == .transition {
             
-            delegate?.setTime(minutes: minutes, seconds: seconds)
+            delegate?.setTransition(minutes: minutes, seconds: seconds)
             
-        } else if !isTime {
+        } else if isTime && currentTimer == .rest {
+            
+            delegate?.setRest(minutes: minutes, seconds: seconds)
+            
+        } else {
             
             delegate?.setSets(numberOfSets: numberOfSets)
             
@@ -70,7 +74,7 @@ class SetsTransitionAndRestViewController: UIViewController, UIPickerViewDelegat
             minLabel.text = "min"
             secLabel.text = "sec"
             
-        } else if !isTime {
+        } else {
             
             numberPicker.selectRow(numberOfSets - 1, inComponent: 0, animated: true)
             

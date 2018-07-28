@@ -16,6 +16,7 @@ class Workout {
         
         case interval
         case transition
+        case rest
         
     }
     
@@ -29,9 +30,14 @@ class Workout {
     
     var setIntervalMinutes: Int = 0
     var setIntervalSeconds: Int = 0
+    
     var setNumberOfSets: Int = 0
+    
     var setTransitionMinutes: Int = 0
     var setTransitionSeconds: Int = 0
+    
+    var setRestMinutes: Int = 0
+    var setRestSeconds: Int = 0
     
     var setTotalIntervalSeconds: Int = 0
     var setTotalTransitionSeconds: Int = 0
@@ -151,6 +157,20 @@ class Workout {
         
         setTransitionMinutes = minutes
         setTransitionSeconds = seconds
+        
+    }
+    
+    func saveRestTime(minutes: Int, seconds: Int) {
+        
+        let workoutInfo = getWorkoutInfo()
+        
+        workoutInfo.restMinutes = Int64(minutes)
+        workoutInfo.restSeconds = Int64(seconds)
+        
+        saveData()
+        
+        setRestMinutes = minutes
+        setRestSeconds = seconds
         
     }
     

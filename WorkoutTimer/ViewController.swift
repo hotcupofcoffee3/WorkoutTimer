@@ -25,7 +25,7 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SetSetsDelegate {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SetSetsTransitionsAndRestDelegate {
     
     
     
@@ -48,7 +48,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var timerForProgress = Timer()
     
     var isTime = Bool()
-    var isInterval = Bool()
+    var isTransition = Bool()
     
     var timerIsStarted = false
     var beganWorkout = false
@@ -77,6 +77,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     @IBOutlet weak var transitionLabel: UILabel!
     
+    @IBOutlet weak var restView: UIView!
+    
+    @IBOutlet weak var restLabel: UILabel!
+    
     @IBOutlet weak var startButtonOutlet: UIButton!
     
     @IBOutlet weak var stopButtonOutlet: UIButton!
@@ -91,7 +95,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     @IBAction func resetButton(_ sender: UIBarButtonItem) {
         
-        resetEverythingAlert(isTime: nil, isInterval: nil)
+        resetEverythingAlert(isTime: nil, isTransition: nil)
         
     }
     
@@ -147,9 +151,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
         } else if segue.identifier == keywords.mainToSetsSegue {
             
-            let destinationVC = segue.destination as! SetsViewController
+            let destinationVC = segue.destination as! SetsTransitionAndRestViewController
             
             destinationVC.numberOfSets = workout.setNumberOfSets
+            
+            destinationVC.delegate = self
             
         }
         
@@ -350,14 +356,18 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         let setsTapGesture = UITapGestureRecognizer(target: self, action: #selector(setsTap))
         let intervalTapGesture = UITapGestureRecognizer(target: self, action: #selector(intervalTap))
         let transitionTapGesture = UITapGestureRecognizer(target: self, action: #selector(transitionTap))
+        let restTapGesture = UITapGestureRecognizer(target: self, action: #selector(restTap))
         
         setCollectionView.addGestureRecognizer(setsTapGesture)
         intervalView.addGestureRecognizer(intervalTapGesture)
         transitionView.addGestureRecognizer(transitionTapGesture)
+        restView.addGestureRecognizer(restTapGesture)
         
         intervalLabel.text = "\(zero(unit: workout.setIntervalMinutes)):\(zero(unit: workout.setIntervalSeconds))"
         
         transitionLabel.text = "\(zero(unit: workout.setTransitionMinutes)):\(zero(unit: workout.setTransitionSeconds))"
+        
+        restLabel.text = "\(zero(unit: workout.setRestMinutes)):\(zero(unit: workout.setRestSeconds))"
         
         timerProgress.progress = 0.0
         
@@ -409,7 +419,7 @@ extension ViewController {
         
     }
     
-    func resetEverythingAlert(isTime: Bool?, isInterval: Bool?) {
+    func resetEverythingAlert(isTime: Bool?, isTransition: Bool?) {
         
         let alert = UIAlertController(title: "Reset?", message: "This will reset all values.", preferredStyle: .alert)
         
@@ -417,9 +427,9 @@ extension ViewController {
             
             if self.beganWorkout {
                 
-                if let time = isTime, let interval = isInterval {
+                if let time = isTime, let transition = isTransition {
                     
-                    self.setAndTimeTapSegue(isTime: time, isInterval: interval)
+                    self.setAndTimeTapSegue(isTime: time, isTransition: transition)
                     
                 }
                 
@@ -483,12 +493,12 @@ extension ViewController {
         
     }
     
-    func setAndTimeTapSegue(isTime: Bool, isInterval: Bool) {
+    func setAndTimeTapSegue(isTime: Bool, isTransition: Bool) {
         
         self.isTime = isTime
-        self.isInterval = isInterval
+        self.isTransition = isTransition
         
-        performSegue(withIdentifier: keywords.mainToExerciseSegue, sender: self)
+        performSegue(withIdentifier: keywords.mainToSetsSegue, sender: self)
         
     }
     
@@ -540,11 +550,11 @@ extension ViewController {
             
             if beganWorkout {
                 
-                resetEverythingAlert(isTime: false, isInterval: false)
+                resetEverythingAlert(isTime: false, isTransition: false)
                 
             } else {
                 
-                setAndTimeTapSegue(isTime: false, isInterval: false)
+                setAndTimeTapSegue(isTime: false, isTransition: false)
                 
             }
            
@@ -558,11 +568,11 @@ extension ViewController {
             
             if beganWorkout {
                 
-                resetEverythingAlert(isTime: true, isInterval: true)
+                resetEverythingAlert(isTime: true, isTransition: true)
                 
             } else {
                 
-                setAndTimeTapSegue(isTime: true, isInterval: true)
+                setAndTimeTapSegue(isTime: true, isTransition: true)
                 
             }
             
@@ -576,11 +586,29 @@ extension ViewController {
             
             if beganWorkout {
                 
-                resetEverythingAlert(isTime: true, isInterval: false)
+                resetEverythingAlert(isTime: true, isTransition: false)
                 
             } else {
                 
-                setAndTimeTapSegue(isTime: true, isInterval: false)
+                setAndTimeTapSegue(isTime: true, isTransition: false)
+                
+            }
+            
+        }
+        
+    }
+    
+    @objc func restTap() {
+        
+        if !timerIsStarted {
+            
+            if beganWorkout {
+                
+                resetEverythingAlert(isTime: true, isTransition: false)
+                
+            } else {
+                
+                setAndTimeTapSegue(isTime: true, isTransition: false)
                 
             }
             
@@ -608,46 +636,22 @@ extension ViewController {
         
     }
     
-    func setTime(minutes: Int, seconds: Int) {
+    func setTransition(minutes: Int, seconds: Int) {
         
-        timerProgress.progress = 0.0
+        workout.setTransitionMinutes = minutes
         
-        setCollectionView.reloadData()
+        workout.setTransitionSeconds = seconds
         
-        if isInterval {
-            
-            workout.setIntervalMinutes = minutes
-            
-            workout.setIntervalSeconds = seconds
-            
-//            workout.saveIntervalTime(minutes: minutes, seconds: seconds)
-            
-            workout.remainingIntervalMinutes = minutes
-            
-            workout.remainingIntervalSeconds = seconds
-            
-            workout.setTotalIntervalSeconds = (minutes * 60) + seconds
-            
-        } else if !isInterval {
-            
-            workout.setTransitionMinutes = minutes
-            
-            workout.setTransitionSeconds = seconds
-            
-            workout.saveTransitionTime(minutes: minutes, seconds: seconds)
-            
-            workout.remainingTransitionMinutes = minutes
-            
-            workout.remainingTransitionSeconds = seconds
-            
-            workout.setTotalTransitionSeconds = (minutes * 60) + seconds
-            
-        }
+        workout.saveTransitionTime(minutes: minutes, seconds: seconds)
         
-        intervalLabel.text = "\(zero(unit: workout.setIntervalMinutes)):\(zero(unit: workout.setIntervalSeconds))"
+    }
+    
+    func setRest(minutes: Int, seconds: Int) {
         
-        transitionLabel.text = "\(zero(unit: workout.setTransitionMinutes)):\(zero(unit: workout.setTransitionSeconds))"
-
+        workout.setRestMinutes = minutes
+        
+        workout.setRestSeconds = seconds
+        
     }
  
     

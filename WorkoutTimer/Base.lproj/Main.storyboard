@@ -252,6 +252,8 @@
                         <outlet property="intervalLabel" destination="Ae8-M1-jND" id="Dvi-Xx-vnr"/>
                         <outlet property="intervalView" destination="bv8-6d-ybd" id="grt-dC-SLR"/>
                         <outlet property="navBar" destination="J3b-HB-qcu" id="a6H-bM-efQ"/>
+                        <outlet property="restLabel" destination="3XI-ap-4Yn" id="kiI-Ld-ZB6"/>
+                        <outlet property="restView" destination="Aii-OY-C40" id="kJS-Rl-i4i"/>
                         <outlet property="setCollectionView" destination="nkh-tL-cwp" id="n8g-pe-h8c"/>
                         <outlet property="startButtonOutlet" destination="Ehb-Ou-OCd" id="L2k-yJ-X1G"/>
                         <outlet property="stopButtonOutlet" destination="T40-rm-wOF" id="pdk-2e-CXC"/>
