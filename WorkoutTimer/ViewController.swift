@@ -49,6 +49,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     var isTime = Bool()
     var isTransition = Bool()
+    var isExercise = Bool()
     
     var timerIsStarted = false
     var beganWorkout = false
@@ -95,7 +96,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     @IBAction func resetButton(_ sender: UIBarButtonItem) {
         
-        resetEverythingAlert(isTime: nil, isTransition: nil)
+        resetEverythingAlert(isTime: nil, isTransition: nil, isExercise: nil)
         
     }
     
@@ -153,9 +154,23 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
             let destinationVC = segue.destination as! SetsTransitionAndRestViewController
             
-            destinationVC.numberOfSets = workout.setNumberOfSets
-            
             destinationVC.delegate = self
+            
+            destinationVC.isTime = isTime
+            
+            destinationVC.isTransition = isTransition
+            
+            if isTime {
+                
+                destinationVC.minutes = isTransition ? workout.setTransitionMinutes : workout.setRestMinutes
+                
+                destinationVC.seconds = isTransition ? workout.setTransitionSeconds : workout.setRestSeconds
+                
+            } else if !isTime {
+                
+                destinationVC.numberOfSets = workout.setNumberOfSets
+                
+            }
             
         }
         
@@ -354,11 +369,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         exerciseCollectionView.register(UINib(nibName: "ExerciseCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "exerciseCell")
         
         let setsTapGesture = UITapGestureRecognizer(target: self, action: #selector(setsTap))
+        let exerciseTapGesture = UITapGestureRecognizer(target: self, action: #selector(exerciseTap))
         let intervalTapGesture = UITapGestureRecognizer(target: self, action: #selector(intervalTap))
         let transitionTapGesture = UITapGestureRecognizer(target: self, action: #selector(transitionTap))
         let restTapGesture = UITapGestureRecognizer(target: self, action: #selector(restTap))
         
         setCollectionView.addGestureRecognizer(setsTapGesture)
+        exerciseCollectionView.addGestureRecognizer(exerciseTapGesture)
         intervalView.addGestureRecognizer(intervalTapGesture)
         transitionView.addGestureRecognizer(transitionTapGesture)
         restView.addGestureRecognizer(restTapGesture)
@@ -419,7 +436,7 @@ extension ViewController {
         
     }
     
-    func resetEverythingAlert(isTime: Bool?, isTransition: Bool?) {
+    func resetEverythingAlert(isTime: Bool?, isTransition: Bool?, isExercise: Bool?) {
         
         let alert = UIAlertController(title: "Reset?", message: "This will reset all values.", preferredStyle: .alert)
         
@@ -427,17 +444,15 @@ extension ViewController {
             
             if self.beganWorkout {
                 
-                if let time = isTime, let transition = isTransition {
+                if let time = isTime, let transition = isTransition, let exercise = isExercise {
                     
-                    self.setAndTimeTapSegue(isTime: time, isTransition: transition)
+                    self.setAndTimeTapSegue(isTime: time, isTransition: transition, isExercise: exercise)
                     
                 }
                 
                 self.resetInfoToStartingSetAmounts()
                 
             } else {
-                
-//                self.workout.setInfoToNil()
                 
                 self.resetInfoToStartingSetAmounts()
                 
@@ -493,12 +508,23 @@ extension ViewController {
         
     }
     
-    func setAndTimeTapSegue(isTime: Bool, isTransition: Bool) {
+    func setAndTimeTapSegue(isTime: Bool, isTransition: Bool, isExercise: Bool) {
         
         self.isTime = isTime
         self.isTransition = isTransition
+        self.isExercise = isExercise
         
-        performSegue(withIdentifier: keywords.mainToSetsSegue, sender: self)
+        if isExercise {
+            
+            performSegue(withIdentifier: keywords.exerciseToPickerSegue, sender: self)
+            
+        } else {
+            
+            performSegue(withIdentifier: keywords.mainToSetsSegue, sender: self)
+            
+        }
+        
+        
         
     }
     
@@ -550,14 +576,32 @@ extension ViewController {
             
             if beganWorkout {
                 
-                resetEverythingAlert(isTime: false, isTransition: false)
+                resetEverythingAlert(isTime: false, isTransition: false, isExercise: false)
                 
             } else {
                 
-                setAndTimeTapSegue(isTime: false, isTransition: false)
+                setAndTimeTapSegue(isTime: false, isTransition: false, isExercise: false)
                 
             }
            
+        }
+        
+    }
+    
+    @objc func exerciseTap() {
+        
+        if !timerIsStarted {
+            
+            if beganWorkout {
+                
+                resetEverythingAlert(isTime: false, isTransition: false, isExercise: true)
+                
+            } else {
+                
+                setAndTimeTapSegue(isTime: false, isTransition: false, isExercise: true)
+                
+            }
+            
         }
         
     }
@@ -568,11 +612,11 @@ extension ViewController {
             
             if beganWorkout {
                 
-                resetEverythingAlert(isTime: true, isTransition: true)
+//                resetEverythingAlert(isTime: true, isTransition: true)
                 
             } else {
                 
-                setAndTimeTapSegue(isTime: true, isTransition: true)
+//                setAndTimeTapSegue(isTime: true, isTransition: true)
                 
             }
             
@@ -586,11 +630,11 @@ extension ViewController {
             
             if beganWorkout {
                 
-                resetEverythingAlert(isTime: true, isTransition: false)
+                resetEverythingAlert(isTime: true, isTransition: true, isExercise: false)
                 
             } else {
                 
-                setAndTimeTapSegue(isTime: true, isTransition: false)
+                setAndTimeTapSegue(isTime: true, isTransition: true, isExercise: false)
                 
             }
             
@@ -604,11 +648,11 @@ extension ViewController {
             
             if beganWorkout {
                 
-                resetEverythingAlert(isTime: true, isTransition: false)
+                resetEverythingAlert(isTime: true, isTransition: false, isExercise: false)
                 
             } else {
                 
-                setAndTimeTapSegue(isTime: true, isTransition: false)
+                setAndTimeTapSegue(isTime: true, isTransition: false, isExercise: false)
                 
             }
             

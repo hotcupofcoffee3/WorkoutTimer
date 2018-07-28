@@ -20,9 +20,9 @@ class SetsTransitionAndRestViewController: UIViewController, UIPickerViewDelegat
         
     var delegate: SetSetsTransitionsAndRestDelegate?
     
-    var currentTimer = Workout.CurrentTimer.transition
-    
     var isTime = Bool()
+    
+    var isTransition = Bool()
     
     var numberOfSets = Int()
     
@@ -44,11 +44,11 @@ class SetsTransitionAndRestViewController: UIViewController, UIPickerViewDelegat
     
     @IBAction func setNumberButton(_ sender: UIButton) {
         
-        if isTime && currentTimer == .transition {
+        if isTime && isTransition {
             
             delegate?.setTransition(minutes: minutes, seconds: seconds)
             
-        } else if isTime && currentTimer == .rest {
+        } else if isTime && !isTransition {
             
             delegate?.setRest(minutes: minutes, seconds: seconds)
             
