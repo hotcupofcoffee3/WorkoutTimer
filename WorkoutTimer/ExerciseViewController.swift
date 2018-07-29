@@ -80,11 +80,15 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
             
             destinationVC.isNew = isNew
             
-            destinationVC.exerciseName = exerciseName
-            
-            destinationVC.minutes = exerciseMinutes
-            
-            destinationVC.seconds = exerciseSeconds
+            if !isNew {
+                
+                destinationVC.exerciseName = exerciseName
+                
+                destinationVC.minutes = exerciseMinutes
+                
+                destinationVC.seconds = exerciseSeconds
+                
+            }
             
         }
         

@@ -42,6 +42,12 @@ class SetsTransitionAndRestViewController: UIViewController, UIPickerViewDelegat
     
     @IBOutlet weak var secLabel: UILabel!
     
+    @IBAction func cancel(_ sender: UIButton) {
+        
+        dismiss(animated: true, completion: nil)
+        
+    }
+    
     @IBAction func setNumberButton(_ sender: UIButton) {
         
         if isTime && isTransition {

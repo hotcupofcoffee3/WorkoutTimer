@@ -910,7 +910,7 @@ extension ViewController {
                     
                 } else {
                     
-                    cell.backgroundColor = keywords.mainBackgroundColor
+                    cell.backgroundColor = UIColor.clear
                     cell.exerciseNameLabel.textColor = UIColor.white
                     cell.exerciseTimeLabel.textColor = UIColor.white
                     
@@ -918,7 +918,7 @@ extension ViewController {
                 
             } else {
                 
-                cell.backgroundColor = keywords.mainBackgroundColor
+                cell.backgroundColor = UIColor.clear
                 cell.exerciseNameLabel.textColor = UIColor.white
                 cell.exerciseTimeLabel.textColor = UIColor.white
                 
