@@ -924,6 +924,22 @@ extension ViewController {
                 
             }
             
+            
+            
+            // Size of font
+            
+            if workout.exerciseArray.count < 6 {
+                
+                cell.exerciseNameLabel.font = UIFont(name: "Helvetica Neue", size: 24)
+                cell.exerciseTimeLabel.font = UIFont(name: "Helvetica Neue", size: 24)
+                
+            } else {
+                
+                cell.exerciseNameLabel.font = UIFont(name: "Helvetica Neue", size: 18)
+                cell.exerciseTimeLabel.font = UIFont(name: "Helvetica Neue", size: 18)
+                
+            }
+            
             return cell
             
         }
@@ -945,17 +961,23 @@ extension ViewController {
             
             var size = CGFloat()
             
+            var height = CGFloat()
+            
             if workout.exerciseArray.count < 6 {
                 
                 size = viewWidth / CGFloat(1)
+                
+                height = 48
                 
             } else {
                 
                 size = viewWidth / CGFloat(2)
                 
+                height = 36
+                
             }
             
-            return CGSize(width: size, height: 48)
+            return CGSize(width: size, height: height)
             
         }
 
