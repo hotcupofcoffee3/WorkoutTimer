@@ -861,6 +861,8 @@ extension ViewController {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
+        
+        
         // Sets Collection
         
         if collectionView == self.setCollectionView {
@@ -882,6 +884,8 @@ extension ViewController {
             }
             
             return cell
+            
+            
             
         // Exercise Collection
             
