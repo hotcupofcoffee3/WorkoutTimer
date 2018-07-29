@@ -32,6 +32,8 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
     
     var isNew = Bool()
     
+    var isTenExercises = Bool()
+    
     
     
     var delegate: UpdateFirstExerciseDelegate?
@@ -40,12 +42,26 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBOutlet weak var exerciseTable: UITableView!
     
+    @IBOutlet weak var addButton: UIBarButtonItem!
+    
     @IBAction func addExercise(_ sender: UIBarButtonItem) {
         
-        isNew = true
-        
-        performSegue(withIdentifier: keywords.exerciseToPickerSegue, sender: self)
-        
+        if isTenExercises {
+            
+            let alert = UIAlertController(title: "Exercise Limit", message: "You can have a maximum of 10 exercises.", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            
+            present(alert, animated: true, completion: nil)
+            
+        } else {
+            
+            isNew = true
+            
+            performSegue(withIdentifier: keywords.exerciseToPickerSegue, sender: self)
+            
+        }
+
     }
     
     @IBAction func back(_ sender: UIBarButtonItem) {
@@ -67,6 +83,12 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         return zero
+        
+    }
+    
+    func toggleIsTenExercises() {
+        
+        isTenExercises = (workout.exerciseArray.count == 10)
         
     }
     
@@ -100,6 +122,9 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
         // Do any additional setup after loading the view.
         
         exerciseTable.register(UINib(nibName: "ExerciseTableViewCell", bundle: nil), forCellReuseIdentifier: "exerciseTableCell")
+        
+        toggleIsTenExercises()
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -134,6 +159,8 @@ extension ExerciseViewController {
         }
         
         workout.loadExercises()
+        
+        toggleIsTenExercises()
         
         exerciseTable.reloadData()
         
@@ -178,6 +205,8 @@ extension ExerciseViewController {
         if editingStyle == .delete {
             
             workout.deleteExercise(workout.exerciseArray[indexPath.row])
+            
+            toggleIsTenExercises()
             
         }
         

@@ -498,6 +498,7 @@ warning</string>
                         <viewLayoutGuide key="safeArea" id="YGX-zD-FoK"/>
                     </view>
                     <connections>
+                        <outlet property="addButton" destination="UyL-LQ-asn" id="Dc6-gG-Abk"/>
                         <outlet property="exerciseTable" destination="Hmn-2q-sPw" id="REI-hx-lg3"/>
                         <segue destination="xw4-mn-naU" kind="presentation" identifier="exerciseToPickerSegue" id="jbe-N9-YrA"/>
                     </connections>

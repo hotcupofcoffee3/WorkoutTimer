@@ -11,11 +11,7 @@
 
 
 
-// Check to see if the "Add exercise" isn't new, and if it isn't, then the comparison to the name doesn't matter if it is the same one that is already set.
-
 // Organize the main exercise page to display the cells, with the fonts and sizes changing based on the number of exercises added.
-
-// Disable the 'Add' button when there are 10 exercises, and have an alert that pops up from the add button that lets you know that you can only add 10 exercises.
 
 
 
@@ -84,7 +80,7 @@ class AddExerciseViewController: UIViewController, UIPickerViewDelegate, UIPicke
             
 //             return
             
-        } else if checkIfNameExists(exerciseName: exerciseNameTextField.text!) {
+        } else if checkIfNameExists(newExerciseName: exerciseNameTextField.text!) {
             
             warningLabel.text = "An exercise already exists with this name."
             
@@ -100,20 +96,42 @@ class AddExerciseViewController: UIViewController, UIPickerViewDelegate, UIPicke
         
     }
     
-    func checkIfNameExists(exerciseName: String) -> Bool {
+    func checkIfNameExists(newExerciseName: String) -> Bool {
         
         var isSame = false
         
         for exercise in workout.exerciseArray {
             
-            if exercise.name!.lowercased() == exerciseName.lowercased() {
+            if isNew {
                 
-                warningLabel.text = "An exercise already has this name."
+                if exercise.name!.lowercased() == newExerciseName.lowercased() {
+                    
+                    warningLabel.text = "An exercise already has this name."
+                    
+                    isSame = true
+                    
+                }
                 
-                isSame = true
+            } else {
+                
+                if exercise.name!.lowercased() == exerciseName.lowercased() {
+                    
+                    continue
+                    
+                } else if exercise.name!.lowercased() == newExerciseName.lowercased() {
+                    
+                    print(exerciseName)
+                    
+                    print(newExerciseName)
+                    
+                    warningLabel.text = "An exercise already has this name."
+                    
+                    isSame = true
+                    
+                }
                 
             }
-            
+
         }
         
         return isSame
