@@ -234,11 +234,11 @@ class Workout {
         
         if self.exerciseArray.count == 0 {
             
-//            saveNewExercise(named: "Exercise")
+            saveNewExercise(named: "Exercise", minutes: 0, seconds: 30)
             
-            saveTestingExercise(named: "Exercise 1", minutes: 1, seconds: 12)
-            saveTestingExercise(named: "Exercise 2", minutes: 2, seconds: 24)
-            saveTestingExercise(named: "Exercise 3", minutes: 3, seconds: 36)
+//            saveTestingExercise(named: "Exercise 1", minutes: 1, seconds: 12)
+//            saveTestingExercise(named: "Exercise 2", minutes: 2, seconds: 24)
+//            saveTestingExercise(named: "Exercise 3", minutes: 3, seconds: 36)
             
             loadExercises()
             
@@ -252,7 +252,7 @@ class Workout {
         
         newWorkout.restMinutes = 0
         newWorkout.restSeconds = 0
-        newWorkout.sets = 10
+        newWorkout.sets = 3
         newWorkout.transitionMinutes = 0
         newWorkout.transitionSeconds = 0
         
