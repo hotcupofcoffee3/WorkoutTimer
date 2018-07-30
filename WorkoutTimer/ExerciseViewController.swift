@@ -34,6 +34,8 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
     
     var isTenExercises = Bool()
     
+    var editCells = false
+    
     
     
     var delegate: UpdateFirstExerciseDelegate?
@@ -43,6 +45,8 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var exerciseTable: UITableView!
     
     @IBOutlet weak var addButton: UIBarButtonItem!
+    
+    @IBOutlet weak var editButton: UIBarButtonItem!
     
     @IBAction func addExercise(_ sender: UIBarButtonItem) {
         
@@ -69,6 +73,18 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
         delegate?.updateFirstExercise(withExercise: workout.exerciseArray[0])
         
         dismiss(animated: true, completion: nil)
+        
+    }
+    
+    @IBAction func edit(_ sender: UIBarButtonItem) {
+        
+        editCells = !editCells
+        
+        editButton.title = editCells ? "Done" : "Edit"
+        
+        exerciseTable.setEditing(editCells, animated: true)
+        
+        exerciseTable.reloadData()
         
     }
     
@@ -211,6 +227,16 @@ extension ExerciseViewController {
         }
         
         tableView.reloadData()
+        
+    }
+    
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return editCells
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        
+        
         
     }
     
