@@ -86,6 +86,12 @@ class AddExerciseViewController: UIViewController, UIPickerViewDelegate, UIPicke
             
             return
             
+        } else if minutes == 0 && seconds == 0 {
+            
+            warningLabel.text = "The time cannot be set to 00:00."
+            
+            return
+            
         }
         
         newExerciseName = exerciseNameTextField.text!
