@@ -991,7 +991,7 @@ extension ViewController {
         
         intervalLabel.text = "\(zero(unit: Int(firstExercise.intervalMinutes))):\(zero(unit: Int(firstExercise.intervalSeconds)))"
         
-        workout.loadExercises()
+        workout.loadExercisesPerRoutine(routine: "Default")
         
         workout.setTotalAndRemainingStartingIntervalAmounts()
         

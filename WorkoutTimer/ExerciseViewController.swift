@@ -150,7 +150,7 @@ extension ExerciseViewController {
         
         if isNew {
             
-            workout.saveNewExercise(named: newName, minutes: minutes, seconds: seconds)
+            workout.saveNewExercise(named: newName, minutes: minutes, seconds: seconds, index: workout.exerciseArray.count, routine: "Default")
             
         } else {
             
@@ -158,7 +158,7 @@ extension ExerciseViewController {
             
         }
         
-        workout.loadExercises()
+        workout.loadExercisesPerRoutine(routine: "Default")
         
         toggleIsTenExercises()
         

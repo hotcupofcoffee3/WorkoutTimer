@@ -24,6 +24,7 @@ class Workout {
     
     var workoutInfoArray = [WorkoutInfo]()
     var exerciseArray = [Exercise]()
+    let keywords = Keywords()
     
     var currentSet = 1
     var currentExerciseIndex = 0
@@ -119,6 +120,34 @@ class Workout {
             
         }
         
+    }
+    
+    func loadExercisesPerRoutine(routine: String) {
+        
+        let request: NSFetchRequest<Exercise> = Exercise.fetchRequest()
+        
+        let routinePredicate = NSPredicate(format: keywords.routineMatchesKey, routine)
+        
+        request.predicate = routinePredicate
+        
+        request.sortDescriptors = [NSSortDescriptor(key: keywords.orderNumberKey, ascending: true)]
+        
+        do {
+            
+            exerciseArray = try context.fetch(request)
+            
+        } catch {
+            
+            print("Error loading Workout Info: \(error)")
+            
+        }
+        
+        if exerciseArray.isEmpty {
+            
+            return print("'exerciseArray' had no object in it.")
+            
+        }
+
     }
     
     func getWorkoutInfo() -> WorkoutInfo {
@@ -218,29 +247,29 @@ class Workout {
         
     }
     
-    func saveTestingExercise(named: String, minutes: Int, seconds: Int) {
-        
-        let test = Exercise(context: context)
-        
-        test.name = named
-        test.intervalMinutes = Int64(minutes)
-        test.intervalSeconds = Int64(seconds)
-        
-        saveData()
-        
-    }
+//    func saveTestingExercise(named: String, minutes: Int, seconds: Int) {
+//
+//        let test = Exercise(context: context)
+//
+//        test.name = named
+//        test.intervalMinutes = Int64(minutes)
+//        test.intervalSeconds = Int64(seconds)
+//
+//        saveData()
+//
+//    }
     
     func makeSureInitialExerciseObjectIsCreated() {
         
         if self.exerciseArray.count == 0 {
             
-            saveNewExercise(named: "Exercise", minutes: 0, seconds: 30)
+            saveNewExercise(named: "Exercise", minutes: 0, seconds: 30, index: 0, routine: "Default")
             
 //            saveTestingExercise(named: "Exercise 1", minutes: 1, seconds: 12)
 //            saveTestingExercise(named: "Exercise 2", minutes: 2, seconds: 24)
 //            saveTestingExercise(named: "Exercise 3", minutes: 3, seconds: 36)
             
-            loadExercises()
+            loadExercisesPerRoutine(routine: "Default")
             
         }
         
@@ -260,13 +289,15 @@ class Workout {
         
     }
     
-    func saveNewExercise(named: String, minutes: Int = 0, seconds: Int = 0) {
+    func saveNewExercise(named: String, minutes: Int = 0, seconds: Int = 0, index: Int, routine: String) {
         
         let newExercise = Exercise(context: context)
         
         newExercise.intervalMinutes = Int64(minutes)
         newExercise.intervalSeconds = Int64(seconds)
         newExercise.name = named
+        newExercise.orderNumber = Int64(index)
+        newExercise.routine = routine
         
         self.saveData()
         
@@ -302,13 +333,33 @@ class Workout {
         
     }
     
+    func updateOrderNumbers() {
+        
+        for i in exerciseArray.indices {
+            
+            exerciseArray[i].orderNumber = Int64(i)
+            
+        }
+        
+        saveData()
+        
+    }
+    
     func deleteExercise(_ exercise: Exercise) {
         
         context.delete(exercise)
         
         saveData()
         
-        loadExercises()
+        loadExercisesPerRoutine(routine: "Default")
+        
+        for i in exerciseArray.indices {
+            
+            exerciseArray[i].orderNumber = Int64(i)
+            
+        }
+        
+        saveData()
         
     }
     
@@ -446,7 +497,7 @@ class Workout {
 //        deleteAllSavedWorkoutInfoObjects()
         
         self.loadWorkoutData()
-        self.loadExercises()
+        self.loadExercisesPerRoutine(routine: "Default")
 
         self.makeSureInitialWorkoutInfoObjectIsCreated()
         self.makeSureInitialExerciseObjectIsCreated()
@@ -483,6 +534,12 @@ class Workout {
         self.setTotalWorkoutSeconds()
         
         self.setMinutesAndSecondsFromTotalWorkoutSeconds()
+        
+        for i in exerciseArray.indices {
+            
+            print(i)
+            
+        }
         
     }
     
