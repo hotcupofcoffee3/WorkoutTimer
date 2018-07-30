@@ -50,6 +50,8 @@ class Workout {
     var remainingRestSeconds: Int = 0
     
     var totalSecondsForProgress = 0
+    var totalWorkoutSeconds = 0
+    var totalWorkoutTimeLeft = 0
     
     func saveData() {
         
@@ -345,6 +347,86 @@ class Workout {
         
     }
     
+    func setTotalWorkoutSeconds() -> Int {
+        
+        var totalSeconds = Int()
+        
+        // Exercises
+        
+        for exercise in exerciseArray {
+            
+            for _ in 1...setNumberOfSets {
+                
+                totalSeconds += Int(exercise.intervalMinutes * 60)
+                totalSeconds += Int(exercise.intervalSeconds)
+                
+            }
+
+        }
+
+        // Transitions
+        
+        if exerciseArray.count > 1 {
+            
+            for _ in 1...setNumberOfSets {
+                
+                for _ in 2...exerciseArray.count {
+                    
+                    totalSeconds += setTotalTransitionSeconds
+                    
+                }
+                
+            }
+            
+        }
+
+        // Rest
+        
+        if setNumberOfSets > 1 {
+            
+            for _ in 2...setNumberOfSets {
+                
+                totalSeconds += setTotalRestSeconds
+                
+            }
+            
+        }
+        
+        return totalSeconds
+        
+    }
+    
+    func getTimeFromTotalWorkoutSeconds() -> (minutes: Int, seconds: Int) {
+        
+        var minutes = Int()
+        var seconds = Int()
+        
+        if (totalWorkoutSeconds / 60) < 1 {
+            
+            minutes = 0
+            seconds = totalWorkoutSeconds
+            
+        } else if totalWorkoutSeconds == 60 {
+            
+            minutes = 1
+            seconds = 0
+            
+        } else {
+            
+            var minutesAsDecimal: Double = (Double(totalWorkoutSeconds) / 60)
+            
+            minutesAsDecimal.round(.towardZero)
+            
+            minutes = Int(minutesAsDecimal)
+            
+            seconds = totalWorkoutSeconds - (minutes * 60)
+
+        }
+        
+        return (minutes, seconds)
+        
+    }
+    
     init() {
         
 //        deleteAllSavedWorkoutInfoObjects()
@@ -383,6 +465,8 @@ class Workout {
         self.totalSecondsForProgress = setTotalSecondsForProgressForExercise(index: 0)
         
 //        print("Workout class loaded: Exercise array contains \(exerciseArray.count) objects.")
+        
+        print(setTotalWorkoutSeconds())
         
     }
     

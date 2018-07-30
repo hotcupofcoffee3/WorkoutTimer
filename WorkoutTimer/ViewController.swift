@@ -12,6 +12,19 @@
 
 
 
+// Just set up two functions in the Workout Model to calculate the total time and the time left.
+// Use these to update UI and to create a timer to count down the amount of time left in the workout, resetting when the workout gets reset, and updated when any information updates.
+
+
+
+
+
+
+
+
+
+
+
 // 1306 - Tock clicking sound (Keyboard click)
 // 1072 - Kinda like a busy tone
 // 1013 - Sounds kind of like a symbol or chime.
@@ -54,8 +67,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var timerIsStarted = false
     var beganWorkout = false
     
-    var usedExerciseIndices = [Int]()
-    
     
     
     // ******
@@ -65,6 +76,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     
     @IBOutlet weak var navBar: UINavigationBar!
+    
+    @IBOutlet weak var totalTimeInWorkout: UILabel!
+    
+    @IBOutlet weak var totalTimeLeft: UILabel!
     
     @IBOutlet weak var setCollectionView: UICollectionView!
     
