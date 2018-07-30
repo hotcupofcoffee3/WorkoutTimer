@@ -74,13 +74,19 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     @IBOutlet weak var intervalView: UIView!
     
+    @IBOutlet weak var intervalTitle: UILabel!
+    
     @IBOutlet weak var intervalLabel: UILabel!
     
     @IBOutlet weak var transitionView: UIView!
     
+    @IBOutlet weak var transitionTitle: UILabel!
+    
     @IBOutlet weak var transitionLabel: UILabel!
     
     @IBOutlet weak var restView: UIView!
+    
+    @IBOutlet weak var restTitle: UILabel!
     
     @IBOutlet weak var restLabel: UILabel!
     
@@ -263,19 +269,19 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 
                 setCollectionView.reloadData()
                 
-                exerciseCollectionView.reloadData()
-                
                 AudioServicesPlaySystemSound(1256)
                 
                 if workout.setTotalTransitionSeconds > 0 && workout.exerciseArray.count > workout.currentExerciseIndex {
                     
                     currentTimer = .transition
                     
+                    toggleTimerViews()
+                    
                     workout.totalSecondsForProgress = workout.setTotalTransitionSeconds
                     
                 } else if workout.setTotalTransitionSeconds == 0 && workout.exerciseArray.count > workout.currentExerciseIndex {
                     
-                    workout.totalSecondsForProgress = workout.setTotalIntervalSeconds
+                    workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: workout.currentExerciseIndex)
                     
                     
                 // End of Set
@@ -290,6 +296,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                         
                         currentTimer = .rest
                         
+                        toggleTimerViews()
+                        
                         workout.totalSecondsForProgress = workout.setTotalRestSeconds
                         
                     } else if workout.currentSet > workout.setNumberOfSets {
@@ -303,6 +311,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     }
 
                 }
+                
+                exerciseCollectionView.reloadData()
                 
                 workout.remainingIntervalMinutes = Int(workout.exerciseArray[workout.currentExerciseIndex].intervalMinutes)
                 
@@ -371,9 +381,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     
                     currentTimer = .interval
                     
+                    exerciseCollectionView.reloadData()
+                    
+                    toggleTimerViews()
+                    
                     timerProgress.progress = 0.0
                     
-                    workout.totalSecondsForProgress = workout.setTotalIntervalSeconds
+                    workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: workout.currentExerciseIndex)
                     
                     AudioServicesPlaySystemSound(1255)
                     
@@ -435,9 +449,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 
                 currentTimer = .interval
                 
+                exerciseCollectionView.reloadData()
+                
+                toggleTimerViews()
+                
                 timerProgress.progress = 0.0
                 
-                workout.totalSecondsForProgress = workout.setTotalIntervalSeconds
+                workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: 0)
                 
                 AudioServicesPlaySystemSound(1255)
                 
@@ -554,6 +572,8 @@ extension ViewController {
             self.beganWorkout = false
             
             self.resetInfoToStartingSetAmounts()
+            
+            self.toggleTimerViews()
         
         }))
         
@@ -692,6 +712,48 @@ extension ViewController {
         }
         
     }
+    
+    func toggleTimerViews() {
+        
+        if timerIsStarted {
+            
+            if currentTimer == .interval {
+                
+                intervalView.backgroundColor = keywords.currentExerciseColor
+                
+                transitionView.backgroundColor = UIColor.clear
+
+                restView.backgroundColor = UIColor.clear
+                
+            } else if currentTimer == .transition {
+                
+                transitionView.backgroundColor = keywords.currentExerciseColor
+                
+                intervalView.backgroundColor = UIColor.clear
+               
+                restView.backgroundColor = UIColor.clear
+                
+            } else if currentTimer == .rest {
+                
+                restView.backgroundColor = keywords.currentExerciseColor
+                
+                intervalView.backgroundColor = UIColor.clear
+                
+                transitionView.backgroundColor = UIColor.clear
+                
+            }
+            
+        } else {
+            
+            intervalView.backgroundColor = UIColor.clear
+            
+            transitionView.backgroundColor = UIColor.clear
+            
+            restView.backgroundColor = UIColor.clear
+            
+        }
+        
+    }
  
     
     
@@ -743,11 +805,11 @@ extension ViewController {
             
             if beganWorkout {
                 
-//                resetEverythingAlert(isTime: true, isTransition: true)
+                resetEverythingAlert(isTime: false, isTransition: false, isExercise: true)
                 
             } else {
                 
-//                setAndTimeTapSegue(isTime: true, isTransition: true)
+                setAndTimeTapSegue(isTime: false, isTransition: false, isExercise: true)
                 
             }
             
@@ -902,10 +964,20 @@ extension ViewController {
                 
                 if workout.currentExerciseIndex == indexPath.row {
                     
-                    cell.backgroundColor = keywords.currentExerciseColor
-                    cell.exerciseNameLabel.textColor = UIColor.white
-                    cell.exerciseTimeLabel.textColor = UIColor.white
-                    
+                    if currentTimer == .interval {
+                        
+                        cell.backgroundColor = keywords.currentExerciseColor
+                        cell.exerciseNameLabel.textColor = UIColor.white
+                        cell.exerciseTimeLabel.textColor = UIColor.white
+                        
+                    } else {
+                        
+                        cell.backgroundColor = UIColor.clear
+                        cell.exerciseNameLabel.textColor = UIColor.white
+                        cell.exerciseTimeLabel.textColor = UIColor.white
+                        
+                    }
+                   
                 } else if workout.currentExerciseIndex > indexPath.row {
                     
                     cell.backgroundColor = UIColor.white

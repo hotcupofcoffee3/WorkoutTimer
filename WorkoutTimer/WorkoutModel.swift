@@ -335,6 +335,16 @@ class Workout {
         
     }
     
+    func setTotalSecondsForProgressForExercise(index: Int) -> Int {
+        
+        let exercise = exerciseArray[index]
+        
+        let seconds = (Int(exercise.intervalMinutes * 60)) + Int(exercise.intervalSeconds)
+        
+        return seconds
+        
+    }
+    
     init() {
         
 //        deleteAllSavedWorkoutInfoObjects()
@@ -357,7 +367,7 @@ class Workout {
         
         let firstExercise = exerciseArray[0]
         
-        self.setTotalIntervalSeconds = (Int(firstExercise.intervalMinutes * 60)) + Int(firstExercise.intervalSeconds)
+        self.setTotalIntervalSeconds = setTotalSecondsForProgressForExercise(index: 0)
         self.setTotalTransitionSeconds = (setTransitionMinutes * 60) + setTransitionSeconds
         self.setTotalRestSeconds = (setRestMinutes * 60) + setRestSeconds
         
@@ -370,7 +380,7 @@ class Workout {
         self.remainingRestMinutes = setRestMinutes
         self.remainingRestSeconds = setRestSeconds
         
-        
+        self.totalSecondsForProgress = setTotalSecondsForProgressForExercise(index: 0)
         
 //        print("Workout class loaded: Exercise array contains \(exerciseArray.count) objects.")
         
