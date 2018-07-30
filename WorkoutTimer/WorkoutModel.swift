@@ -535,12 +535,6 @@ class Workout {
         
         self.setMinutesAndSecondsFromTotalWorkoutSeconds()
         
-        for i in exerciseArray.indices {
-            
-            print(i)
-            
-        }
-        
     }
     
 }
