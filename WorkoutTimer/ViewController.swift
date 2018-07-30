@@ -59,6 +59,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var timerForInterval = Timer()
     var timerForTransition = Timer()
     var timerForProgress = Timer()
+    var timerForWorkout = Timer()
     
     var isTime = Bool()
     var isTransition = Bool()
@@ -137,6 +138,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
             timerForProgress = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(animateProgress), userInfo: nil, repeats: true)
             
+            timerForWorkout = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(runWorkoutTimer), userInfo: nil, repeats: true)
+            
             exerciseCollectionView.reloadData()
             
         }
@@ -150,6 +153,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             mainTimer.invalidate()
             
             timerForProgress.invalidate()
+            
+            timerForWorkout.invalidate()
             
             timerIsStarted = false
             
@@ -224,6 +229,48 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             restTimer()
             
         }
+        
+    }
+    
+    @objc func runWorkoutTimer() {
+        
+        if workout.remainingWorkoutMinutes > 0 {
+            
+            if workout.remainingWorkoutSeconds > 0 {
+                
+                workout.remainingWorkoutSeconds -= 1
+                
+            } else {
+                
+                workout.remainingWorkoutMinutes -= 1
+                
+                workout.remainingWorkoutSeconds = 59
+                
+            }
+            
+        } else if workout.remainingWorkoutMinutes == 0 {
+            
+            if workout.remainingWorkoutSeconds > 0 {
+                
+                workout.remainingWorkoutSeconds -= 1
+                
+            }
+            
+            if workout.remainingWorkoutSeconds == 0 {
+                
+                print(workout.remainingWorkoutSeconds)
+                
+                // Reset amounts
+                
+                workout.remainingWorkoutMinutes = workout.setWorkoutMinutes
+                
+                workout.remainingWorkoutSeconds = workout.setWorkoutSeconds
+                
+            }
+            
+        }
+        
+        updateRemainingWorkoutTime()
         
     }
     
@@ -320,6 +367,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                         mainTimer.invalidate()
                         
                         timerForProgress.invalidate()
+                        
+                        timerForWorkout.invalidate()
+                        
+                        workout.remainingWorkoutSeconds = 0
+                        
+                        updateRemainingWorkoutTime()
                         
                         finishedWorkoutAlert()
                         
@@ -522,6 +575,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         updateIntervalLabelToFirstExercise()
         
+        updateTotalWorkoutTimeAndLabels()
+        
         transitionLabel.text = "\(zero(unit: workout.setTransitionMinutes)):\(zero(unit: workout.setTransitionSeconds))"
         
         restLabel.text = "\(zero(unit: workout.setRestMinutes)):\(zero(unit: workout.setRestSeconds))"
@@ -620,6 +675,8 @@ extension ViewController {
             
             self.timerForProgress.invalidate()
             
+            self.timerForWorkout.invalidate()
+            
             self.resetInfoToStartingSetAmounts()
             
         }))
@@ -671,6 +728,10 @@ extension ViewController {
         transitionLabel.text = "\(zero(unit: workout.setTransitionMinutes)):\(zero(unit: workout.setTransitionSeconds))"
         
         workout.setRemainingToSetAmounts()
+        
+        updateTotalWorkoutTimeAndLabels()
+        
+        toggleTimerViews()
         
         toggleButtonColors(reset: true)
         
@@ -767,6 +828,24 @@ extension ViewController {
             restView.backgroundColor = UIColor.clear
             
         }
+        
+    }
+    
+    func updateRemainingWorkoutTime() {
+        
+        totalTimeLeft.text = "\(zero(unit: workout.remainingWorkoutMinutes)):\(zero(unit: workout.remainingWorkoutSeconds))"
+        
+    }
+    
+    func updateTotalWorkoutTimeAndLabels() {
+        
+        workout.setTotalWorkoutSeconds()
+        
+        workout.setMinutesAndSecondsFromTotalWorkoutSeconds()
+        
+        totalTimeInWorkout.text = "\(zero(unit: workout.setWorkoutMinutes)):\(zero(unit: workout.setWorkoutSeconds))"
+        
+        updateRemainingWorkoutTime()
         
     }
  
@@ -884,6 +963,8 @@ extension ViewController {
         
         setCollectionView.reloadData()
         
+        updateTotalWorkoutTimeAndLabels()
+        
     }
     
     func setTransition(minutes: Int, seconds: Int) {
@@ -892,6 +973,8 @@ extension ViewController {
         
         transitionLabel.text = "\(zero(unit: workout.setTransitionMinutes)):\(zero(unit: workout.setTransitionSeconds))"
         
+        updateTotalWorkoutTimeAndLabels()
+        
     }
     
     func setRest(minutes: Int, seconds: Int) {
@@ -899,6 +982,8 @@ extension ViewController {
         workout.saveRestTime(minutes: minutes, seconds: seconds)
         
         restLabel.text = "\(zero(unit: workout.setRestMinutes)):\(zero(unit: workout.setRestSeconds))"
+        
+        updateTotalWorkoutTimeAndLabels()
         
     }
     
@@ -911,6 +996,8 @@ extension ViewController {
         workout.setTotalAndRemainingStartingIntervalAmounts()
         
         exerciseCollectionView.reloadData()
+        
+        updateTotalWorkoutTimeAndLabels()
         
     }
  

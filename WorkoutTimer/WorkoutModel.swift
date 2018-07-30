@@ -36,6 +36,9 @@ class Workout {
     var setRestMinutes: Int = 0
     var setRestSeconds: Int = 0
     
+    var setWorkoutMinutes: Int = 0
+    var setWorkoutSeconds: Int = 0
+    
     var setTotalIntervalSeconds: Int = 0
     var setTotalTransitionSeconds: Int = 0
     var setTotalRestSeconds: Int = 0
@@ -48,6 +51,9 @@ class Workout {
     
     var remainingRestMinutes: Int = 0
     var remainingRestSeconds: Int = 0
+    
+    var remainingWorkoutMinutes: Int = 0
+    var remainingWorkoutSeconds: Int = 0
     
     var totalSecondsForProgress = 0
     var totalWorkoutSeconds = 0
@@ -165,6 +171,8 @@ class Workout {
         remainingTransitionMinutes = minutes
         remainingTransitionSeconds = seconds
         
+        setTotalTransitionSeconds = (setTransitionMinutes * 60) + setTransitionSeconds
+        
     }
     
     func saveRestTime(minutes: Int, seconds: Int) {
@@ -181,6 +189,8 @@ class Workout {
         
         remainingRestMinutes = minutes
         remainingRestSeconds = seconds
+        
+        setTotalRestSeconds = (setRestMinutes * 60) + setRestSeconds
         
     }
     
@@ -347,7 +357,7 @@ class Workout {
         
     }
     
-    func setTotalWorkoutSeconds() -> Int {
+    func setTotalWorkoutSeconds() {
         
         var totalSeconds = Int()
         
@@ -392,11 +402,11 @@ class Workout {
             
         }
         
-        return totalSeconds
+        totalWorkoutSeconds = totalSeconds
         
     }
     
-    func getTimeFromTotalWorkoutSeconds() -> (minutes: Int, seconds: Int) {
+    func setMinutesAndSecondsFromTotalWorkoutSeconds() {
         
         var minutes = Int()
         var seconds = Int()
@@ -423,7 +433,11 @@ class Workout {
 
         }
         
-        return (minutes, seconds)
+        setWorkoutMinutes = minutes
+        setWorkoutSeconds = seconds
+        
+        remainingWorkoutMinutes = minutes
+        remainingWorkoutSeconds = seconds
         
     }
     
@@ -466,7 +480,9 @@ class Workout {
         
 //        print("Workout class loaded: Exercise array contains \(exerciseArray.count) objects.")
         
-        print(setTotalWorkoutSeconds())
+        self.setTotalWorkoutSeconds()
+        
+        self.setMinutesAndSecondsFromTotalWorkoutSeconds()
         
     }
     
