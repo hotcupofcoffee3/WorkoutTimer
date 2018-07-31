@@ -104,14 +104,14 @@ class Workout {
         
     }
     
-    func saveNewExercise(named: String, minutes: Int = 0, seconds: Int = 0, index: Int, routine: String) {
+    func saveNewExercise(named: String, minutes: Int = 0, seconds: Int = 0, routine: String) {
         
         let newExercise = Exercise(context: context)
         
         newExercise.intervalMinutes = Int64(minutes)
         newExercise.intervalSeconds = Int64(seconds)
         newExercise.name = named
-        newExercise.orderNumber = Int64(index)
+        newExercise.orderNumber = Int64(exerciseArray.count)
         newExercise.routine = routine
         
         self.saveData()
@@ -530,7 +530,7 @@ class Workout {
         
         if self.exerciseArray.count == 0 {
             
-            saveNewExercise(named: "Exercise", minutes: 0, seconds: 30, index: 0, routine: "Default")
+            saveNewExercise(named: "Exercise", minutes: 0, seconds: 30, routine: "Default")
             
             loadExercisesPerRoutine(routine: "Default")
             

@@ -166,7 +166,7 @@ extension ExerciseViewController {
         
         if isNew {
             
-            workout.saveNewExercise(named: newName, minutes: minutes, seconds: seconds, index: workout.exerciseArray.count, routine: "Default")
+            workout.saveNewExercise(named: newName, minutes: minutes, seconds: seconds, routine: "Default")
             
         } else {
             
@@ -236,7 +236,15 @@ extension ExerciseViewController {
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
+        let selectedExercise = workout.exerciseArray[sourceIndexPath.row]
         
+        workout.exerciseArray.remove(at: sourceIndexPath.row)
+        
+        workout.exerciseArray.insert(selectedExercise, at: destinationIndexPath.row)
+        
+        workout.updateOrderNumbers()
+        
+        tableView.reloadData()
         
     }
     
