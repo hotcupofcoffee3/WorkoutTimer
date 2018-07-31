@@ -1,27 +1,28 @@
 //
-//  TimeAndNumberViewController.swift
+//  SetsTranstionAndRestViewController.swift
 //  WorkoutTimer
 //
-//  Created by Adam Moore on 7/23/18.
+//  Created by Adam Moore on 7/27/18.
 //  Copyright © 2018 Adam Moore. All rights reserved.
 //
 
 import UIKit
 
-protocol SetNumberDelegate {
+protocol SetSetsTransitionsAndRestDelegate {
     
     func setSets(numberOfSets: Int)
-    func setTime(minutes: Int, seconds: Int)
+    func setTransition(minutes: Int, seconds: Int)
+    func setRest(minutes: Int, seconds: Int)
     
 }
 
-class TimeAndNumberViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
-    
-    var delegate: SetNumberDelegate?
+class SetsTransitionAndRestViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+        
+    var delegate: SetSetsTransitionsAndRestDelegate?
     
     var isTime = Bool()
     
-    var isInterval = Bool()
+    var isTransition = Bool()
     
     var numberOfSets = Int()
     
@@ -31,6 +32,8 @@ class TimeAndNumberViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     var pickerMinutesAndSeconds = Array(0...59)
     
+    @IBOutlet weak var chosenPickerInfoTitle: UILabel!
+    
     @IBOutlet weak var chosenPickerInfoLabel: UILabel!
     
     @IBOutlet weak var numberPicker: UIPickerView!
@@ -39,13 +42,23 @@ class TimeAndNumberViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     @IBOutlet weak var secLabel: UILabel!
     
+    @IBAction func cancel(_ sender: UIButton) {
+        
+        dismiss(animated: true, completion: nil)
+        
+    }
+    
     @IBAction func setNumberButton(_ sender: UIButton) {
         
-        if isTime {
+        if isTime && isTransition {
             
-            delegate?.setTime(minutes: minutes, seconds: seconds)
+            delegate?.setTransition(minutes: minutes, seconds: seconds)
             
-        } else if !isTime {
+        } else if isTime && !isTransition {
+            
+            delegate?.setRest(minutes: minutes, seconds: seconds)
+            
+        } else {
             
             delegate?.setSets(numberOfSets: numberOfSets)
             
@@ -67,17 +80,21 @@ class TimeAndNumberViewController: UIViewController, UIPickerViewDelegate, UIPic
             minLabel.text = "min"
             secLabel.text = "sec"
             
-        } else if !isTime {
+            chosenPickerInfoTitle.text = isTransition ? "Transition Time" : "Rest Time"
+            
+        } else {
             
             numberPicker.selectRow(numberOfSets - 1, inComponent: 0, animated: true)
             
             minLabel.text = ""
             secLabel.text = ""
             
+            chosenPickerInfoTitle.text = "Number of Sets"
+            
         }
         
         chosenPickerInfoLabel.text = isTime ? "\(zero(unit: minutes))\(minutes):\(zero(unit: seconds))\(seconds)" : "\(numberOfSets)"
-
+        
     }
     
     func zero(unit: Int) -> String {
@@ -98,7 +115,7 @@ class TimeAndNumberViewController: UIViewController, UIPickerViewDelegate, UIPic
 
 
 
-extension TimeAndNumberViewController {
+extension SetsTransitionAndRestViewController {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         
@@ -112,11 +129,11 @@ extension TimeAndNumberViewController {
         
     }
     
-//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-//
-//        return isTime ? "\(row)" : "\(row + 1)"
-//
-//    }
+    //    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    //
+    //        return isTime ? "\(row)" : "\(row + 1)"
+    //
+    //    }
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         let titleString = isTime ? "\(row)" : "\(row + 1)"
@@ -125,40 +142,29 @@ extension TimeAndNumberViewController {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-
+        
         if isTime {
-
+            
             if component == 0 {
-
+                
                 minutes = row
-
+                
             } else if component == 1 {
-
+                
                 seconds = row
-
+                
             }
-
+            
             chosenPickerInfoLabel.text = "\(zero(unit: minutes))\(minutes):\(zero(unit: seconds))\(seconds)"
-
+            
         } else {
             
             numberOfSets = row + 1
-
+            
             chosenPickerInfoLabel.text = "\(numberOfSets)"
-
+            
         }
-
+        
     }
-    
+
 }
-
-
-
-
-
-
-
-
-
-
-

@@ -11,10 +11,20 @@ import UIKit
 
 class Keywords {
     
-    let mainToPickerSegue = "mainToPickerSegue"
+    let mainToExerciseSegue = "mainToExerciseSegue"
+    
+    let mainToSetsSegue = "mainToSetsSegue"
+    
+    let exerciseToPickerSegue = "exerciseToPickerSegue"
+    
+    let routineMatchesKey = "routine MATCHES %@"
+    
+    let orderNumberKey = "orderNumber"
     
     let mainBackgroundColor = UIColor.init(red: 70/255, green: 109/255, blue: 111/255, alpha: 1.0)
     
     let darkVersionOfMainBackgroundColor = UIColor.init(red: 33/255, green: 51/255, blue: 52/255, alpha: 1.0)
+    
+    let currentExerciseColor = UIColor.init(red: 122/255, green: 141/255, blue: 73/255, alpha: 1.0)
     
 }
