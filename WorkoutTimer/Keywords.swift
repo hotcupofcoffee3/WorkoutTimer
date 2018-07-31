@@ -17,6 +17,10 @@ class Keywords {
     
     let exerciseToPickerSegue = "exerciseToPickerSegue"
     
+    let exerciseToRoutineSegue = "exerciseToRoutineSegue"
+    
+    let routineToAddRoutineSegue = "routineToAddRoutineSegue"
+    
     let routineMatchesKey = "routine MATCHES %@"
     
     let orderNumberKey = "orderNumber"

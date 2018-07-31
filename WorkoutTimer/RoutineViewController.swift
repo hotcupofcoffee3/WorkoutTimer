@@ -1,20 +1,14 @@
 //
-//  ExerciseViewController.swift
+//  RoutineViewController.swift
 //  WorkoutTimer
 //
-//  Created by Adam Moore on 7/27/18.
+//  Created by Adam Moore on 7/31/18.
 //  Copyright © 2018 Adam Moore. All rights reserved.
 //
 
 import UIKit
 
-protocol UpdateFirstExerciseDelegate {
-    
-    func updateFirstExercise(withExercise: Exercise)
-    
-}
-
-class ExerciseViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SetExerciseDelegate {
+class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
     
@@ -48,14 +42,6 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBOutlet weak var editButton: UIBarButtonItem!
     
-    @IBOutlet weak var goToRoutinesButton: UIButton!
-    
-    @IBAction func goToRoutines(_ sender: UIButton) {
-        
-        performSegue(withIdentifier: keywords.exerciseToRoutineSegue, sender: self)
-        
-    }
-    
     @IBAction func addExercise(_ sender: UIBarButtonItem) {
         
         if isTenExercises {
@@ -73,7 +59,7 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
             performSegue(withIdentifier: keywords.exerciseToPickerSegue, sender: self)
             
         }
-
+        
     }
     
     @IBAction func back(_ sender: UIBarButtonItem) {
@@ -89,8 +75,6 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
         editCells = !editCells
         
         editButton.title = editCells ? "Done" : "Edit"
-        
-        goToRoutinesButton.setTitle(editCells ? "Edit Routines" : workout.exerciseArray[0].routine!, for: .normal)
         
         exerciseTable.setEditing(editCells, animated: true)
         
@@ -124,8 +108,6 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
             
             let destinationVC = segue.destination as! AddExerciseViewController
             
-            destinationVC.delegate = self
-            
             destinationVC.isNew = isNew
             
             if !isNew {
@@ -144,25 +126,23 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         
         exerciseTable.register(UINib(nibName: "ExerciseTableViewCell", bundle: nil), forCellReuseIdentifier: "exerciseTableCell")
         
-        goToRoutinesButton.setTitle(editCells ? "Edit Routines" : workout.exerciseArray[0].routine!, for: .normal)
-        
         toggleIsTenExercises()
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
 }
 
-extension ExerciseViewController {
+extension RoutineViewController {
     
     func setExerciseVariables(named: String, minutes: Int, seconds: Int) {
         

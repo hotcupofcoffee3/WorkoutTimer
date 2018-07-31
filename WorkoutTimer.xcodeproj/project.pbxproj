@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B506381E211111C7002451F9 /* RoutineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B506381D211111C7002451F9 /* RoutineViewController.swift */; };
+		B50638202111128B002451F9 /* AddRoutineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B506381F2111128B002451F9 /* AddRoutineViewController.swift */; };
 		B529CB77210BA50C005A0488 /* ExerciseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B529CB75210BA50C005A0488 /* ExerciseCollectionViewCell.swift */; };
 		B529CB78210BA50C005A0488 /* ExerciseCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B529CB76210BA50C005A0488 /* ExerciseCollectionViewCell.xib */; };
 		B529CB7A210BBD32005A0488 /* ExerciseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B529CB79210BBD32005A0488 /* ExerciseViewController.swift */; };
@@ -27,6 +29,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B506381D211111C7002451F9 /* RoutineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineViewController.swift; sourceTree = "<group>"; };
+		B506381F2111128B002451F9 /* AddRoutineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRoutineViewController.swift; sourceTree = "<group>"; };
 		B529CB75210BA50C005A0488 /* ExerciseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCollectionViewCell.swift; sourceTree = "<group>"; };
 		B529CB76210BA50C005A0488 /* ExerciseCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExerciseCollectionViewCell.xib; sourceTree = "<group>"; };
 		B529CB79210BBD32005A0488 /* ExerciseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseViewController.swift; sourceTree = "<group>"; };
@@ -96,6 +100,8 @@
 				B5C3253A21068B5800A88FDB /* WorkoutModel.swift */,
 				B5C3251F21065A3E00A88FDB /* ViewController.swift */,
 				B529CB79210BBD32005A0488 /* ExerciseViewController.swift */,
+				B506381D211111C7002451F9 /* RoutineViewController.swift */,
+				B506381F2111128B002451F9 /* AddRoutineViewController.swift */,
 				B5C3253421065FD300A88FDB /* AddExerciseViewController.swift */,
 				B529CB7B210BC894005A0488 /* SetsTransitionAndRestViewController.swift */,
 				B529CB7D210BC9D4005A0488 /* Cells */,
@@ -189,8 +195,10 @@
 				B529CB7C210BC894005A0488 /* SetsTransitionAndRestViewController.swift in Sources */,
 				B5C3253B21068B5800A88FDB /* WorkoutModel.swift in Sources */,
 				B529CB77210BA50C005A0488 /* ExerciseCollectionViewCell.swift in Sources */,
+				B506381E211111C7002451F9 /* RoutineViewController.swift in Sources */,
 				B5C3253321065DDF00A88FDB /* Keywords.swift in Sources */,
 				B5C3252621065A3E00A88FDB /* WorkoutTimer.xcdatamodeld in Sources */,
+				B50638202111128B002451F9 /* AddRoutineViewController.swift in Sources */,
 				B529CB7A210BBD32005A0488 /* ExerciseViewController.swift in Sources */,
 				B5C3251E21065A3E00A88FDB /* AppDelegate.swift in Sources */,
 			);
