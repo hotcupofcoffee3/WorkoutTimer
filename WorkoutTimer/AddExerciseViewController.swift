@@ -24,8 +24,6 @@
 
 
 
-
-
 import UIKit
 
 protocol SetExerciseDelegate {
