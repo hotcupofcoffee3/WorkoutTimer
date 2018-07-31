@@ -20,6 +20,14 @@ class Workout {
         
     }
     
+    
+    
+    // ******
+    // *** Properties
+    // ******
+    
+    
+    
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     var workoutInfoArray = [WorkoutInfo]()
@@ -60,6 +68,14 @@ class Workout {
     var totalWorkoutSeconds = 0
     var totalWorkoutTimeLeft = 0
     
+    
+    
+    // ******
+    // *** Save
+    // ******
+    
+    
+    
     func saveData() {
         
         do {
@@ -73,6 +89,103 @@ class Workout {
         }
         
     }
+    
+    func saveNewWorkoutInfo() {
+        
+        let newWorkout = WorkoutInfo(context: context)
+        
+        newWorkout.restMinutes = 0
+        newWorkout.restSeconds = 0
+        newWorkout.sets = 3
+        newWorkout.transitionMinutes = 0
+        newWorkout.transitionSeconds = 0
+        
+        self.saveData()
+        
+    }
+    
+    func saveNewExercise(named: String, minutes: Int = 0, seconds: Int = 0, index: Int, routine: String) {
+        
+        let newExercise = Exercise(context: context)
+        
+        newExercise.intervalMinutes = Int64(minutes)
+        newExercise.intervalSeconds = Int64(seconds)
+        newExercise.name = named
+        newExercise.orderNumber = Int64(index)
+        newExercise.routine = routine
+        
+        self.saveData()
+        
+    }
+    
+    func saveIntervalTime(exerciseName: String, minutes: Int, seconds: Int) {
+        
+        guard let exercise = getExercise(named: exerciseName) else { return }
+        
+        exercise.intervalMinutes = Int64(minutes)
+        exercise.intervalSeconds = Int64(seconds)
+        
+        saveData()
+        
+    }
+    
+    func saveTransitionTime(minutes: Int, seconds: Int) {
+        
+        let workoutInfo = getWorkoutInfo()
+        
+        workoutInfo.transitionMinutes = Int64(minutes)
+        workoutInfo.transitionSeconds = Int64(seconds)
+        
+        saveData()
+        
+        setTransitionMinutes = minutes
+        setTransitionSeconds = seconds
+        
+        remainingTransitionMinutes = minutes
+        remainingTransitionSeconds = seconds
+        
+        setTotalTransitionSeconds = (setTransitionMinutes * 60) + setTransitionSeconds
+        
+    }
+    
+    func saveRestTime(minutes: Int, seconds: Int) {
+        
+        let workoutInfo = getWorkoutInfo()
+        
+        workoutInfo.restMinutes = Int64(minutes)
+        workoutInfo.restSeconds = Int64(seconds)
+        
+        saveData()
+        
+        setRestMinutes = minutes
+        setRestSeconds = seconds
+        
+        remainingRestMinutes = minutes
+        remainingRestSeconds = seconds
+        
+        setTotalRestSeconds = (setRestMinutes * 60) + setRestSeconds
+        
+    }
+    
+    func saveSets(sets: Int) {
+        
+        let workoutInfo = getWorkoutInfo()
+        
+        workoutInfo.sets = Int64(sets)
+        
+        saveData()
+        
+        setNumberOfSets = sets
+        
+    }
+    
+    
+    
+    // ******
+    // *** Load
+    // ******
+    
+    
     
     func loadWorkoutData() {
         
@@ -150,6 +263,14 @@ class Workout {
 
     }
     
+    
+    
+    // ******
+    // *** Retrieve Basic Workout Info and Specific Exercises
+    // ******
+    
+    
+    
     func getWorkoutInfo() -> WorkoutInfo {
         
         return workoutInfoArray[0]
@@ -173,135 +294,14 @@ class Workout {
         return exerciseToReturn
         
     }
+
     
-    func saveIntervalTime(exerciseName: String, minutes: Int, seconds: Int) {
-        
-        guard let exercise = getExercise(named: exerciseName) else { return }
-        
-        exercise.intervalMinutes = Int64(minutes)
-        exercise.intervalSeconds = Int64(seconds)
-        
-        saveData()
-        
-    }
     
-    func saveTransitionTime(minutes: Int, seconds: Int) {
-        
-        let workoutInfo = getWorkoutInfo()
-        
-        workoutInfo.transitionMinutes = Int64(minutes)
-        workoutInfo.transitionSeconds = Int64(seconds)
-        
-        saveData()
-        
-        setTransitionMinutes = minutes
-        setTransitionSeconds = seconds
-        
-        remainingTransitionMinutes = minutes
-        remainingTransitionSeconds = seconds
-        
-        setTotalTransitionSeconds = (setTransitionMinutes * 60) + setTransitionSeconds
-        
-    }
+    // ******
+    // *** Update Exercise and Exercise Indices
+    // ******
     
-    func saveRestTime(minutes: Int, seconds: Int) {
-        
-        let workoutInfo = getWorkoutInfo()
-        
-        workoutInfo.restMinutes = Int64(minutes)
-        workoutInfo.restSeconds = Int64(seconds)
-        
-        saveData()
-        
-        setRestMinutes = minutes
-        setRestSeconds = seconds
-        
-        remainingRestMinutes = minutes
-        remainingRestSeconds = seconds
-        
-        setTotalRestSeconds = (setRestMinutes * 60) + setRestSeconds
-        
-    }
     
-    func saveSets(sets: Int) {
-        
-        let workoutInfo = getWorkoutInfo()
-        
-        workoutInfo.sets = Int64(sets)
-        
-        saveData()
-        
-        setNumberOfSets = sets
-        
-    }
-    
-    func makeSureInitialWorkoutInfoObjectIsCreated() {
-        
-        if self.workoutInfoArray.count == 0 {
-            
-            saveNewWorkoutInfo()
-            
-            loadWorkoutData()
-            
-        }
-        
-    }
-    
-//    func saveTestingExercise(named: String, minutes: Int, seconds: Int) {
-//
-//        let test = Exercise(context: context)
-//
-//        test.name = named
-//        test.intervalMinutes = Int64(minutes)
-//        test.intervalSeconds = Int64(seconds)
-//
-//        saveData()
-//
-//    }
-    
-    func makeSureInitialExerciseObjectIsCreated() {
-        
-        if self.exerciseArray.count == 0 {
-            
-            saveNewExercise(named: "Exercise", minutes: 0, seconds: 30, index: 0, routine: "Default")
-            
-//            saveTestingExercise(named: "Exercise 1", minutes: 1, seconds: 12)
-//            saveTestingExercise(named: "Exercise 2", minutes: 2, seconds: 24)
-//            saveTestingExercise(named: "Exercise 3", minutes: 3, seconds: 36)
-            
-            loadExercisesPerRoutine(routine: "Default")
-            
-        }
-        
-    }
-    
-    func saveNewWorkoutInfo() {
-        
-        let newWorkout = WorkoutInfo(context: context)
-        
-        newWorkout.restMinutes = 0
-        newWorkout.restSeconds = 0
-        newWorkout.sets = 3
-        newWorkout.transitionMinutes = 0
-        newWorkout.transitionSeconds = 0
-        
-        self.saveData()
-        
-    }
-    
-    func saveNewExercise(named: String, minutes: Int = 0, seconds: Int = 0, index: Int, routine: String) {
-        
-        let newExercise = Exercise(context: context)
-        
-        newExercise.intervalMinutes = Int64(minutes)
-        newExercise.intervalSeconds = Int64(seconds)
-        newExercise.name = named
-        newExercise.orderNumber = Int64(index)
-        newExercise.routine = routine
-        
-        self.saveData()
-        
-    }
     
     func updateExercise(named: String, newName: String, newMinutes: Int, newSeconds: Int) {
         
@@ -345,6 +345,14 @@ class Workout {
         
     }
     
+    
+    
+    // ******
+    // *** Delete
+    // ******
+    
+    
+    
     func deleteExercise(_ exercise: Exercise) {
         
         context.delete(exercise)
@@ -377,14 +385,20 @@ class Workout {
         
     }
     
+    
+    
+    // ******
+    // *** Set Amounts to Remaining or Total Amounts
+    // ******
+    
+    
+    
     func setTotalAndRemainingStartingIntervalAmounts() {
         
-        let firstExercise = exerciseArray[0]
+        setTotalIntervalSeconds = (Int(exerciseArray[0].intervalMinutes * 60)) + Int(exerciseArray[0].intervalSeconds)
         
-        setTotalIntervalSeconds = (Int(firstExercise.intervalMinutes * 60)) + Int(firstExercise.intervalSeconds)
-        
-        remainingIntervalMinutes = Int(firstExercise.intervalMinutes)
-        remainingIntervalSeconds = Int(firstExercise.intervalSeconds)
+        remainingIntervalMinutes = Int(exerciseArray[0].intervalMinutes)
+        remainingIntervalSeconds = Int(exerciseArray[0].intervalSeconds)
         
     }
 
@@ -492,16 +506,60 @@ class Workout {
         
     }
     
+    
+    
+    // ******
+    // *** Initialization
+    // ******
+    
+    
+    
+    func makeSureInitialWorkoutInfoObjectIsCreated() {
+        
+        if self.workoutInfoArray.count == 0 {
+            
+            saveNewWorkoutInfo()
+            
+            loadWorkoutData()
+            
+        }
+        
+    }
+    
+    func makeSureInitialExerciseObjectIsCreated() {
+        
+        if self.exerciseArray.count == 0 {
+            
+            saveNewExercise(named: "Exercise", minutes: 0, seconds: 30, index: 0, routine: "Default")
+            
+            loadExercisesPerRoutine(routine: "Default")
+            
+        }
+        
+    }
+    
     init() {
         
 //        deleteAllSavedWorkoutInfoObjects()
         
+        
+        
+        // Load saved amounts
+        
         self.loadWorkoutData()
         self.loadExercisesPerRoutine(routine: "Default")
 
+        
+        
+        // For First Time Users, make sure initial amounts are set.
+        
         self.makeSureInitialWorkoutInfoObjectIsCreated()
         self.makeSureInitialExerciseObjectIsCreated()
 
+        
+        
+        // Set properties to their saved values.
+        
         let workoutInfo = getWorkoutInfo()
 
         self.setNumberOfSets = Int(workoutInfo.sets)
@@ -512,14 +570,12 @@ class Workout {
         self.setRestMinutes = Int(workoutInfo.restMinutes)
         self.setRestSeconds = Int(workoutInfo.restSeconds)
         
-        let firstExercise = exerciseArray[0]
-        
         self.setTotalIntervalSeconds = setTotalSecondsForProgressForExercise(index: 0)
         self.setTotalTransitionSeconds = (setTransitionMinutes * 60) + setTransitionSeconds
         self.setTotalRestSeconds = (setRestMinutes * 60) + setRestSeconds
         
-        self.remainingIntervalMinutes = Int(firstExercise.intervalMinutes)
-        self.remainingIntervalSeconds = Int(firstExercise.intervalSeconds)
+        self.remainingIntervalMinutes = Int(exerciseArray[0].intervalMinutes)
+        self.remainingIntervalSeconds = Int(exerciseArray[0].intervalSeconds)
         
         self.remainingTransitionMinutes = setTransitionMinutes
         self.remainingTransitionSeconds = setTransitionSeconds
@@ -528,8 +584,6 @@ class Workout {
         self.remainingRestSeconds = setRestSeconds
         
         self.totalSecondsForProgress = setTotalSecondsForProgressForExercise(index: 0)
-        
-//        print("Workout class loaded: Exercise array contains \(exerciseArray.count) objects.")
         
         self.setTotalWorkoutSeconds()
         
