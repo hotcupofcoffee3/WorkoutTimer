@@ -14,37 +14,23 @@ protocol SetRoutineDelegate {
     
 }
 
-class AddRoutineViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+class AddRoutineViewController: UIViewController, UITextFieldDelegate {
     
     let workout = Workout()
     
     var delegate: SetRoutineDelegate?
     
-    var exerciseName = String()
+    var routineName = String()
     
-    var newExerciseName = String()
-    
-    var minutes = Int()
-    
-    var seconds = Int()
+    var newRoutineName = String()
     
     var isNew = Bool()
     
-    var pickerMinutesAndSeconds = Array(0...59)
+    @IBOutlet weak var routineNameView: UIView!
     
-    @IBOutlet weak var exerciseNameView: UIView!
-    
-    @IBOutlet weak var exerciseNameTextField: UITextField!
+    @IBOutlet weak var routineNameTextField: UITextField!
     
     @IBOutlet weak var warningLabel: UILabel!
-    
-    @IBOutlet weak var chosenPickerInfoLabel: UILabel!
-    
-    @IBOutlet weak var numberPicker: UIPickerView!
-    
-    @IBOutlet weak var minLabel: UILabel!
-    
-    @IBOutlet weak var secLabel: UILabel!
     
     @IBAction func cancel(_ sender: UIButton) {
         
@@ -52,65 +38,45 @@ class AddRoutineViewController: UIViewController, UIPickerViewDelegate, UIPicker
         
     }
     
-    @IBAction func setExercise(_ sender: UIButton) {
+    @IBAction func setRoutine(_ sender: UIButton) {
         
-        if exerciseNameTextField.text == "" {
+        if routineNameTextField.text == "" {
             
             return warningLabel.text = "You have to fill in a value for the exercise name."
             
             //             return
             
-        } else if checkIfNameExists(newExerciseName: exerciseNameTextField.text!) {
+        } else if checkIfNameExists(newRoutineName: routineNameTextField.text!) {
             
             warningLabel.text = "An exercise already exists with this name."
             
             return
             
-        } else if minutes == 0 && seconds == 0 {
-            
-            warningLabel.text = "The time cannot be set to 00:00."
-            
-            return
-            
         }
         
-        newExerciseName = exerciseNameTextField.text!
+        newRoutineName = routineNameTextField.text!
         
-        delegate?.setExercise(oldName: exerciseName, newName: newExerciseName, minutes: minutes, seconds: seconds, isNew: isNew)
+        delegate?.setRoutine(oldName: routineName, newName: newRoutineName, isNew: isNew)
         
         dismiss(animated: true, completion: nil)
         
     }
     
-    func checkIfNameExists(newExerciseName: String) -> Bool {
+    func checkIfNameExists(newRoutineName: String) -> Bool {
         
         var isSame = false
         
-        for exercise in workout.exerciseArray {
+        for routine in workout.routineArray {
             
-            if isNew {
+            if !isNew && routine.lowercased() == routineName.lowercased() {
                 
-                if exercise.name!.lowercased() == newExerciseName.lowercased() {
-                    
-                    warningLabel.text = "An exercise already has this name."
-                    
-                    isSame = true
-                    
-                }
+                continue
                 
             } else {
                 
-                if exercise.name!.lowercased() == exerciseName.lowercased() {
+                if routine.lowercased() == newRoutineName.lowercased() {
                     
-                    continue
-                    
-                } else if exercise.name!.lowercased() == newExerciseName.lowercased() {
-                    
-                    print(exerciseName)
-                    
-                    print(newExerciseName)
-                    
-                    warningLabel.text = "An exercise already has this name."
+                    warningLabel.text = "A routine already has this name."
                     
                     isSame = true
                     
@@ -127,32 +93,9 @@ class AddRoutineViewController: UIViewController, UIPickerViewDelegate, UIPicker
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        exerciseNameTextField.text = "\(exerciseName)"
+        routineNameTextField.text = "\(routineName)"
         
         warningLabel.text = ""
-        
-        numberPicker.selectRow(minutes, inComponent: 0, animated: true)
-        
-        numberPicker.selectRow(seconds, inComponent: 1, animated: true)
-        
-        minLabel.text = "min"
-        secLabel.text = "sec"
-        
-        chosenPickerInfoLabel.text = "\(zero(unit: minutes))\(minutes):\(zero(unit: seconds))\(seconds)"
-        
-    }
-    
-    func zero(unit: Int) -> String {
-        
-        var zero = ""
-        
-        if unit <= 9 {
-            
-            zero = "0"
-            
-        }
-        
-        return zero
         
     }
     
@@ -162,49 +105,15 @@ class AddRoutineViewController: UIViewController, UIPickerViewDelegate, UIPicker
 
 extension AddRoutineViewController {
     
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        
-        return 2
-        
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        
-        return pickerMinutesAndSeconds.count
-        
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        let titleString = "\(row)"
-        let title = NSAttributedString(string: titleString, attributes: [NSAttributedStringKey.foregroundColor:UIColor.white])
-        return title
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
-        if component == 0 {
-            
-            minutes = row
-            
-        } else if component == 1 {
-            
-            seconds = row
-            
-        }
-        
-        chosenPickerInfoLabel.text = "\(zero(unit: minutes))\(minutes):\(zero(unit: seconds))\(seconds)"
-        
-    }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        exerciseNameTextField.resignFirstResponder()
+        routineNameTextField.resignFirstResponder()
         
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
-        exerciseNameTextField.endEditing(true)
+        routineNameTextField.endEditing(true)
         
         return true
     }

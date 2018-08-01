@@ -70,6 +70,8 @@ class Workout {
     var totalWorkoutSeconds = 0
     var totalWorkoutTimeLeft = 0
     
+    var lastUsedRoutine = String()
+    
     
     
     // ******
@@ -178,6 +180,14 @@ class Workout {
         saveData()
         
         setNumberOfSets = sets
+        
+    }
+    
+    func saveLastUsedRoutine(routine: String) {
+        
+        UserDefaults.standard.set(routine, forKey: keywords.routineKey)
+        
+        lastUsedRoutine = routine
         
     }
     
@@ -295,6 +305,24 @@ class Workout {
         
     }
     
+    func loadLastUsedRoutine() {
+        
+        if UserDefaults.standard.object(forKey: keywords.routineKey) == nil {
+            
+            saveLastUsedRoutine(routine: keywords.defaultKey)
+            
+        } else {
+            
+            if let routine = UserDefaults.standard.object(forKey: keywords.routineKey) as? String {
+                
+                lastUsedRoutine = routine
+                
+            }
+            
+        }
+        
+    }
+    
     
     
     // ******
@@ -370,6 +398,20 @@ class Workout {
         for i in exerciseArray.indices {
             
             exerciseArray[i].orderNumber = Int64(i)
+            
+        }
+        
+        saveData()
+        
+    }
+    
+    func updateRoutineName(oldName: String, newName: String) {
+        
+        loadExercisesPerRoutine(routine: oldName)
+        
+        for exercise in exerciseArray {
+            
+            exercise.routine = newName
             
         }
         
@@ -562,9 +604,9 @@ class Workout {
         
         if self.exerciseArray.count == 0 {
             
-            saveNewExercise(named: "Exercise", minutes: 0, seconds: 30, routine: "Default")
+            saveNewExercise(named: "Exercise 1", minutes: 0, seconds: 30, routine: keywords.defaultKey)
             
-            loadExercisesPerRoutine(routine: "Default")
+            loadExercisesPerRoutine(routine: keywords.defaultKey)
             
         }
         
@@ -578,8 +620,10 @@ class Workout {
         
         // Load saved amounts
         
+        self.loadLastUsedRoutine()
+        
         self.loadWorkoutData()
-        self.loadExercisesPerRoutine(routine: "Default")
+        self.loadExercisesPerRoutine(routine: lastUsedRoutine)
 
         
         

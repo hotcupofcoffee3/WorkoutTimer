@@ -186,7 +186,7 @@ extension ExerciseViewController {
             
         }
         
-        workout.loadExercisesPerRoutine(routine: "Default")
+        workout.loadExercisesPerRoutine(routine: workout.lastUsedRoutine)
         
         toggleIsTenExercises()
         

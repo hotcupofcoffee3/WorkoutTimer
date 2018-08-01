@@ -8,6 +8,19 @@
 
 import UIKit
 
+// ******
+// *** TODO:
+// ******
+
+// Last added the cells to be clicked to either go edit the routine, or go back to the main exercise area, hoping that it changes the workout.exerciseArray, but it hasn't been tested. Maybe need to add a delegate that updates the workout object for the Exercise VC.
+// Need to take care of the Delete functionality for the Routine Table, and add a function in the model to delete all Exercises associated with the Routine.
+// Hook up the actions and outlets from the VC to the View, as none of this for the Routine, for the most part, have been done yet.
+
+
+
+
+
+
 class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SetRoutineDelegate {
     
     
@@ -100,25 +113,23 @@ extension RoutineViewController {
         
     }
     
-    func setExercise(oldName: String, newName: String, minutes: Int, seconds: Int, isNew: Bool) {
+    func setRoutine(oldName: String, newName: String, isNew: Bool) {
         
-        setExerciseVariables(named: newName, minutes: minutes, seconds: seconds)
+        setRoutineVariable(named: newName)
         
         if isNew {
             
-            workout.saveNewExercise(named: newName, minutes: minutes, seconds: seconds, routine: "Default")
+            workout.saveNewExercise(named: "Exercise 1", minutes: 0, seconds: 0, routine: newName)
             
         } else {
             
-            workout.updateExercise(named: oldName, newName: newName, newMinutes: minutes, newSeconds: seconds)
+            workout.updateRoutineName(oldName: oldName, newName: newName)
             
         }
         
-        workout.loadExercisesPerRoutine(routine: "Default")
+        workout.loadRoutines()
         
-        toggleIsTenExercises()
-        
-        exerciseTable.reloadData()
+        routineTable.reloadData()
         
     }
     
@@ -144,13 +155,19 @@ extension RoutineViewController {
         
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let routine = workout.routineArray[indexPath.row]
-        
-        setExerciseVariables(named: exercise.name!, minutes: Int(exercise.intervalMinutes), seconds: Int(exercise.intervalSeconds))
-        
-        isNew = false
-        
-        performSegue(withIdentifier: keywords.exerciseToPickerSegue, sender: self)
+        if editCells {
+            
+            isNew = false
+            
+            performSegue(withIdentifier: keywords.routineToAddRoutineSegue, sender: self)
+            
+        } else {
+            
+            workout.saveLastUsedRoutine(routine: workout.routineArray[indexPath.row])
+            
+            dismiss(animated: true, completion: nil)
+            
+        }
         
     }
     
@@ -158,9 +175,7 @@ extension RoutineViewController {
         
         if editingStyle == .delete {
             
-            workout.deleteExercise(workout.exerciseArray[indexPath.row])
-            
-            toggleIsTenExercises()
+//            workout.deleteExercise(workout.exerciseArray[indexPath.row])
             
         }
         
