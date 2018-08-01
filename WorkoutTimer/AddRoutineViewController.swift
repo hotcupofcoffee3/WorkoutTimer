@@ -8,11 +8,17 @@
 
 import UIKit
 
+protocol SetRoutineDelegate {
+    
+    func setRoutine(oldName: String, newName: String, isNew: Bool)
+    
+}
+
 class AddRoutineViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
     let workout = Workout()
     
-    var delegate: SetExerciseDelegate?
+    var delegate: SetRoutineDelegate?
     
     var exerciseName = String()
     

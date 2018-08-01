@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SetRoutineDelegate {
     
     
     
@@ -18,53 +18,31 @@ class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     
     
-    var exerciseName = String()
+    var routineName = String()
     
-    var exerciseMinutes = Int()
     
-    var exerciseSeconds = Int()
-    
+   
     var isNew = Bool()
-    
-    var isTenExercises = Bool()
     
     var editCells = false
     
     
     
-    var delegate: UpdateFirstExerciseDelegate?
-    
-    
-    
-    @IBOutlet weak var exerciseTable: UITableView!
+    @IBOutlet weak var routineTable: UITableView!
     
     @IBOutlet weak var addButton: UIBarButtonItem!
     
     @IBOutlet weak var editButton: UIBarButtonItem!
     
-    @IBAction func addExercise(_ sender: UIBarButtonItem) {
+    @IBAction func addRoutine(_ sender: UIBarButtonItem) {
         
-        if isTenExercises {
-            
-            let alert = UIAlertController(title: "Exercise Limit", message: "You can have a maximum of 10 exercises.", preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            
-            present(alert, animated: true, completion: nil)
-            
-        } else {
-            
-            isNew = true
-            
-            performSegue(withIdentifier: keywords.exerciseToPickerSegue, sender: self)
-            
-        }
+        isNew = true
+        
+        performSegue(withIdentifier: keywords.routineToAddRoutineSegue, sender: self)
         
     }
     
     @IBAction func back(_ sender: UIBarButtonItem) {
-        
-        delegate?.updateFirstExercise(withExercise: workout.exerciseArray[0])
         
         dismiss(animated: true, completion: nil)
         
@@ -76,47 +54,19 @@ class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         editButton.title = editCells ? "Done" : "Edit"
         
-        exerciseTable.setEditing(editCells, animated: true)
-        
-        exerciseTable.reloadData()
-        
-    }
-    
-    func zero(unit: Int) -> String {
-        
-        var zero = "\(unit)"
-        
-        if unit <= 9 {
-            
-            zero = "0\(unit)"
-            
-        }
-        
-        return zero
-        
-    }
-    
-    func toggleIsTenExercises() {
-        
-        isTenExercises = (workout.exerciseArray.count == 10)
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == keywords.exerciseToPickerSegue {
+        if segue.identifier == keywords.routineToAddRoutineSegue {
             
-            let destinationVC = segue.destination as! AddExerciseViewController
+            let destinationVC = segue.destination as! AddRoutineViewController
             
             destinationVC.isNew = isNew
             
             if !isNew {
                 
-                destinationVC.exerciseName = exerciseName
                 
-                destinationVC.minutes = exerciseMinutes
-                
-                destinationVC.seconds = exerciseSeconds
                 
             }
             
@@ -129,9 +79,7 @@ class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         // Do any additional setup after loading the view.
         
-        exerciseTable.register(UINib(nibName: "ExerciseTableViewCell", bundle: nil), forCellReuseIdentifier: "exerciseTableCell")
-        
-        toggleIsTenExercises()
+       routineTable.register(UINib(nibName: "RoutineTableViewCell", bundle: nil), forCellReuseIdentifier: "routineTableCell")
         
     }
     
@@ -142,13 +90,13 @@ class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewD
     
 }
 
+
+
 extension RoutineViewController {
     
-    func setExerciseVariables(named: String, minutes: Int, seconds: Int) {
+    func setRoutineVariable(named: String) {
         
-        exerciseName = named
-        exerciseMinutes = minutes
-        exerciseSeconds = seconds
+        routineName = named
         
     }
     
@@ -175,17 +123,15 @@ extension RoutineViewController {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return workout.exerciseArray.count
+        return workout.routineArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "exerciseTableCell") as! ExerciseTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "routineTableCell") as! RoutineTableViewCell
         
-        let currentExercise = workout.exerciseArray[indexPath.row]
+        let currentRoutine = workout.routineArray[indexPath.row]
         
-        cell.exerciseNameLabel.text = "\(currentExercise.name!)"
-        
-        cell.exerciseTimeLabel.text = "\(zero(unit: Int(currentExercise.intervalMinutes))):\(zero(unit: Int(currentExercise.intervalSeconds)))"
+        cell.routineNameLabel.text = "\(currentRoutine)"
         
         return cell
     }
@@ -198,7 +144,7 @@ extension RoutineViewController {
         
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let exercise = workout.exerciseArray[indexPath.row]
+        let routine = workout.routineArray[indexPath.row]
         
         setExerciseVariables(named: exercise.name!, minutes: Int(exercise.intervalMinutes), seconds: Int(exercise.intervalSeconds))
         

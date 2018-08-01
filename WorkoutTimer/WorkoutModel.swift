@@ -32,6 +32,8 @@ class Workout {
     
     var workoutInfoArray = [WorkoutInfo]()
     var exerciseArray = [Exercise]()
+    var routineArray = [String]()
+    
     let keywords = Keywords()
     
     var currentSet = 1
@@ -261,6 +263,36 @@ class Workout {
             
         }
 
+    }
+    
+    func loadRoutines() {
+        
+        loadExercises()
+        
+        for exercise in exerciseArray {
+            
+            if routineArray.count == 0 {
+                
+                routineArray.append(exercise.routine!)
+                
+            }
+            
+            for routine in routineArray {
+                
+                if routine == exercise.routine {
+                    
+                    continue
+                    
+                } else {
+                    
+                    routineArray.append(exercise.routine!)
+                    
+                }
+                
+            }
+            
+        }
+        
     }
     
     
@@ -588,6 +620,8 @@ class Workout {
         self.setTotalWorkoutSeconds()
         
         self.setMinutesAndSecondsFromTotalWorkoutSeconds()
+        
+        self.loadRoutines()
         
     }
     
