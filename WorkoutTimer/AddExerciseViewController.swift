@@ -8,19 +8,10 @@
 
 
 
-
-
-
-// Organize the main exercise page to display the cells, with the fonts and sizes changing based on the number of exercises added.
-
-
-
 // Warning: 255/110/101
 // Purple: 146/87/173
 // Dark blue background: 44/62/80
 // Lighter teal: 22/160/133
-
-
 
 
 

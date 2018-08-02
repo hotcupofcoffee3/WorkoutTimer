@@ -741,7 +741,7 @@ warning</string>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="mHo-Zc-411"/>
                                     <barButtonItem systemItem="add" id="9Yn-cf-8IM">
                                         <connections>
-                                            <action selector="addExercise:" destination="0WI-Oe-cVr" id="Yqr-qb-g1u"/>
+                                            <action selector="addRoutine:" destination="0WI-Oe-cVr" id="6xK-bw-mYx"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="MHn-5s-CbP"/>
@@ -788,7 +788,7 @@ warning</string>
                     <connections>
                         <outlet property="addButton" destination="9Yn-cf-8IM" id="sQ0-T6-s67"/>
                         <outlet property="editButton" destination="Ebn-Am-BHy" id="M4a-Xo-yW5"/>
-                        <outlet property="exerciseTable" destination="5YQ-Yy-0cz" id="6Bg-Ju-EwZ"/>
+                        <outlet property="routineTable" destination="5YQ-Yy-0cz" id="Wks-ih-jic"/>
                         <segue destination="bRc-YK-AfT" kind="presentation" identifier="routineToAddRoutineSegue" id="pHk-cT-RTf"/>
                     </connections>
                 </viewController>
@@ -833,66 +833,15 @@ warning</string>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AF8-2i-FVh">
-                                <rect key="frame" x="20" y="158" width="335" height="53.5"/>
+                                <rect key="frame" x="20" y="158" width="335" height="41"/>
                                 <string key="text">warning
 warning</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="0.43137254899999999" blue="0.39607843139999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="y5M-JN-KEZ" userLabel="Interval Stack View">
-                                <rect key="frame" x="0.0" y="217.5" width="375" height="96"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Interval" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="16o-8g-E39">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="24"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--:--" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ybS-me-JTO">
-                                        <rect key="frame" x="0.0" y="48" width="375" height="48"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="36"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="96" id="JTm-6K-b1d"/>
-                                </constraints>
-                            </stackView>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P79-bl-cYa">
-                                <rect key="frame" x="77" y="323.5" width="220" height="200"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="q8B-sM-gbg"/>
-                                    <constraint firstAttribute="width" constant="220" id="wqz-GX-90g"/>
-                                </constraints>
-                                <connections>
-                                    <outlet property="dataSource" destination="bRc-YK-AfT" id="w3q-07-wYD"/>
-                                    <outlet property="delegate" destination="bRc-YK-AfT" id="mrl-1R-Uc5"/>
-                                </connections>
-                            </pickerView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="No4-Rr-SgL" userLabel="min/sec Stack">
-                                <rect key="frame" x="157.5" y="409.5" width="150" height="28"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="   min" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NdK-bS-nhS">
-                                        <rect key="frame" x="0.0" y="0.0" width="75" height="28"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="24"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sec" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aX4-wa-ziI">
-                                        <rect key="frame" x="75" y="0.0" width="75" height="28"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="24"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="150" id="mWa-tJ-aQi"/>
-                                </constraints>
-                            </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KrA-3n-mDW">
-                                <rect key="frame" x="0.0" y="543.5" width="375" height="60"/>
+                                <rect key="frame" x="0.0" y="259" width="375" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="dZn-IK-XWG"/>
                                 </constraints>
@@ -900,7 +849,7 @@ warning</string>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Set"/>
                                 <connections>
-                                    <action selector="setExercise:" destination="bRc-YK-AfT" eventType="touchUpInside" id="cOE-LQ-IJP"/>
+                                    <action selector="setRoutine:" destination="bRc-YK-AfT" eventType="touchUpInside" id="Nq1-dk-ggO"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dHQ-6o-rYN">
@@ -916,36 +865,24 @@ warning</string>
                         </subviews>
                         <color key="backgroundColor" white="0.18465169270000001" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="y5M-JN-KEZ" firstAttribute="leading" secondItem="ICE-Nh-YSv" secondAttribute="leading" id="20H-H6-QKB"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="dHQ-6o-rYN" secondAttribute="trailing" constant="20" symbolic="YES" id="2Vi-sf-fDS"/>
                             <constraint firstItem="AF8-2i-FVh" firstAttribute="top" secondItem="wH9-jm-kwe" secondAttribute="bottom" constant="6" id="42y-fw-584"/>
+                            <constraint firstItem="KrA-3n-mDW" firstAttribute="top" secondItem="AF8-2i-FVh" secondAttribute="bottom" constant="60" id="5qa-0j-SVk"/>
                             <constraint firstItem="dHQ-6o-rYN" firstAttribute="leading" secondItem="ICE-Nh-YSv" secondAttribute="leading" constant="20" id="5yI-91-DTM"/>
-                            <constraint firstItem="KrA-3n-mDW" firstAttribute="top" secondItem="P79-bl-cYa" secondAttribute="bottom" constant="20" id="Ahb-nf-HBI"/>
                             <constraint firstItem="wH9-jm-kwe" firstAttribute="leading" secondItem="ICE-Nh-YSv" secondAttribute="leading" constant="20" id="BcZ-Lw-A3P"/>
                             <constraint firstItem="ICE-Nh-YSv" firstAttribute="trailing" secondItem="KrA-3n-mDW" secondAttribute="trailing" id="Lrc-wd-bPo"/>
-                            <constraint firstItem="P79-bl-cYa" firstAttribute="top" secondItem="y5M-JN-KEZ" secondAttribute="bottom" constant="10" id="N8I-2t-eaT"/>
-                            <constraint firstItem="No4-Rr-SgL" firstAttribute="centerX" secondItem="7f6-wP-gjC" secondAttribute="centerX" constant="45" id="Osg-yU-tph"/>
                             <constraint firstItem="dHQ-6o-rYN" firstAttribute="top" secondItem="ICE-Nh-YSv" secondAttribute="top" constant="10" id="SDc-qk-qHF"/>
-                            <constraint firstItem="ICE-Nh-YSv" firstAttribute="trailing" secondItem="y5M-JN-KEZ" secondAttribute="trailing" id="UTF-kJ-fJM"/>
                             <constraint firstItem="ICE-Nh-YSv" firstAttribute="trailing" secondItem="AF8-2i-FVh" secondAttribute="trailing" constant="20" id="XOr-lz-pR7"/>
                             <constraint firstItem="ICE-Nh-YSv" firstAttribute="trailing" secondItem="wH9-jm-kwe" secondAttribute="trailing" constant="20" id="aAi-k2-5kS"/>
-                            <constraint firstItem="No4-Rr-SgL" firstAttribute="centerY" secondItem="7f6-wP-gjC" secondAttribute="centerY" constant="90" id="byO-mo-FIR"/>
                             <constraint firstItem="wH9-jm-kwe" firstAttribute="top" secondItem="ICE-Nh-YSv" secondAttribute="top" constant="60" id="ddd-R2-IQ5"/>
                             <constraint firstItem="AF8-2i-FVh" firstAttribute="leading" secondItem="ICE-Nh-YSv" secondAttribute="leading" constant="20" id="dj6-Mc-hpY"/>
-                            <constraint firstItem="P79-bl-cYa" firstAttribute="centerX" secondItem="7f6-wP-gjC" secondAttribute="centerX" id="dvZ-SP-Pus"/>
-                            <constraint firstItem="y5M-JN-KEZ" firstAttribute="top" secondItem="AF8-2i-FVh" secondAttribute="bottom" constant="6" id="dwd-Ak-IFT"/>
                             <constraint firstItem="KrA-3n-mDW" firstAttribute="leading" secondItem="ICE-Nh-YSv" secondAttribute="leading" id="eIK-MB-Zwg"/>
-                            <constraint firstItem="P79-bl-cYa" firstAttribute="centerY" secondItem="7f6-wP-gjC" secondAttribute="centerY" constant="90" id="pLw-LL-s0m"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ICE-Nh-YSv"/>
                     </view>
                     <connections>
-                        <outlet property="chosenPickerInfoLabel" destination="ybS-me-JTO" id="rD0-bA-BQ4"/>
-                        <outlet property="exerciseNameTextField" destination="QGa-IG-nce" id="EGD-cL-hmv"/>
-                        <outlet property="exerciseNameView" destination="wH9-jm-kwe" id="Ygm-L7-Acw"/>
-                        <outlet property="minLabel" destination="NdK-bS-nhS" id="L9T-AI-xLW"/>
-                        <outlet property="numberPicker" destination="P79-bl-cYa" id="cVJ-Gm-X0t"/>
-                        <outlet property="secLabel" destination="aX4-wa-ziI" id="H6L-5l-2kU"/>
+                        <outlet property="routineNameTextField" destination="QGa-IG-nce" id="tNG-8a-ZlI"/>
+                        <outlet property="routineNameView" destination="wH9-jm-kwe" id="G3Y-CE-tna"/>
                         <outlet property="warningLabel" destination="AF8-2i-FVh" id="ak5-Cw-9N9"/>
                     </connections>
                 </viewController>

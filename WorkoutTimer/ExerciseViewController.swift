@@ -14,7 +14,7 @@ protocol UpdateFirstExerciseDelegate {
     
 }
 
-class ExerciseViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SetExerciseDelegate {
+class ExerciseViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SetExerciseDelegate, LoadRoutineExercises {
     
     
     
@@ -189,6 +189,14 @@ extension ExerciseViewController {
         workout.loadExercisesPerRoutine(routine: workout.lastUsedRoutine)
         
         toggleIsTenExercises()
+        
+        exerciseTable.reloadData()
+        
+    }
+    
+    func reloadExercisesPerRoutine() {
+        
+        workout.loadExercisesPerRoutine(routine: workout.lastUsedRoutine)
         
         exerciseTable.reloadData()
         

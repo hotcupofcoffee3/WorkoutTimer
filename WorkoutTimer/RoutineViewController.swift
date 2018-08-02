@@ -8,18 +8,25 @@
 
 import UIKit
 
+
+
 // ******
 // *** TODO:
 // ******
 
-// Last added the cells to be clicked to either go edit the routine, or go back to the main exercise area, hoping that it changes the workout.exerciseArray, but it hasn't been tested. Maybe need to add a delegate that updates the workout object for the Exercise VC.
+
+
 // Need to take care of the Delete functionality for the Routine Table, and add a function in the model to delete all Exercises associated with the Routine.
+
 // Hook up the actions and outlets from the VC to the View, as none of this for the Routine, for the most part, have been done yet.
 
 
 
-
-
+protocol LoadRoutineExercises {
+    
+    func reloadExercisesPerRoutine()
+    
+}
 
 class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SetRoutineDelegate {
     
@@ -32,6 +39,8 @@ class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     
     var routineName = String()
+    
+    var delegate: LoadRoutineExercises?
     
     
    
@@ -165,6 +174,8 @@ extension RoutineViewController {
             
             workout.saveLastUsedRoutine(routine: workout.routineArray[indexPath.row])
             
+            delegate?.reloadExercisesPerRoutine()
+            
             dismiss(animated: true, completion: nil)
             
         }
@@ -189,15 +200,15 @@ extension RoutineViewController {
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
-        let selectedExercise = workout.exerciseArray[sourceIndexPath.row]
-        
-        workout.exerciseArray.remove(at: sourceIndexPath.row)
-        
-        workout.exerciseArray.insert(selectedExercise, at: destinationIndexPath.row)
-        
-        workout.updateOrderNumbers()
-        
-        tableView.reloadData()
+//        let selectedExercise = workout.exerciseArray[sourceIndexPath.row]
+//
+//        workout.exerciseArray.remove(at: sourceIndexPath.row)
+//
+//        workout.exerciseArray.insert(selectedExercise, at: destinationIndexPath.row)
+//
+//        workout.updateOrderNumbers()
+//
+//        tableView.reloadData()
         
     }
     
