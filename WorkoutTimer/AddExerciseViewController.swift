@@ -148,6 +148,8 @@ class AddExerciseViewController: UIViewController, UIPickerViewDelegate, UIPicke
         secLabel.text = "sec"
         
         chosenPickerInfoLabel.text = "\(zero(unit: minutes))\(minutes):\(zero(unit: seconds))\(seconds)"
+        
+        exerciseNameTextField.delegate = self
 
     }
     

@@ -16,7 +16,7 @@ import UIKit
 
 
 
-// Need to update information for the adding segue and populating the necessary variables and textField placement.
+
 
 
 
@@ -86,7 +86,7 @@ class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             if !isNew {
                 
-                
+                destinationVC.routineName = routineName
                 
             }
             
@@ -165,6 +165,8 @@ extension RoutineViewController {
         if editCells {
             
             isNew = false
+            
+            routineName = workout.routineArray[indexPath.row]
             
             performSegue(withIdentifier: keywords.routineToAddRoutineSegue, sender: self)
             

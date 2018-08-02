@@ -97,6 +97,8 @@ class AddRoutineViewController: UIViewController, UITextFieldDelegate {
         
         warningLabel.text = ""
         
+        routineNameTextField.delegate = self
+        
     }
     
 }
