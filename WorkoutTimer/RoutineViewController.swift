@@ -16,9 +16,7 @@ import UIKit
 
 
 
-// Need to take care of the Delete functionality for the Routine Table, and add a function in the model to delete all Exercises associated with the Routine.
-
-// Hook up the actions and outlets from the VC to the View, as none of this for the Routine, for the most part, have been done yet.
+// Need to update information for the adding segue and populating the necessary variables and textField placement.
 
 
 
@@ -186,7 +184,19 @@ extension RoutineViewController {
         
         if editingStyle == .delete {
             
-//            workout.deleteExercise(workout.exerciseArray[indexPath.row])
+            if workout.routineArray.count > 1 {
+                
+                workout.deleteRoutine(routineToDelete: workout.routineArray[indexPath.row])
+                
+            } else {
+                
+                let alert = UIAlertController(title: "Nope!", message: "Cannot delete the last routine.", preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "Got it!", style: .default, handler: nil))
+                
+                present(alert, animated: true, completion: nil)
+                
+            }
             
         }
         
@@ -194,22 +204,15 @@ extension RoutineViewController {
         
     }
     
-    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return editCells
-    }
-    
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        
-//        let selectedExercise = workout.exerciseArray[sourceIndexPath.row]
-//
-//        workout.exerciseArray.remove(at: sourceIndexPath.row)
-//
-//        workout.exerciseArray.insert(selectedExercise, at: destinationIndexPath.row)
-//
-//        workout.updateOrderNumbers()
-//
-//        tableView.reloadData()
-        
-    }
-    
 }
+
+
+
+
+
+
+
+
+
+
+

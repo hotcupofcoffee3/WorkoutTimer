@@ -459,6 +459,40 @@ class Workout {
         
     }
     
+    func deleteRoutine(routineToDelete: String) {
+        
+        loadExercises()
+        
+        for exercise in exerciseArray {
+            
+            if exercise.routine == routineToDelete {
+                
+                context.delete(exercise)
+                
+            }
+            
+        }
+        
+        loadRoutines()
+        
+        for i in routineArray.indices {
+            
+            if routineToDelete == routineArray[i] {
+                
+                routineArray.remove(at: i)
+                
+            }
+            
+        }
+        
+        saveData()
+        
+        loadExercises()
+        
+        loadRoutines()
+        
+    }
+    
     
     
     // ******
@@ -666,6 +700,12 @@ class Workout {
         self.setMinutesAndSecondsFromTotalWorkoutSeconds()
         
         self.loadRoutines()
+        
+        for i in routineArray.indices {
+            
+            print(i)
+            
+        }
         
     }
     
