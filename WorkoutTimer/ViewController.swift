@@ -134,6 +134,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
             toggleButtonColors(reset: false)
             
+            toggleTimerViews()
+            
             mainTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(runTimer), userInfo: nil, repeats: true)
             
             timerForProgress = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(animateProgress), userInfo: nil, repeats: true)
@@ -793,37 +795,73 @@ extension ViewController {
             
             if currentTimer == .interval {
                 
-                intervalView.backgroundColor = keywords.currentExerciseColor
+//                intervalView.backgroundColor = keywords.currentExerciseColor
+//
+//                transitionView.backgroundColor = UIColor.clear
+//
+//                restView.backgroundColor = UIColor.clear
                 
-                transitionView.backgroundColor = UIColor.clear
-
-                restView.backgroundColor = UIColor.clear
+                intervalTitle.isEnabled = true
+                intervalLabel.isEnabled = true
+                
+                transitionTitle.isEnabled = false
+                transitionLabel.isEnabled = false
+                
+                restTitle.isEnabled = false
+                restLabel.isEnabled = false
                 
             } else if currentTimer == .transition {
                 
-                transitionView.backgroundColor = keywords.currentExerciseColor
+//                transitionView.backgroundColor = keywords.currentExerciseColor
+//
+//                intervalView.backgroundColor = UIColor.clear
+//
+//                restView.backgroundColor = UIColor.clear
                 
-                intervalView.backgroundColor = UIColor.clear
-               
-                restView.backgroundColor = UIColor.clear
+                intervalTitle.isEnabled = false
+                intervalLabel.isEnabled = false
+                
+                transitionTitle.isEnabled = true
+                transitionLabel.isEnabled = true
+                
+                restTitle.isEnabled = false
+                restLabel.isEnabled = false
                 
             } else if currentTimer == .rest {
                 
-                restView.backgroundColor = keywords.currentExerciseColor
+//                restView.backgroundColor = keywords.currentExerciseColor
+//
+//                intervalView.backgroundColor = UIColor.clear
+//
+//                transitionView.backgroundColor = UIColor.clear
                 
-                intervalView.backgroundColor = UIColor.clear
+                intervalTitle.isEnabled = false
+                intervalLabel.isEnabled = false
                 
-                transitionView.backgroundColor = UIColor.clear
+                transitionTitle.isEnabled = false
+                transitionLabel.isEnabled = false
+                
+                restTitle.isEnabled = true
+                restLabel.isEnabled = true
                 
             }
             
         } else {
             
-            intervalView.backgroundColor = UIColor.clear
+//            intervalView.backgroundColor = UIColor.clear
+//
+//            transitionView.backgroundColor = UIColor.clear
+//
+//            restView.backgroundColor = UIColor.clear
             
-            transitionView.backgroundColor = UIColor.clear
+            intervalTitle.isEnabled = true
+            intervalLabel.isEnabled = true
             
-            restView.backgroundColor = UIColor.clear
+            transitionTitle.isEnabled = true
+            transitionLabel.isEnabled = true
+            
+            restTitle.isEnabled = true
+            restLabel.isEnabled = true
             
         }
         
@@ -996,6 +1034,8 @@ extension ViewController {
         exerciseCollectionView.reloadData()
         
         updateTotalWorkoutTimeAndLabels()
+        
+        workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: 0)
         
     }
  
