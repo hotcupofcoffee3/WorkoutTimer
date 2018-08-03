@@ -38,7 +38,7 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SetSetsTransitionsAndRestDelegate, UpdateFirstExerciseDelegate {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SetSetsTransitionsAndRestDelegate, UpdateFirstExerciseDelegate, LoadRoutineExercises {
 
     
     
@@ -179,6 +179,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             let destinationVC = segue.destination as! ExerciseViewController
             
             destinationVC.delegate = self
+            
+            destinationVC.delegate2 = self
             
         } else if segue.identifier == keywords.mainToSetsSegue {
             
@@ -795,12 +797,6 @@ extension ViewController {
             
             if currentTimer == .interval {
                 
-//                intervalView.backgroundColor = keywords.currentExerciseColor
-//
-//                transitionView.backgroundColor = UIColor.clear
-//
-//                restView.backgroundColor = UIColor.clear
-                
                 intervalTitle.isEnabled = true
                 intervalLabel.isEnabled = true
                 
@@ -812,12 +808,6 @@ extension ViewController {
                 
             } else if currentTimer == .transition {
                 
-//                transitionView.backgroundColor = keywords.currentExerciseColor
-//
-//                intervalView.backgroundColor = UIColor.clear
-//
-//                restView.backgroundColor = UIColor.clear
-                
                 intervalTitle.isEnabled = false
                 intervalLabel.isEnabled = false
                 
@@ -828,12 +818,6 @@ extension ViewController {
                 restLabel.isEnabled = false
                 
             } else if currentTimer == .rest {
-                
-//                restView.backgroundColor = keywords.currentExerciseColor
-//
-//                intervalView.backgroundColor = UIColor.clear
-//
-//                transitionView.backgroundColor = UIColor.clear
                 
                 intervalTitle.isEnabled = false
                 intervalLabel.isEnabled = false
@@ -847,12 +831,6 @@ extension ViewController {
             }
             
         } else {
-            
-//            intervalView.backgroundColor = UIColor.clear
-//
-//            transitionView.backgroundColor = UIColor.clear
-//
-//            restView.backgroundColor = UIColor.clear
             
             intervalTitle.isEnabled = true
             intervalLabel.isEnabled = true
@@ -1025,11 +1003,28 @@ extension ViewController {
     
     func updateFirstExercise(withExercise firstExercise: Exercise) {
         
+        workout.loadLastUsedRoutine()
+        print(workout.lastUsedRoutine)
+        
+        workout.loadExercisesPerRoutine(routine: workout.lastUsedRoutine)
+        
         intervalLabel.text = "\(zero(unit: Int(firstExercise.intervalMinutes))):\(zero(unit: Int(firstExercise.intervalSeconds)))"
         
-        workout.loadExercisesPerRoutine(routine: "Default")
-        
         workout.setTotalAndRemainingStartingIntervalAmounts()
+        
+        exerciseCollectionView.reloadData()
+        
+        updateTotalWorkoutTimeAndLabels()
+        
+        workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: 0)
+        
+    }
+    
+    func reloadExercisesPerRoutine() {
+        
+        workout.loadLastUsedRoutine()
+        
+        workout.loadExercisesPerRoutine(routine: workout.lastUsedRoutine)
         
         exerciseCollectionView.reloadData()
         

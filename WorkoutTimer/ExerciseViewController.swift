@@ -40,6 +40,8 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
     
     var delegate: UpdateFirstExerciseDelegate?
     
+    var delegate2: LoadRoutineExercises?
+    
     
     
     @IBOutlet weak var exerciseTable: UITableView!
@@ -80,21 +82,15 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
         
         delegate?.updateFirstExercise(withExercise: workout.exerciseArray[0])
         
+        delegate2?.reloadExercisesPerRoutine()
+        
         dismiss(animated: true, completion: nil)
         
     }
     
     @IBAction func edit(_ sender: UIBarButtonItem) {
         
-        editCells = !editCells
-        
-        editButton.title = editCells ? "Done" : "Edit"
-        
-        goToRoutinesButton.setTitle(editCells ? "Edit Routines" : workout.exerciseArray[0].routine!, for: .normal)
-        
-        exerciseTable.setEditing(editCells, animated: true)
-        
-        exerciseTable.reloadData()
+        toggleEditAndDoneFunction(edit: true)
         
     }
     
@@ -118,6 +114,20 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
+    func toggleEditAndDoneFunction(edit: Bool) {
+        
+        editCells = edit
+        
+        editButton.title = edit ? "Done" : "Edit"
+        
+        goToRoutinesButton.setTitle(edit ? "Edit Routines" : workout.exerciseArray[0].routine!, for: .normal)
+        
+        exerciseTable.setEditing(edit, animated: true)
+        
+        exerciseTable.reloadData()
+        
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == keywords.exerciseToPickerSegue {
@@ -138,6 +148,12 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
                 
             }
             
+        } else if segue.identifier == keywords.exerciseToRoutineSegue {
+            
+            let destinationVC = segue.destination as! RoutineViewController
+            
+            destinationVC.delegate = self
+            
         }
         
     }
@@ -146,6 +162,8 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        workout.loadExercisesPerRoutine(routine: workout.lastUsedRoutine)
         
         exerciseTable.register(UINib(nibName: "ExerciseTableViewCell", bundle: nil), forCellReuseIdentifier: "exerciseTableCell")
         
@@ -174,11 +192,13 @@ extension ExerciseViewController {
     
     func setExercise(oldName: String, newName: String, minutes: Int, seconds: Int, isNew: Bool) {
         
+        toggleEditAndDoneFunction(edit: false)
+        
         setExerciseVariables(named: newName, minutes: minutes, seconds: seconds)
         
         if isNew {
             
-            workout.saveNewExercise(named: newName, minutes: minutes, seconds: seconds, routine: "Default")
+            workout.saveNewExercise(named: newName, minutes: minutes, seconds: seconds, routine: workout.lastUsedRoutine)
             
         } else {
             
@@ -196,7 +216,13 @@ extension ExerciseViewController {
     
     func reloadExercisesPerRoutine() {
         
+        workout.loadLastUsedRoutine()
+        
         workout.loadExercisesPerRoutine(routine: workout.lastUsedRoutine)
+        
+        toggleEditAndDoneFunction(edit: false)
+        
+        goToRoutinesButton.setTitle(workout.lastUsedRoutine, for: .normal)
         
         exerciseTable.reloadData()
         

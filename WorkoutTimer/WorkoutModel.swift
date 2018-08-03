@@ -225,13 +225,15 @@ class Workout {
         
     }
     
-    func loadExercises() {
+    func loadExercises() -> [Exercise] {
+        
+        var exercises = [Exercise]()
         
         let request: NSFetchRequest<Exercise> = Exercise.fetchRequest()
         
         do {
             
-            exerciseArray = try context.fetch(request)
+            exercises = try context.fetch(request)
             
         } catch {
             
@@ -239,11 +241,13 @@ class Workout {
             
         }
         
-        if exerciseArray.isEmpty {
+        if exercises.isEmpty {
             
-            return print("'exerciseArray' had no object in it.")
+            print("'exercises' Array has no object in it.")
             
         }
+        
+        return exercises
         
     }
     
@@ -272,14 +276,22 @@ class Workout {
             return print("'exerciseArray' had no object in it.")
             
         }
+        
+//        print(routineArray)
+//        for exercise in exerciseArray {
+//            
+//            print("\(exercise.name!): \(exercise.routine!)")
+//            
+//        }
+        
 
     }
     
     func loadRoutines() {
         
-        loadExercises()
+        let exercises = loadExercises()
         
-        for exercise in exerciseArray {
+        for exercise in exercises {
             
             if routineArray.count == 0 {
                 
@@ -287,17 +299,21 @@ class Workout {
                 
             }
             
+            var isAdded = false
+            
             for routine in routineArray {
                 
                 if routine == exercise.routine {
                     
-                    continue
-                    
-                } else {
-                    
-                    routineArray.append(exercise.routine!)
+                    isAdded = true
                     
                 }
+                
+            }
+            
+            if !isAdded {
+                
+                routineArray.append(exercise.routine!)
                 
             }
             
@@ -461,9 +477,9 @@ class Workout {
     
     func deleteRoutine(routineToDelete: String) {
         
-        loadExercises()
+        let exercises = loadExercises()
         
-        for exercise in exerciseArray {
+        for exercise in exercises {
             
             if exercise.routine == routineToDelete {
                 
@@ -486,8 +502,6 @@ class Workout {
         }
         
         saveData()
-        
-        loadExercises()
         
         loadRoutines()
         
@@ -643,7 +657,7 @@ class Workout {
             loadExercisesPerRoutine(routine: keywords.defaultKey)
             
         }
-        
+
     }
     
     init() {
@@ -657,7 +671,9 @@ class Workout {
         self.loadLastUsedRoutine()
         
         self.loadWorkoutData()
+//        print(lastUsedRoutine)
         self.loadExercisesPerRoutine(routine: lastUsedRoutine)
+        
 
         
         
@@ -700,12 +716,6 @@ class Workout {
         self.setMinutesAndSecondsFromTotalWorkoutSeconds()
         
         self.loadRoutines()
-        
-        for i in routineArray.indices {
-            
-            print(i)
-            
-        }
         
     }
     

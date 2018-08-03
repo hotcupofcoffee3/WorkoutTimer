@@ -64,6 +64,8 @@ class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func back(_ sender: UIBarButtonItem) {
         
+        delegate?.reloadExercisesPerRoutine()
+        
         dismiss(animated: true, completion: nil)
         
     }
@@ -74,6 +76,8 @@ class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         editButton.title = editCells ? "Done" : "Edit"
         
+        routineTable.reloadData()
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -81,6 +85,8 @@ class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewD
         if segue.identifier == keywords.routineToAddRoutineSegue {
             
             let destinationVC = segue.destination as! AddRoutineViewController
+            
+            destinationVC.delegate = self
             
             destinationVC.isNew = isNew
             
@@ -126,7 +132,7 @@ extension RoutineViewController {
         
         if isNew {
             
-            workout.saveNewExercise(named: "Exercise 1", minutes: 0, seconds: 0, routine: newName)
+            workout.saveNewExercise(named: "Exercise 1", minutes: 0, seconds: 30, routine: newName)
             
         } else {
             
@@ -150,6 +156,8 @@ extension RoutineViewController {
         let currentRoutine = workout.routineArray[indexPath.row]
         
         cell.routineNameLabel.text = "\(currentRoutine)"
+        
+        cell.accessoryType = editCells ? .disclosureIndicator : .none
         
         return cell
     }
@@ -189,6 +197,8 @@ extension RoutineViewController {
             if workout.routineArray.count > 1 {
                 
                 workout.deleteRoutine(routineToDelete: workout.routineArray[indexPath.row])
+                
+                workout.saveLastUsedRoutine(routine: workout.routineArray[0])
                 
             } else {
                 
