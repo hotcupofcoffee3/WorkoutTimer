@@ -181,9 +181,9 @@ extension RoutineViewController {
         } else {
             
             workout.saveLastUsedRoutine(routine: workout.routineArray[indexPath.row])
-            
+
             delegate?.reloadExercisesPerRoutine()
-            
+
             dismiss(animated: true, completion: nil)
             
         }
