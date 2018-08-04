@@ -8,13 +8,6 @@
 
 
 
-// Warning: 255/110/101
-// Purple: 146/87/173
-// Dark blue background: 44/62/80
-// Lighter teal: 22/160/133
-
-
-
 import UIKit
 
 protocol SetExerciseDelegate {

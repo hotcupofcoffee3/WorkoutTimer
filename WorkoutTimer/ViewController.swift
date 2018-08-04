@@ -556,8 +556,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navBar.setBackgroundImage(UIImage(), for: .default)
-        navBar.shadowImage = UIImage()
+//        navBar.setBackgroundImage(UIImage(), for: .default)
+//        navBar.shadowImage = UIImage()
         
         setCollectionView.register(UINib(nibName: "SetsCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "setCell")
         
@@ -594,6 +594,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         stopButtonOutlet.layer.cornerRadius = 45
         
         toggleButtonColors(reset: true)
+        
+        toggleNavBarTitle()
         
     }
     
@@ -754,6 +756,12 @@ extension ViewController {
             performSegue(withIdentifier: keywords.mainToSetsSegue, sender: self)
             
         }
+        
+    }
+    
+    func toggleNavBarTitle() {
+        
+        navBar.topItem?.title = workout.lastUsedRoutine
         
     }
     
@@ -1016,6 +1024,8 @@ extension ViewController {
         
         updateTotalWorkoutTimeAndLabels()
         
+        toggleNavBarTitle()
+        
         workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: 0)
         
     }
@@ -1029,6 +1039,8 @@ extension ViewController {
         exerciseCollectionView.reloadData()
         
         updateTotalWorkoutTimeAndLabels()
+        
+        toggleNavBarTitle()
         
         workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: 0)
         
