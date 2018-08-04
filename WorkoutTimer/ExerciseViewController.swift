@@ -219,7 +219,6 @@ extension ExerciseViewController {
     func reloadExercisesPerRoutine() {
         
         workout.loadLastUsedRoutine()
-        print(workout.lastUsedRoutine)
         
         workout.loadExercisesPerRoutine(routine: workout.lastUsedRoutine)
         
