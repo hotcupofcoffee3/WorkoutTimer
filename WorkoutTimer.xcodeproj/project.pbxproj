@@ -39,7 +39,7 @@
 		B529CB7B210BC894005A0488 /* SetsTransitionAndRestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetsTransitionAndRestViewController.swift; sourceTree = "<group>"; };
 		B5A07C9A21124C81006B0C5E /* RoutineTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineTableViewCell.swift; sourceTree = "<group>"; };
 		B5A07C9B21124C81006B0C5E /* RoutineTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoutineTableViewCell.xib; sourceTree = "<group>"; };
-		B5C3251A21065A3E00A88FDB /* Intervate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Intervate.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B5C3251A21065A3E00A88FDB /* FIT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FIT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5C3251D21065A3E00A88FDB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5C3251F21065A3E00A88FDB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B5C3252221065A3E00A88FDB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -93,7 +93,7 @@
 		B5C3251B21065A3E00A88FDB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B5C3251A21065A3E00A88FDB /* Intervate.app */,
+				B5C3251A21065A3E00A88FDB /* FIT.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -137,7 +137,7 @@
 			);
 			name = WorkoutTimer;
 			productName = WorkoutTimer;
-			productReference = B5C3251A21065A3E00A88FDB /* Intervate.app */;
+			productReference = B5C3251A21065A3E00A88FDB /* FIT.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -360,8 +360,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.luneofthepune.Intervate;
-				PRODUCT_NAME = Intervate;
+				PRODUCT_BUNDLE_IDENTIFIER = com.luneofthepune.FIT;
+				PRODUCT_NAME = FIT;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -379,8 +379,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.luneofthepune.Intervate;
-				PRODUCT_NAME = Intervate;
+				PRODUCT_BUNDLE_IDENTIFIER = com.luneofthepune.FIT;
+				PRODUCT_NAME = FIT;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
