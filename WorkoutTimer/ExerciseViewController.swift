@@ -18,6 +18,12 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     
+    // ******
+    // *** MARK: - Variables
+    // ******
+    
+    
+    
     let keywords = Keywords()
     
     let workout = Workout()
@@ -44,6 +50,12 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     
+    // ******
+    // *** MARK: - IBOutlets
+    // ******
+    
+    
+    
     @IBOutlet weak var exerciseTable: UITableView!
     
     @IBOutlet weak var addButton: UIBarButtonItem!
@@ -51,6 +63,14 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var editButton: UIBarButtonItem!
     
     @IBOutlet weak var goToRoutinesButton: UIButton!
+    
+    
+    
+    // ******
+    // *** MARK: - IBActions
+    // ******
+    
+    
     
     @IBAction func goToRoutines(_ sender: UIButton) {
         
@@ -96,6 +116,86 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
+    
+    
+    // ******
+    // *** MARK: - Segue
+    // ******
+    
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == keywords.exerciseToPickerSegue {
+            
+            let destinationVC = segue.destination as! AddExerciseViewController
+            
+            destinationVC.delegate = self
+            
+            destinationVC.isNew = isNew
+            
+            if !isNew {
+                
+                destinationVC.exerciseName = exerciseName
+                
+                destinationVC.minutes = exerciseMinutes
+                
+                destinationVC.seconds = exerciseSeconds
+                
+            }
+            
+        } else if segue.identifier == keywords.exerciseToRoutineSegue {
+            
+            let destinationVC = segue.destination as! RoutineViewController
+            
+            destinationVC.delegate = self
+            
+        }
+        
+    }
+    
+
+    
+    // ******
+    // *** Loadables
+    // ******
+    
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // Do any additional setup after loading the view.
+        
+        workout.loadExercisesPerRoutine(routine: workout.lastUsedRoutine)
+        
+        exerciseTable.register(UINib(nibName: "ExerciseTableViewCell", bundle: nil), forCellReuseIdentifier: "exerciseTableCell")
+        
+        goToRoutinesButton.setTitle(editCells ? "Edit Routines" : workout.exerciseArray[0].routine!, for: .normal)
+        
+        toggleIsTenExercises()
+        
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+
+}
+
+
+
+extension ExerciseViewController {
+    
+    
+    
+    // ******
+    // *** MARK: - Functions - Zero, Ten Exercises Check, Toggle Edit & Done, and Set Exercise Variables
+    // ******
+    
+    
+    
     func zero(unit: Int) -> String {
         
         var zero = "\(unit)"
@@ -130,60 +230,6 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == keywords.exerciseToPickerSegue {
-            
-            let destinationVC = segue.destination as! AddExerciseViewController
-            
-            destinationVC.delegate = self
-            
-            destinationVC.isNew = isNew
-            
-            if !isNew {
-                
-                destinationVC.exerciseName = exerciseName
-                
-                destinationVC.minutes = exerciseMinutes
-                
-                destinationVC.seconds = exerciseSeconds
-                
-            }
-            
-        } else if segue.identifier == keywords.exerciseToRoutineSegue {
-            
-            let destinationVC = segue.destination as! RoutineViewController
-            
-            destinationVC.delegate = self
-            
-        }
-        
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        
-        workout.loadExercisesPerRoutine(routine: workout.lastUsedRoutine)
-        
-        exerciseTable.register(UINib(nibName: "ExerciseTableViewCell", bundle: nil), forCellReuseIdentifier: "exerciseTableCell")
-        
-        goToRoutinesButton.setTitle(editCells ? "Edit Routines" : workout.exerciseArray[0].routine!, for: .normal)
-        
-        toggleIsTenExercises()
-        
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-}
-
-extension ExerciseViewController {
-    
     func setExerciseVariables(named: String, minutes: Int, seconds: Int) {
         
         exerciseName = named
@@ -191,6 +237,14 @@ extension ExerciseViewController {
         exerciseSeconds = seconds
         
     }
+    
+    
+    
+    // ******
+    // *** MARK: - Delegates
+    // ******
+    
+    
     
     func setExercise(oldName: String, newName: String, minutes: Int, seconds: Int, isNew: Bool) {
         
@@ -229,6 +283,14 @@ extension ExerciseViewController {
         exerciseTable.reloadData()
         
     }
+    
+    
+    
+    // ******
+    // *** MARK: - TableView
+    // ******
+    
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return workout.exerciseArray.count

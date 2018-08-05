@@ -18,6 +18,14 @@ protocol SetExerciseDelegate {
 
 class AddExerciseViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
+    
+    
+    // ******
+    // *** MARK: - Variables
+    // ******
+    
+    
+    
     let workout = Workout()
     
     var delegate: SetExerciseDelegate?
@@ -34,6 +42,14 @@ class AddExerciseViewController: UIViewController, UIPickerViewDelegate, UIPicke
     
     var pickerMinutesAndSeconds = Array(0...59)
     
+    
+    
+    // ******
+    // *** MARK: - IBOutlets
+    // ******
+    
+    
+    
     @IBOutlet weak var exerciseNameView: UIView!
     
     @IBOutlet weak var exerciseNameTextField: UITextField!
@@ -47,6 +63,14 @@ class AddExerciseViewController: UIViewController, UIPickerViewDelegate, UIPicke
     @IBOutlet weak var minLabel: UILabel!
     
     @IBOutlet weak var secLabel: UILabel!
+    
+    
+    
+    // ******
+    // *** MARK: - IBActions
+    // ******
+    
+    
     
     @IBAction func cancel(_ sender: UIButton) {
         
@@ -81,6 +105,65 @@ class AddExerciseViewController: UIViewController, UIPickerViewDelegate, UIPicke
         delegate?.setExercise(oldName: exerciseName, newName: newExerciseName, minutes: minutes, seconds: seconds, isNew: isNew)
         
         dismiss(animated: true, completion: nil)
+        
+    }
+
+    
+    
+    // ******
+    // *** MARK: - Loadables
+    // ******
+    
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        exerciseNameTextField.text = "\(exerciseName)"
+        
+        warningLabel.text = ""
+
+        numberPicker.selectRow(minutes, inComponent: 0, animated: true)
+        
+        numberPicker.selectRow(seconds, inComponent: 1, animated: true)
+        
+        minLabel.text = "min"
+        secLabel.text = "sec"
+        
+        chosenPickerInfoLabel.text = "\(zero(unit: minutes))\(minutes):\(zero(unit: seconds))\(seconds)"
+        
+        exerciseNameTextField.delegate = self
+        
+        let exerciseViewTap = UITapGestureRecognizer(target: self, action: #selector(exerciseTap))
+        exerciseNameView.addGestureRecognizer(exerciseViewTap)
+
+    }
+    
+}
+
+
+
+extension AddExerciseViewController {
+    
+    
+    
+    // ******
+    // *** MARK: - Functions - Zero and Check if Name Already Exists
+    // ******
+    
+    
+    
+    func zero(unit: Int) -> String {
+        
+        var zero = ""
+        
+        if unit <= 9 {
+            
+            zero = "0"
+            
+        }
+        
+        return zero
         
     }
     
@@ -119,52 +202,20 @@ class AddExerciseViewController: UIViewController, UIPickerViewDelegate, UIPicke
                 }
                 
             }
-
+            
         }
         
         return isSame
         
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        exerciseNameTextField.text = "\(exerciseName)"
-        
-        warningLabel.text = ""
-
-        numberPicker.selectRow(minutes, inComponent: 0, animated: true)
-        
-        numberPicker.selectRow(seconds, inComponent: 1, animated: true)
-        
-        minLabel.text = "min"
-        secLabel.text = "sec"
-        
-        chosenPickerInfoLabel.text = "\(zero(unit: minutes))\(minutes):\(zero(unit: seconds))\(seconds)"
-        
-        exerciseNameTextField.delegate = self
-
-    }
     
-    func zero(unit: Int) -> String {
-        
-        var zero = ""
-        
-        if unit <= 9 {
-            
-            zero = "0"
-            
-        }
-        
-        return zero
-        
-    }
     
-}
-
-
-
-extension AddExerciseViewController {
+    // ******
+    // *** MARK: - PickerView
+    // ******
+    
+    
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         
@@ -199,6 +250,28 @@ extension AddExerciseViewController {
         chosenPickerInfoLabel.text = "\(zero(unit: minutes))\(minutes):\(zero(unit: seconds))\(seconds)"
             
     }
+    
+    
+    
+    // ******
+    // *** MARK: - Tap Functions
+    // ******
+    
+    
+    
+    @objc func exerciseTap() {
+        
+        exerciseNameTextField.becomeFirstResponder()
+        
+    }
+    
+    
+    
+    // ******
+    // *** MARK: - TextField Delegates
+    // ******
+    
+    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         

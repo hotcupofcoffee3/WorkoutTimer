@@ -8,18 +8,6 @@
 
 import UIKit
 
-
-
-// ******
-// *** TODO:
-// ******
-
-
-
-
-
-
-
 protocol LoadRoutineExercises {
     
     func reloadExercisesPerRoutine()
@@ -27,6 +15,12 @@ protocol LoadRoutineExercises {
 }
 
 class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SetRoutineDelegate {
+    
+    
+    
+    // ******
+    // *** MARK: - Variables
+    // ******
     
     
     
@@ -48,11 +42,25 @@ class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     
     
+    // ******
+    // *** MARK: - IBOutlets
+    // ******
+    
+    
+    
     @IBOutlet weak var routineTable: UITableView!
     
     @IBOutlet weak var addButton: UIBarButtonItem!
     
     @IBOutlet weak var editButton: UIBarButtonItem!
+    
+    
+    
+    // ******
+    // *** MARK: - IBActions
+    // ******
+    
+    
     
     @IBAction func addRoutine(_ sender: UIBarButtonItem) {
         
@@ -80,6 +88,14 @@ class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewD
         
     }
     
+    
+    
+    // ******
+    // *** MARK: - Segue
+    // ******
+    
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == keywords.routineToAddRoutineSegue {
@@ -99,6 +115,14 @@ class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         
     }
+    
+    
+    
+    // ******
+    // *** MARK: - Loadables
+    // ******
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,11 +144,27 @@ class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewD
 
 extension RoutineViewController {
     
+    
+    
+    // ******
+    // *** MARK: - Functions - Set Routine Variable
+    // ******
+    
+
+    
     func setRoutineVariable(named: String) {
         
         routineName = named
         
     }
+    
+    
+    
+    // ******
+    // *** MARK: - Delegates
+    // ******
+    
+    
     
     func setRoutine(oldName: String, newName: String, isNew: Bool) {
         
@@ -145,6 +185,14 @@ extension RoutineViewController {
         routineTable.reloadData()
         
     }
+    
+    
+    
+    // ******
+    // *** MARK: - TableView
+    // ******
+    
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return workout.routineArray.count

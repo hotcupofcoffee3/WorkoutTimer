@@ -16,6 +16,14 @@ protocol SetRoutineDelegate {
 
 class AddRoutineViewController: UIViewController, UITextFieldDelegate {
     
+    
+    
+    // ******
+    // *** MARK: - Variables
+    // ******
+    
+    
+    
     let workout = Workout()
     
     var delegate: SetRoutineDelegate?
@@ -26,11 +34,27 @@ class AddRoutineViewController: UIViewController, UITextFieldDelegate {
     
     var isNew = Bool()
     
+    
+    
+    // ******
+    // *** MARK: - IBOutlets
+    // ******
+    
+    
+    
     @IBOutlet weak var routineNameView: UIView!
     
     @IBOutlet weak var routineNameTextField: UITextField!
     
     @IBOutlet weak var warningLabel: UILabel!
+    
+    
+    
+    // ******
+    // *** MARK: - IBActions
+    // ******
+    
+    
     
     @IBAction func cancel(_ sender: UIButton) {
         
@@ -62,6 +86,42 @@ class AddRoutineViewController: UIViewController, UITextFieldDelegate {
         
     }
     
+
+    
+    // ******
+    // *** MARK: - Loadables
+    // ******
+    
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        routineNameTextField.text = "\(routineName)"
+        
+        warningLabel.text = ""
+        
+        routineNameTextField.delegate = self
+        
+        let routineViewTap = UITapGestureRecognizer(target: self, action: #selector(routineTap))
+        routineNameView.addGestureRecognizer(routineViewTap)
+        
+    }
+    
+}
+
+
+
+extension AddRoutineViewController {
+    
+    
+    
+    // ******
+    // *** MARK: - Functions - Check if Routine Already Exists
+    // ******
+    
+    
+    
     func checkIfNameExists(newRoutineName: String) -> Bool {
         
         var isSame = false
@@ -90,22 +150,27 @@ class AddRoutineViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    
+    
+    // ******
+    // *** MARK: - Tap Functions
+    // ******
+    
+    
+    
+    @objc func routineTap() {
         
-        routineNameTextField.text = "\(routineName)"
-        
-        warningLabel.text = ""
-        
-        routineNameTextField.delegate = self
+        routineNameTextField.becomeFirstResponder()
         
     }
     
-}
-
-
-
-extension AddRoutineViewController {
+    
+    
+    // ******
+    // *** MARK: - TextField Delegates
+    // ******
+    
+    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         

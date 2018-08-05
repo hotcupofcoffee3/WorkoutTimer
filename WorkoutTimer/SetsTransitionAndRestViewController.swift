@@ -17,7 +17,15 @@ protocol SetSetsTransitionsAndRestDelegate {
 }
 
 class SetsTransitionAndRestViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
-        
+    
+    
+    
+    // ******
+    // *** MARK: - Variables
+    // ******
+    
+    
+    
     var delegate: SetSetsTransitionsAndRestDelegate?
     
     var isTime = Bool()
@@ -32,6 +40,14 @@ class SetsTransitionAndRestViewController: UIViewController, UIPickerViewDelegat
     
     var pickerMinutesAndSeconds = Array(0...59)
     
+    
+    
+    // ******
+    // *** MARK: - IBOutlets
+    // ******
+    
+    
+    
     @IBOutlet weak var chosenPickerInfoTitle: UILabel!
     
     @IBOutlet weak var chosenPickerInfoLabel: UILabel!
@@ -41,6 +57,14 @@ class SetsTransitionAndRestViewController: UIViewController, UIPickerViewDelegat
     @IBOutlet weak var minLabel: UILabel!
     
     @IBOutlet weak var secLabel: UILabel!
+    
+    
+    
+    // ******
+    // *** MARK: - IBActions
+    // ******
+    
+    
     
     @IBAction func cancel(_ sender: UIButton) {
         
@@ -67,6 +91,14 @@ class SetsTransitionAndRestViewController: UIViewController, UIPickerViewDelegat
         dismiss(animated: true, completion: nil)
         
     }
+    
+    
+    
+    // ******
+    // *** MARK: - Loadables
+    // ******
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,6 +129,20 @@ class SetsTransitionAndRestViewController: UIViewController, UIPickerViewDelegat
         
     }
     
+}
+
+
+
+extension SetsTransitionAndRestViewController {
+    
+    
+    
+    // ******
+    // *** MARK: - Functions - Zero and Check if Name Already Exists
+    // ******
+    
+    
+    
     func zero(unit: Int) -> String {
         
         var zero = ""
@@ -111,11 +157,13 @@ class SetsTransitionAndRestViewController: UIViewController, UIPickerViewDelegat
         
     }
     
-}
-
-
-
-extension SetsTransitionAndRestViewController {
+    
+    
+    // ******
+    // *** MARK: - PickerView
+    // ******
+    
+    
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         
@@ -128,12 +176,6 @@ extension SetsTransitionAndRestViewController {
         return isTime ? pickerMinutesAndSeconds.count : 10
         
     }
-    
-    //    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-    //
-    //        return isTime ? "\(row)" : "\(row + 1)"
-    //
-    //    }
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         let titleString = isTime ? "\(row)" : "\(row + 1)"
@@ -168,3 +210,11 @@ extension SetsTransitionAndRestViewController {
     }
 
 }
+
+
+
+
+
+
+
+

@@ -12,19 +12,6 @@
 
 
 
-// Just set up two functions in the Workout Model to calculate the total time and the time left.
-// Use these to update UI and to create a timer to count down the amount of time left in the workout, resetting when the workout gets reset, and updated when any information updates.
-
-
-
-
-
-
-
-
-
-
-
 // 1306 - Tock clicking sound (Keyboard click)
 // 1072 - Kinda like a busy tone
 // 1013 - Sounds kind of like a symbol or chime.
@@ -211,6 +198,72 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     
     // ******
+    // *** Loadables
+    // ******
+    
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+//        navBar.setBackgroundImage(UIImage(), for: .default)
+//        navBar.shadowImage = UIImage()
+        
+        setCollectionView.register(UINib(nibName: "SetsCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "setCell")
+        
+        exerciseCollectionView.register(UINib(nibName: "ExerciseCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "exerciseCell")
+        
+        let setsTapGesture = UITapGestureRecognizer(target: self, action: #selector(setsTap))
+        let exerciseTapGesture = UITapGestureRecognizer(target: self, action: #selector(exerciseTap))
+        let intervalTapGesture = UITapGestureRecognizer(target: self, action: #selector(intervalTap))
+        let transitionTapGesture = UITapGestureRecognizer(target: self, action: #selector(transitionTap))
+        let restTapGesture = UITapGestureRecognizer(target: self, action: #selector(restTap))
+        
+        setCollectionView.addGestureRecognizer(setsTapGesture)
+        exerciseCollectionView.addGestureRecognizer(exerciseTapGesture)
+        intervalView.addGestureRecognizer(intervalTapGesture)
+        transitionView.addGestureRecognizer(transitionTapGesture)
+        restView.addGestureRecognizer(restTapGesture)
+        
+        updateIntervalLabelToFirstExercise()
+        
+        updateTotalWorkoutTimeAndLabels()
+        
+        transitionLabel.text = "\(zero(unit: workout.setTransitionMinutes)):\(zero(unit: workout.setTransitionSeconds))"
+        
+        restLabel.text = "\(zero(unit: workout.setRestMinutes)):\(zero(unit: workout.setRestSeconds))"
+        
+        timerProgress.progress = 0.0
+        
+        startButtonOutlet.layer.borderColor = UIColor.white.cgColor
+        startButtonOutlet.layer.borderWidth = 2
+        startButtonOutlet.layer.cornerRadius = 45
+        
+        stopButtonOutlet.layer.borderColor = UIColor.white.cgColor
+        stopButtonOutlet.layer.borderWidth = 2
+        stopButtonOutlet.layer.cornerRadius = 45
+        
+        toggleButtonColors(reset: true)
+        
+        toggleNavBarTitle()
+        
+    }
+    
+}
+
+
+
+
+
+
+
+// --------------------------------------------------------------------------------------
+
+extension ViewController {
+    
+    
+    
+    // ******
     // *** MARK: - Timers
     // ******
     
@@ -289,7 +342,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         // The first time it is called, it resets the labels of the others.
         
         if Int(workout.exerciseArray[workout.currentExerciseIndex].intervalMinutes) == workout.remainingIntervalMinutes && Int(workout.exerciseArray[workout.currentExerciseIndex].intervalSeconds) == workout.remainingIntervalSeconds {
-
+            
             transitionLabel.text = "\(zero(unit: workout.remainingTransitionMinutes)):\(zero(unit: workout.remainingTransitionSeconds))"
             
             restLabel.text = "\(zero(unit: workout.remainingRestMinutes)):\(zero(unit: workout.remainingRestSeconds))"
@@ -348,7 +401,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: workout.currentExerciseIndex)
                     
                     
-                // End of Set
+                    // End of Set
                     
                 } else if workout.exerciseArray.count == workout.currentExerciseIndex {
                     
@@ -379,7 +432,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                         finishedWorkoutAlert()
                         
                     }
-
+                    
                 }
                 
                 exerciseCollectionView.reloadData()
@@ -399,7 +452,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         if currentTimer == .transition || currentTimer == .rest {
             
             workout.remainingIntervalMinutes = Int(workout.exerciseArray[workout.currentExerciseIndex].intervalMinutes)
-
+            
             workout.remainingIntervalSeconds = Int(workout.exerciseArray[workout.currentExerciseIndex].intervalSeconds)
             
         }
@@ -548,87 +601,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     
     // ******
-    // *** Loadables
-    // ******
-    
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-//        navBar.setBackgroundImage(UIImage(), for: .default)
-//        navBar.shadowImage = UIImage()
-        
-        setCollectionView.register(UINib(nibName: "SetsCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "setCell")
-        
-        exerciseCollectionView.register(UINib(nibName: "ExerciseCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "exerciseCell")
-        
-        let setsTapGesture = UITapGestureRecognizer(target: self, action: #selector(setsTap))
-        let exerciseTapGesture = UITapGestureRecognizer(target: self, action: #selector(exerciseTap))
-        let intervalTapGesture = UITapGestureRecognizer(target: self, action: #selector(intervalTap))
-        let transitionTapGesture = UITapGestureRecognizer(target: self, action: #selector(transitionTap))
-        let restTapGesture = UITapGestureRecognizer(target: self, action: #selector(restTap))
-        
-        setCollectionView.addGestureRecognizer(setsTapGesture)
-        exerciseCollectionView.addGestureRecognizer(exerciseTapGesture)
-        intervalView.addGestureRecognizer(intervalTapGesture)
-        transitionView.addGestureRecognizer(transitionTapGesture)
-        restView.addGestureRecognizer(restTapGesture)
-        
-        updateIntervalLabelToFirstExercise()
-        
-        updateTotalWorkoutTimeAndLabels()
-        
-        transitionLabel.text = "\(zero(unit: workout.setTransitionMinutes)):\(zero(unit: workout.setTransitionSeconds))"
-        
-        restLabel.text = "\(zero(unit: workout.setRestMinutes)):\(zero(unit: workout.setRestSeconds))"
-        
-        timerProgress.progress = 0.0
-        
-        startButtonOutlet.layer.borderColor = UIColor.white.cgColor
-        startButtonOutlet.layer.borderWidth = 2
-        startButtonOutlet.layer.cornerRadius = 45
-        
-        stopButtonOutlet.layer.borderColor = UIColor.white.cgColor
-        stopButtonOutlet.layer.borderWidth = 2
-        stopButtonOutlet.layer.cornerRadius = 45
-        
-        toggleButtonColors(reset: true)
-        
-        toggleNavBarTitle()
-        
-    }
-    
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// --------------------------------------------------------------------------------------
-
-extension ViewController {
-    
-    
-    
-    // ******
-    // *** MARK: - Alert, Zero, Reset, Interval Label, and Toggle Button Colors Functions
+    // *** MARK: - Functions - Alert, Zero, Reset, Interval Label, and Toggle Button Colors
     // ******
     
     
@@ -1012,7 +985,6 @@ extension ViewController {
     func updateFirstExercise(withExercise firstExercise: Exercise) {
         
         workout.loadLastUsedRoutine()
-        print(workout.lastUsedRoutine)
         
         workout.loadExercisesPerRoutine(routine: workout.lastUsedRoutine)
         
