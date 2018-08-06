@@ -449,7 +449,7 @@ class Workout {
         
         saveData()
         
-        loadExercisesPerRoutine(routine: "Default")
+        loadExercisesPerRoutine(routine: lastUsedRoutine)
         
         for i in exerciseArray.indices {
             
@@ -489,16 +489,16 @@ class Workout {
             
         }
         
-        loadRoutines()
-        
         for i in routineArray.indices {
             
             if routineToDelete == routineArray[i] {
-                
+
                 routineArray.remove(at: i)
                 
+                break
+
             }
-            
+
         }
         
         saveData()

@@ -167,7 +167,7 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
 
         // Do any additional setup after loading the view.
         
-        workout.loadExercisesPerRoutine(routine: workout.lastUsedRoutine)
+//        workout.loadExercisesPerRoutine(routine: workout.lastUsedRoutine)
         
         exerciseTable.register(UINib(nibName: "ExerciseTableViewCell", bundle: nil), forCellReuseIdentifier: "exerciseTableCell")
         

@@ -191,9 +191,9 @@ extension AddExerciseViewController {
                     
                 } else if exercise.name!.lowercased() == newExerciseName.lowercased() {
                     
-                    print(exerciseName)
-                    
-                    print(newExerciseName)
+//                    print(exerciseName)
+//                    
+//                    print(newExerciseName)
                     
                     warningLabel.text = "An exercise already has this name."
                     
