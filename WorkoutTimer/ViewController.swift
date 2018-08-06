@@ -409,13 +409,20 @@ extension ViewController {
                     
                     workout.currentExerciseIndex = 0
                     
-                    if workout.currentSet <= workout.setNumberOfSets {
+                    if workout.setTotalRestSeconds > 0 && workout.currentSet <= workout.setNumberOfSets {
                         
                         currentTimer = .rest
                         
                         toggleTimerViews()
                         
                         workout.totalSecondsForProgress = workout.setTotalRestSeconds
+                        
+                    } else if workout.setTotalRestSeconds == 0 && workout.currentSet <= workout.setNumberOfSets {
+                        
+                        workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: workout.currentExerciseIndex)
+                        
+                        
+                        // End of Workout
                         
                     } else if workout.currentSet > workout.setNumberOfSets {
                         
