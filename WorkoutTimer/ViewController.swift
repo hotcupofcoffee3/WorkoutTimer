@@ -131,6 +131,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
             exerciseCollectionView.reloadData()
             
+            setCollectionView.reloadData()
+            
         }
         
     }
@@ -1059,7 +1061,12 @@ extension ViewController {
             
             cell.setNumberLabel.text = "\(indexPath.row + 1)"
             
-            if workout.currentSet > 1 && indexPath.row < (workout.currentSet - 1) {
+            if workout.currentSet == (indexPath.row + 1) && beganWorkout {
+                
+                cell.backgroundColor = keywords.currentExerciseColor
+                cell.setNumberLabel.textColor = UIColor.white
+                
+            }else if workout.currentSet > 1 && indexPath.row < (workout.currentSet - 1) && workout.currentSet != (indexPath.row + 1) && beganWorkout {
                 
                 cell.backgroundColor = UIColor.white
                 cell.setNumberLabel.textColor = keywords.mainBackgroundColor
