@@ -142,6 +142,10 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 destinationVC.seconds = exerciseSeconds
                 
+            } else {
+                
+                destinationVC.seconds = 30
+                
             }
             
         } else if segue.identifier == keywords.exerciseToRoutineSegue {
