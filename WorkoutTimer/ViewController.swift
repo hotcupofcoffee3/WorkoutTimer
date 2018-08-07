@@ -1139,13 +1139,17 @@ extension ViewController {
             
             if workout.exerciseArray.count < 6 {
                 
-                cell.exerciseNameLabel.font = UIFont(name: "Helvetica Neue", size: 24)
-                cell.exerciseTimeLabel.font = UIFont(name: "Helvetica Neue", size: 24)
+//                cell.exerciseNameLabel.font = UIFont(name: "Helvetica Neue", size: 24)
+//                cell.exerciseTimeLabel.font = UIFont(name: "Helvetica Neue", size: 24)
+                cell.exerciseNameLabel.font = cell.exerciseNameLabel.font.withSize(24)
+                cell.exerciseTimeLabel.font = cell.exerciseTimeLabel.font.withSize(24)
                 
             } else {
                 
-                cell.exerciseNameLabel.font = UIFont(name: "Helvetica Neue", size: 18)
-                cell.exerciseTimeLabel.font = UIFont(name: "Helvetica Neue", size: 18)
+//                cell.exerciseNameLabel.font = UIFont(name: "Helvetica Neue", size: 18)
+//                cell.exerciseTimeLabel.font = UIFont(name: "Helvetica Neue", size: 18)
+                cell.exerciseNameLabel.font = cell.exerciseNameLabel.font.withSize(18)
+                cell.exerciseTimeLabel.font = cell.exerciseTimeLabel.font.withSize(18)
                 
             }
             
