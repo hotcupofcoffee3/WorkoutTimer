@@ -250,7 +250,7 @@ extension RoutineViewController {
                 
             } else {
                 
-                let alert = UIAlertController(title: "Nope!", message: "Cannot delete the last routine.", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Nope!", message: "You have to have at least 1 routine.", preferredStyle: .alert)
                 
                 alert.addAction(UIAlertAction(title: "Got it!", style: .default, handler: nil))
                 

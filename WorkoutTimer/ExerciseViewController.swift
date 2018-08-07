@@ -330,9 +330,21 @@ extension ExerciseViewController {
         
         if editingStyle == .delete {
             
-            workout.deleteExercise(workout.exerciseArray[indexPath.row])
-            
-            toggleIsTenExercises()
+            if workout.exerciseArray.count > 1 {
+                
+                workout.deleteExercise(workout.exerciseArray[indexPath.row])
+                
+                toggleIsTenExercises()
+                
+            } else {
+                
+                let alert = UIAlertController(title: "Nope!", message: "You have to have at least 1 exercise.", preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "Got it!", style: .default, handler: nil))
+                
+                present(alert, animated: true, completion: nil)
+                
+            }
             
         }
         
