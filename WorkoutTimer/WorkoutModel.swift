@@ -431,6 +431,24 @@ class Workout {
             
         }
         
+        loadRoutines()
+        
+        for i in routineArray.indices {
+            
+            if routineArray[i] == oldName {
+                
+                routineArray.remove(at: i)
+                
+                break
+                
+            }
+            
+        }
+        
+        loadRoutines()
+        
+        saveLastUsedRoutine(routine: newName)
+        
         saveData()
         
     }
