@@ -523,6 +523,12 @@ class Workout {
         
         loadRoutines()
         
+        if routineToDelete == lastUsedRoutine {
+            
+            saveLastUsedRoutine(routine: routineArray[0])
+            
+        }
+        
     }
     
     

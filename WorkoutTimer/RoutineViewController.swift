@@ -258,8 +258,6 @@ extension RoutineViewController {
                 
                 workout.deleteRoutine(routineToDelete: workout.routineArray[indexPath.row])
                 
-                workout.saveLastUsedRoutine(routine: workout.routineArray[0])
-                
             } else {
                 
                 let alert = UIAlertController(title: "Nope!", message: "You have to have at least 1 routine.", preferredStyle: .alert)
