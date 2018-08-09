@@ -145,6 +145,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
             timerForProgress.invalidate()
             
+            timerForWorkout.invalidate()
+            
             timerIsStarted = false
             
             toggleButtonColors(reset: false)
@@ -163,7 +165,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == keywords.mainToExerciseSegue {
+        if segue.identifier == keywords.mainToRoutinesSegue {
+            
+            let destinationVC = segue.destination as! RoutineViewController
+            
+            destinationVC.delegate = self
+            
+            destinationVC.delegate2 = self
+            
+        } else if segue.identifier == keywords.mainToExerciseSegue {
             
             let destinationVC = segue.destination as! ExerciseViewController
             
@@ -200,7 +210,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     
     // ******
-    // *** Loadables
+    // *** MARK: - Loadables
     // ******
     
     
@@ -215,12 +225,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         exerciseCollectionView.register(UINib(nibName: "ExerciseCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "exerciseCell")
         
+        let routineTitleTapGesture = UITapGestureRecognizer(target: self, action: #selector(routineTitleTap))
         let setsTapGesture = UITapGestureRecognizer(target: self, action: #selector(setsTap))
         let exerciseTapGesture = UITapGestureRecognizer(target: self, action: #selector(exerciseTap))
         let intervalTapGesture = UITapGestureRecognizer(target: self, action: #selector(intervalTap))
         let transitionTapGesture = UITapGestureRecognizer(target: self, action: #selector(transitionTap))
         let restTapGesture = UITapGestureRecognizer(target: self, action: #selector(restTap))
         
+        navBar.addGestureRecognizer(routineTitleTapGesture)
         setCollectionView.addGestureRecognizer(setsTapGesture)
         exerciseCollectionView.addGestureRecognizer(exerciseTapGesture)
         intervalView.addGestureRecognizer(intervalTapGesture)
@@ -371,7 +383,7 @@ extension ViewController {
                 
                 workout.remainingIntervalSeconds -= 1
                 
-                if workout.remainingIntervalSeconds <= 3 && workout.remainingIntervalSeconds > 0 {
+                if workout.remainingIntervalSeconds <= 5 && workout.remainingIntervalSeconds > 0 {
                     
                     AudioServicesPlaySystemSound(1057)
                     
@@ -496,7 +508,7 @@ extension ViewController {
                 
                 workout.remainingTransitionSeconds -= 1
                 
-                if workout.remainingTransitionSeconds <= 3 && workout.remainingTransitionSeconds > 0 {
+                if workout.remainingTransitionSeconds <= 5 && workout.remainingTransitionSeconds > 0 {
                     
                     AudioServicesPlaySystemSound(1057)
                     
@@ -569,7 +581,7 @@ extension ViewController {
                 
                 workout.remainingRestSeconds -= 1
                 
-                if workout.remainingRestSeconds <= 3 && workout.remainingRestSeconds > 0 {
+                if workout.remainingRestSeconds <= 5 && workout.remainingRestSeconds > 0 {
                     
                     AudioServicesPlaySystemSound(1057)
                     
@@ -639,7 +651,7 @@ extension ViewController {
     
     func resetEverythingAlert(isTime: Bool?, isTransition: Bool?, isExercise: Bool?) {
         
-        let alert = UIAlertController(title: "Reset?", message: "This will reset all values.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Reset?", message: "This will start the workout over.", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Reset", style: .destructive, handler: { (action) in
             
@@ -648,6 +660,10 @@ extension ViewController {
                 if let time = isTime, let transition = isTransition, let exercise = isExercise {
                     
                     self.setAndTimeTapSegue(isTime: time, isTransition: transition, isExercise: exercise)
+                    
+                } else {
+                    
+                    self.performSegue(withIdentifier: self.keywords.mainToRoutinesSegue, sender: self)
                     
                 }
                 
@@ -858,6 +874,26 @@ extension ViewController {
     // ******
     // *** MARK: - Tap Functions
     // ******
+    
+    
+    
+    @objc func routineTitleTap() {
+        
+        if !timerIsStarted {
+            
+            if beganWorkout {
+                
+                resetEverythingAlert(isTime: nil, isTransition: nil, isExercise: nil)
+                
+            } else {
+                
+                performSegue(withIdentifier: keywords.mainToRoutinesSegue, sender: self)
+                
+            }
+            
+        }
+        
+    }
     
     
 

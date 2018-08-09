@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -13,7 +12,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Intervate" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="FIT" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -320,6 +319,7 @@
                         <outlet property="transitionView" destination="W7A-Qf-H0T" id="l95-Rk-6UM"/>
                         <segue destination="Emh-bF-r0j" kind="presentation" identifier="mainToExerciseSegue" modalTransitionStyle="flipHorizontal" id="UvR-FY-7qA"/>
                         <segue destination="KsY-k3-I8Q" kind="presentation" identifier="mainToSetsSegue" modalPresentationStyle="overFullScreen" id="0pK-Us-tXt"/>
+                        <segue destination="0WI-Oe-cVr" kind="presentation" identifier="mainToRoutinesSegue" id="Uig-b2-Unb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -329,7 +329,7 @@
         <!--Add Exercise View Controller-->
         <scene sceneID="DzX-rv-rtV">
             <objects>
-                <viewController id="xw4-mn-naU" customClass="AddExerciseViewController" customModule="Intervate" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="xw4-mn-naU" customClass="AddExerciseViewController" customModule="FIT" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="12U-wR-VmJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -348,7 +348,7 @@
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="yes" spellCheckingType="yes" keyboardAppearance="alert" returnKeyType="done"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="yes" spellCheckingType="yes" keyboardAppearance="alert" returnKeyType="done"/>
                                         <connections>
                                             <outlet property="delegate" destination="xw4-mn-naU" id="sFj-zU-iaF"/>
                                         </connections>
@@ -489,7 +489,7 @@ warning</string>
         <!--Exercise View Controller-->
         <scene sceneID="Sg6-4f-Y82">
             <objects>
-                <viewController id="Emh-bF-r0j" customClass="ExerciseViewController" customModule="Intervate" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Emh-bF-r0j" customClass="ExerciseViewController" customModule="FIT" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Uhg-EY-ffs">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -502,7 +502,7 @@ warning</string>
                                 </textAttributes>
                                 <items>
                                     <navigationItem title="Exercises" id="1P9-Im-YgK">
-                                        <barButtonItem key="leftBarButtonItem" title="Back" id="KdE-cs-KzC">
+                                        <barButtonItem key="leftBarButtonItem" title="Done" id="KdE-cs-KzC">
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <connections>
                                                 <action selector="back:" destination="Emh-bF-r0j" id="zkg-c9-KY2"/>
@@ -599,7 +599,7 @@ warning</string>
         <!--Sets Transition And Rest View Controller-->
         <scene sceneID="bRe-mr-Cen">
             <objects>
-                <viewController id="KsY-k3-I8Q" customClass="SetsTransitionAndRestViewController" customModule="Intervate" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="KsY-k3-I8Q" customClass="SetsTransitionAndRestViewController" customModule="FIT" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mCx-XT-hXj">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -710,7 +710,7 @@ warning</string>
         <!--Routine View Controller-->
         <scene sceneID="wMW-J5-WFT">
             <objects>
-                <viewController id="0WI-Oe-cVr" customClass="RoutineViewController" customModule="Intervate" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="0WI-Oe-cVr" customClass="RoutineViewController" customModule="FIT" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CCM-ZF-pcQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -802,7 +802,7 @@ warning</string>
         <!--Add Routine View Controller-->
         <scene sceneID="JW4-2i-A5T">
             <objects>
-                <viewController id="bRc-YK-AfT" customClass="AddRoutineViewController" customModule="Intervate" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="bRc-YK-AfT" customClass="AddRoutineViewController" customModule="FIT" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7f6-wP-gjC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -821,7 +821,7 @@ warning</string>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="yes" spellCheckingType="yes" keyboardAppearance="alert" returnKeyType="done"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="yes" spellCheckingType="yes" keyboardAppearance="alert" returnKeyType="done"/>
                                         <connections>
                                             <outlet property="delegate" destination="bRc-YK-AfT" id="7kY-zX-lsj"/>
                                         </connections>
@@ -900,4 +900,7 @@ warning</string>
     <resources>
         <image name="WorkoutTimer-OpeningBackground" width="1024" height="1024"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="Uig-b2-Unb"/>
+    </inferredMetricsTieBreakers>
 </document>

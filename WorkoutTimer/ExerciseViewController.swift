@@ -152,7 +152,7 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
             
             let destinationVC = segue.destination as! RoutineViewController
             
-            destinationVC.delegate = self
+            destinationVC.delegate2 = self
             
         }
         
@@ -226,7 +226,7 @@ extension ExerciseViewController {
         
         editButton.title = edit ? "Done" : "Edit"
         
-        goToRoutinesButton.setTitle(edit ? "Edit Routines" : workout.exerciseArray[0].routine!, for: .normal)
+//        goToRoutinesButton.setTitle(edit ? "Edit Routines" : workout.exerciseArray[0].routine!, for: .normal)
         
         exerciseTable.setEditing(edit, animated: true)
         

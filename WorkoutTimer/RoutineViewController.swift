@@ -32,7 +32,9 @@ class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var routineName = String()
     
-    var delegate: LoadRoutineExercises?
+    var delegate: UpdateFirstExerciseDelegate?
+    
+    var delegate2: LoadRoutineExercises?
     
     
    
@@ -72,7 +74,9 @@ class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func back(_ sender: UIBarButtonItem) {
         
-        delegate?.reloadExercisesPerRoutine()
+        delegate?.updateFirstExercise(withExercise: workout.exerciseArray[0])
+        
+        delegate2?.reloadExercisesPerRoutine()
         
         dismiss(animated: true, completion: nil)
         
@@ -168,6 +172,10 @@ extension RoutineViewController {
     
     func setRoutine(oldName: String, newName: String, isNew: Bool) {
         
+        editCells = false
+        
+        editButton.title = editCells ? "Done" : "Edit"
+        
         setRoutineVariable(named: newName)
         
         if isNew {
@@ -229,8 +237,12 @@ extension RoutineViewController {
         } else {
             
             workout.saveLastUsedRoutine(routine: workout.routineArray[indexPath.row])
-
-            delegate?.reloadExercisesPerRoutine()
+            
+            workout.loadExercisesPerRoutine(routine: workout.lastUsedRoutine)
+            
+            delegate?.updateFirstExercise(withExercise: workout.exerciseArray[0])
+            
+            delegate2?.reloadExercisesPerRoutine()
 
             dismiss(animated: true, completion: nil)
             
