@@ -74,9 +74,9 @@ class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func back(_ sender: UIBarButtonItem) {
         
-        delegate?.updateFirstExercise(withExercise: workout.exerciseArray[0])
-        
         delegate2?.reloadExercisesPerRoutine()
+        
+        delegate?.updateFirstExercise()
         
         dismiss(animated: true, completion: nil)
         
@@ -240,7 +240,7 @@ extension RoutineViewController {
             
             workout.loadExercisesPerRoutine(routine: workout.lastUsedRoutine)
             
-            delegate?.updateFirstExercise(withExercise: workout.exerciseArray[0])
+            delegate?.updateFirstExercise()
             
             delegate2?.reloadExercisesPerRoutine()
 

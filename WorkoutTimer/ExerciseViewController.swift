@@ -10,7 +10,7 @@ import UIKit
 
 protocol UpdateFirstExerciseDelegate {
     
-    func updateFirstExercise(withExercise: Exercise)
+    func updateFirstExercise()
     
 }
 
@@ -100,7 +100,7 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBAction func back(_ sender: UIBarButtonItem) {
         
-        delegate?.updateFirstExercise(withExercise: workout.exerciseArray[0])
+        delegate?.updateFirstExercise()
         
         delegate2?.reloadExercisesPerRoutine()
         

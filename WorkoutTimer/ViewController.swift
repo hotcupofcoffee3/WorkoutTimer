@@ -1027,13 +1027,13 @@ extension ViewController {
         
     }
     
-    func updateFirstExercise(withExercise firstExercise: Exercise) {
+    func updateFirstExercise() {
         
         workout.loadLastUsedRoutine()
         
         workout.loadExercisesPerRoutine(routine: workout.lastUsedRoutine)
         
-        intervalLabel.text = "\(zero(unit: Int(firstExercise.intervalMinutes))):\(zero(unit: Int(firstExercise.intervalSeconds)))"
+        intervalLabel.text = "\(zero(unit: Int(workout.exerciseArray[0].intervalMinutes))):\(zero(unit: Int(workout.exerciseArray[0].intervalSeconds)))"
         
         workout.setTotalAndRemainingStartingIntervalAmounts()
         
