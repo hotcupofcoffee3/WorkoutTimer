@@ -705,7 +705,7 @@ warning</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FHa-KY-zD9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2209" y="134"/>
+            <point key="canvasLocation" x="129" y="887"/>
         </scene>
         <!--Routine View Controller-->
         <scene sceneID="wMW-J5-WFT">
@@ -723,7 +723,7 @@ warning</string>
                                 </textAttributes>
                                 <items>
                                     <navigationItem title="Routines" id="bsF-pk-SxL">
-                                        <barButtonItem key="leftBarButtonItem" title="Back" id="3aU-nG-YpH">
+                                        <barButtonItem key="leftBarButtonItem" title="Done" id="3aU-nG-YpH">
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <connections>
                                                 <action selector="back:" destination="0WI-Oe-cVr" id="CLm-ou-9gu"/>
