@@ -127,7 +127,7 @@ class SetsTransitionAndRestViewController: UIViewController, UIPickerViewDelegat
             
         }
         
-        chosenPickerInfoLabel.text = isTime ? "\(workoutTimer.zero(unit: minutes))\(minutes):\(workoutTimer.zero(unit: seconds))\(seconds)" : "\(numberOfSets)"
+        chosenPickerInfoLabel.text = isTime ? "\(workoutTimer.zero(unit: minutes)):\(workoutTimer.zero(unit: seconds))" : "\(numberOfSets)"
         
     }
     
@@ -177,7 +177,7 @@ extension SetsTransitionAndRestViewController {
                 
             }
             
-            chosenPickerInfoLabel.text = "\(workoutTimer.zero(unit: minutes))\(minutes):\(workoutTimer.zero(unit: seconds))\(seconds)"
+            chosenPickerInfoLabel.text = "\(workoutTimer.zero(unit: minutes)):\(workoutTimer.zero(unit: seconds))"
             
         } else {
             

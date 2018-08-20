@@ -176,6 +176,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
             destinationVC.delegate2 = self
             
+            destinationVC.delegate3 = self
+            
         } else if segue.identifier == keywords.mainToExerciseSegue {
             
             let destinationVC = segue.destination as! ExerciseViewController
@@ -329,8 +331,6 @@ extension ViewController {
             }
             
             if workout.remainingWorkoutSeconds == 0 {
-                
-                print(workout.remainingWorkoutSeconds)
                 
                 // Reset amounts
                 
@@ -986,7 +986,7 @@ extension ViewController {
     
     func setSets(numberOfSets: Int) {
         
-        workout.saveSets(sets: numberOfSets)
+        workout.saveSets(routine: workout.lastUsedRoutine, sets: numberOfSets)
         
         timerProgress.progress = 0.0
         
@@ -998,7 +998,7 @@ extension ViewController {
     
     func setTransition(minutes: Int, seconds: Int) {
         
-        workout.saveTransitionTime(minutes: minutes, seconds: seconds)
+        workout.saveTransitionTime(routine: workout.lastUsedRoutine, minutes: minutes, seconds: seconds)
         
         transitionLabel.text = "\(workoutTimer.zero(unit: workout.setTransitionMinutes)):\(workoutTimer.zero(unit: workout.setTransitionSeconds))"
         
@@ -1008,7 +1008,7 @@ extension ViewController {
     
     func setRest(minutes: Int, seconds: Int) {
         
-        workout.saveRestTime(minutes: minutes, seconds: seconds)
+        workout.saveRestTime(routine: workout.lastUsedRoutine, minutes: minutes, seconds: seconds)
         
         restLabel.text = "\(workoutTimer.zero(unit: workout.setRestMinutes)):\(workoutTimer.zero(unit: workout.setRestSeconds))"
         

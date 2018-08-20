@@ -5,6 +5,7 @@
         <attribute name="intervalSeconds" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" defaultValueString="unnamed" syncable="YES"/>
         <attribute name="orderNumber" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="reps" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="routine" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="WorkoutInfo" representedClassName="WorkoutInfo" syncable="YES" codeGenerationType="class">
@@ -16,7 +17,7 @@
         <attribute name="transitionSeconds" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Exercise" positionX="-63" positionY="36" width="128" height="120"/>
+        <element name="Exercise" positionX="-63" positionY="36" width="128" height="135"/>
         <element name="WorkoutInfo" positionX="-63" positionY="-18" width="128" height="135"/>
     </elements>
 </model>

@@ -23,7 +23,7 @@ class Workout {
     
     
     // ******
-    // *** Properties
+    // *** MARK: - Properties
     // ******
     
     
@@ -75,7 +75,7 @@ class Workout {
     
     
     // ******
-    // *** Save
+    // *** MARK: - Save
     // ******
     
     
@@ -94,7 +94,7 @@ class Workout {
         
     }
     
-    func saveNewWorkoutInfo() {
+    func saveNewWorkoutInfo(routine: String) {
         
         let newWorkout = WorkoutInfo(context: context)
         
@@ -103,12 +103,23 @@ class Workout {
         newWorkout.sets = 3
         newWorkout.transitionMinutes = 0
         newWorkout.transitionSeconds = 0
+        newWorkout.routine = routine
         
         self.saveData()
         
     }
     
-    func saveNewExercise(named: String, minutes: Int = 0, seconds: Int = 0, routine: String) {
+    func saveNewRoutine(routine: String) {
+        
+        saveNewExercise(named: "Exercise 1", minutes: 0, seconds: 30, routine: routine, reps: 0)
+        
+        saveNewWorkoutInfo(routine: routine)
+        
+        self.saveData()
+        
+    }
+    
+    func saveNewExercise(named: String, minutes: Int = 0, seconds: Int = 0, routine: String, reps: Int = 0) {
         
         let newExercise = Exercise(context: context)
         
@@ -117,6 +128,7 @@ class Workout {
         newExercise.name = named
         newExercise.orderNumber = Int64(exerciseArray.count)
         newExercise.routine = routine
+        newExercise.reps = Int64(reps)
         
         self.saveData()
         
@@ -133,9 +145,9 @@ class Workout {
         
     }
     
-    func saveTransitionTime(minutes: Int, seconds: Int) {
+    func saveTransitionTime(routine: String, minutes: Int, seconds: Int) {
         
-        let workoutInfo = getWorkoutInfo()
+        let workoutInfo = getWorkoutInfo(routine: routine)
         
         workoutInfo.transitionMinutes = Int64(minutes)
         workoutInfo.transitionSeconds = Int64(seconds)
@@ -152,9 +164,9 @@ class Workout {
         
     }
     
-    func saveRestTime(minutes: Int, seconds: Int) {
+    func saveRestTime(routine: String, minutes: Int, seconds: Int) {
         
-        let workoutInfo = getWorkoutInfo()
+        let workoutInfo = getWorkoutInfo(routine: routine)
         
         workoutInfo.restMinutes = Int64(minutes)
         workoutInfo.restSeconds = Int64(seconds)
@@ -171,9 +183,9 @@ class Workout {
         
     }
     
-    func saveSets(sets: Int) {
+    func saveSets(routine: String, sets: Int) {
         
-        let workoutInfo = getWorkoutInfo()
+        let workoutInfo = getWorkoutInfo(routine: routine)
         
         workoutInfo.sets = Int64(sets)
         
@@ -194,10 +206,40 @@ class Workout {
     
     
     // ******
-    // *** Load
+    // *** MARK: - Load
     // ******
     
     
+    
+    func loadWorkoutDataPerRoutine(routine: String) {
+        
+        let request: NSFetchRequest<WorkoutInfo> = WorkoutInfo.fetchRequest()
+        
+        let workoutPredicate = NSPredicate(format: keywords.routineMatchesKey, routine)
+        
+        request.predicate = workoutPredicate
+        
+        do {
+            
+            workoutInfoArray = try context.fetch(request)
+            
+        } catch {
+            
+            print("Error loading Workout Info: \(error)")
+            
+        }
+        
+        if workoutInfoArray.isEmpty {
+            
+            return print("'workoutInfoArray' had no object in it.")
+            
+        } else if workoutInfoArray.count > 1 {
+            
+            return print("'workoutInfoArray' has \(workoutInfoArray.count)")
+            
+        }
+        
+    }
     
     func loadWorkoutData() {
         
@@ -342,12 +384,14 @@ class Workout {
     
     
     // ******
-    // *** Retrieve Basic Workout Info and Specific Exercises
+    // *** MARK: - Retrieve Basic Workout Info and Specific Exercises
     // ******
     
     
     
-    func getWorkoutInfo() -> WorkoutInfo {
+    func getWorkoutInfo(routine: String) -> WorkoutInfo {
+        
+        loadWorkoutDataPerRoutine(routine: routine)
         
         return workoutInfoArray[0]
         
@@ -374,7 +418,7 @@ class Workout {
     
     
     // ******
-    // *** Update Exercise and Exercise Indices
+    // *** MARK: - Update Exercise and Exercise Indices
     // ******
     
     
@@ -456,7 +500,7 @@ class Workout {
     
     
     // ******
-    // *** Delete
+    // *** MARK: - Delete
     // ******
     
     
@@ -534,7 +578,7 @@ class Workout {
     
     
     // ******
-    // *** Set Amounts to Remaining or Total Amounts or Zero Time Label
+    // *** MARK: - Set Amounts to Remaining or Total Amounts or Zero Time Label
     // ******
     
     
@@ -657,7 +701,7 @@ class Workout {
     
     
     // ******
-    // *** Initialization
+    // *** MARK: - Initialization
     // ******
     
     
@@ -666,9 +710,9 @@ class Workout {
         
         if self.workoutInfoArray.count == 0 {
             
-            saveNewWorkoutInfo()
+            saveNewWorkoutInfo(routine: keywords.defaultKey)
             
-            loadWorkoutData()
+            loadWorkoutDataPerRoutine(routine: keywords.defaultKey)
             
         }
         
@@ -696,7 +740,7 @@ class Workout {
         
         self.loadLastUsedRoutine()
         
-        self.loadWorkoutData()
+        self.loadWorkoutDataPerRoutine(routine: lastUsedRoutine)
 //        print(lastUsedRoutine)
         self.loadExercisesPerRoutine(routine: lastUsedRoutine)
         
@@ -712,7 +756,7 @@ class Workout {
         
         // Set properties to their saved values.
         
-        let workoutInfo = getWorkoutInfo()
+        let workoutInfo = getWorkoutInfo(routine: lastUsedRoutine)
 
         self.setNumberOfSets = Int(workoutInfo.sets)
         

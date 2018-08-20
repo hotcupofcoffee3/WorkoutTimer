@@ -132,7 +132,7 @@ class AddExerciseViewController: UIViewController, UIPickerViewDelegate, UIPicke
         minLabel.text = "min"
         secLabel.text = "sec"
         
-        chosenPickerInfoLabel.text = "\(workoutTimer.zero(unit: minutes))\(minutes):\(workoutTimer.zero(unit: seconds))\(seconds)"
+        chosenPickerInfoLabel.text = "\(workoutTimer.zero(unit: minutes)):\(workoutTimer.zero(unit: seconds))"
         
         exerciseNameTextField.delegate = self
         
@@ -150,7 +150,7 @@ extension AddExerciseViewController {
     
     
     // ******
-    // *** MARK: - Functions - Zero and Check if Name Already Exists
+    // *** MARK: - Functions - Check if Name Already Exists
     // ******
     
     
@@ -235,7 +235,7 @@ extension AddExerciseViewController {
 
         }
 
-        chosenPickerInfoLabel.text = "\(workoutTimer.zero(unit: minutes))\(minutes):\(workoutTimer.zero(unit: seconds))\(seconds)"
+        chosenPickerInfoLabel.text = "\(workoutTimer.zero(unit: minutes)):\(workoutTimer.zero(unit: seconds))"
             
     }
     

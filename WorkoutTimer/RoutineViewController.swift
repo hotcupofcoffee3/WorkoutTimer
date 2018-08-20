@@ -36,6 +36,8 @@ class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var delegate2: LoadRoutineExercises?
     
+    var delegate3: SetSetsTransitionsAndRestDelegate?
+    
     
    
     var isNew = Bool()
@@ -180,7 +182,7 @@ extension RoutineViewController {
         
         if isNew {
             
-            workout.saveNewExercise(named: "Exercise 1", minutes: 0, seconds: 30, routine: newName)
+            workout.saveNewRoutine(routine: newName)
             
         } else {
             
@@ -240,9 +242,19 @@ extension RoutineViewController {
             
             workout.loadExercisesPerRoutine(routine: workout.lastUsedRoutine)
             
+            workout.loadWorkoutDataPerRoutine(routine: workout.lastUsedRoutine)
+            
             delegate?.updateFirstExercise()
             
             delegate2?.reloadExercisesPerRoutine()
+            
+            let workoutArray = workout.getWorkoutInfo(routine: workout.lastUsedRoutine)
+
+            delegate3?.setRest(minutes: Int(workoutArray.restMinutes), seconds: Int(workoutArray.restSeconds))
+            
+            delegate3?.setTransition(minutes: Int(workoutArray.transitionMinutes), seconds: Int(workoutArray.transitionSeconds))
+            
+            delegate3?.setSets(numberOfSets: Int(workoutArray.sets))
 
             dismiss(animated: true, completion: nil)
             
