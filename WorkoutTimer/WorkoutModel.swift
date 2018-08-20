@@ -581,9 +581,7 @@ class Workout {
     // *** MARK: - Set Amounts to Remaining or Total Amounts or Zero Time Label
     // ******
     
-    
-    
-    
+
     
     func setTotalAndRemainingStartingIntervalAmounts() {
         
@@ -706,28 +704,20 @@ class Workout {
     
     
     
-    func makeSureInitialWorkoutInfoObjectIsCreated() {
+    func makeSureInitialInfoIsCreatedAfterLoading() {
         
         if self.workoutInfoArray.count == 0 {
+            
+            saveNewExercise(named: "Exercise 1", minutes: 0, seconds: 30, routine: keywords.defaultKey)
             
             saveNewWorkoutInfo(routine: keywords.defaultKey)
             
             loadWorkoutDataPerRoutine(routine: keywords.defaultKey)
             
-        }
-        
-    }
-    
-    func makeSureInitialExerciseObjectIsCreated() {
-        
-        if self.exerciseArray.count == 0 {
-            
-            saveNewExercise(named: "Exercise 1", minutes: 0, seconds: 30, routine: keywords.defaultKey)
-            
             loadExercisesPerRoutine(routine: keywords.defaultKey)
             
         }
-
+        
     }
     
     init() {
@@ -741,16 +731,14 @@ class Workout {
         self.loadLastUsedRoutine()
         
         self.loadWorkoutDataPerRoutine(routine: lastUsedRoutine)
-//        print(lastUsedRoutine)
+
         self.loadExercisesPerRoutine(routine: lastUsedRoutine)
         
 
         
-        
         // For First Time Users, make sure initial amounts are set.
         
-        self.makeSureInitialWorkoutInfoObjectIsCreated()
-        self.makeSureInitialExerciseObjectIsCreated()
+        self.makeSureInitialInfoIsCreatedAfterLoading()
 
         
         

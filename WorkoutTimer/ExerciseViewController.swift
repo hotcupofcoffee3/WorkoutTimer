@@ -26,7 +26,7 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
     
     let keywords = Keywords()
     let workout = Workout()
-    let workoutTimer = WorkoutTimer()
+    let timerForWorkout = TimerForWorkout()
     
     
     
@@ -293,7 +293,7 @@ extension ExerciseViewController {
         
         cell.exerciseNameLabel.text = "\(currentExercise.name!)"
         
-        cell.exerciseTimeLabel.text = "\(workoutTimer.zero(unit: Int(currentExercise.intervalMinutes))):\(workoutTimer.zero(unit: Int(currentExercise.intervalSeconds)))"
+        cell.exerciseTimeLabel.text = "\(timerForWorkout.zero(unit: Int(currentExercise.intervalMinutes))):\(timerForWorkout.zero(unit: Int(currentExercise.intervalSeconds)))"
         
         return cell
     }

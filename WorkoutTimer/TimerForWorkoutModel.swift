@@ -1,5 +1,5 @@
 //
-//  TimerModel.swift
+//  TimerForWorkoutModel.swift
 //  WorkoutTimer
 //
 //  Created by Adam Moore on 8/20/18.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class WorkoutTimer {
+class TimerForWorkout {
     
     func zero(unit: Int) -> String {
         
