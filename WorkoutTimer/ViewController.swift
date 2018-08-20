@@ -15,10 +15,10 @@
 // 1306 - Tock clicking sound (Keyboard click)
 // 1072 - Kinda like a busy tone
 // 1013 - Sounds kind of like a symbol or chime.
-// 1057 - Sounds like a Dark-eyed Junco chirp.
-// 1255 - Double beep for starting.
-// 1256 - Low to high quick beeps for starting.
-// 1330 - Sherwood Forest
+// 1057 - CURRENT COUNTDOWN: Sounds like a Dark-eyed Junco chirp.
+// 1255 - CURRENT ENDING TRANSITION & REST: Double beep for starting.
+// 1256 - CURRENT ENDING INTERVAL: Low to high quick beeps for starting.
+// 1330 - CURRENT ENDING WORKOUT: Sherwood Forest
 
 
 

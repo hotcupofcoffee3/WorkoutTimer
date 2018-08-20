@@ -139,9 +139,14 @@ class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewD
         
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewWillAppear(_ animated: Bool) {
+        
+        if isNew {
+            
+            loadWorkoutInfoAndReturnToMain(routine: routineName)
+            
+        }
+        
     }
     
 }
@@ -161,6 +166,30 @@ extension RoutineViewController {
     func setRoutineVariable(named: String) {
         
         routineName = named
+        
+    }
+    
+    func loadWorkoutInfoAndReturnToMain(routine: String) {
+        
+        workout.saveLastUsedRoutine(routine: routine)
+        
+        workout.loadExercisesPerRoutine(routine: workout.lastUsedRoutine)
+        
+        workout.loadWorkoutDataPerRoutine(routine: workout.lastUsedRoutine)
+        
+        delegate?.updateFirstExercise()
+        
+        delegate2?.reloadExercisesPerRoutine()
+        
+        let workoutArray = workout.getWorkoutInfo(routine: workout.lastUsedRoutine)
+        
+        delegate3?.setRest(minutes: Int(workoutArray.restMinutes), seconds: Int(workoutArray.restSeconds))
+        
+        delegate3?.setTransition(minutes: Int(workoutArray.transitionMinutes), seconds: Int(workoutArray.transitionSeconds))
+        
+        delegate3?.setSets(numberOfSets: Int(workoutArray.sets))
+        
+        dismiss(animated: true, completion: nil)
         
     }
     
@@ -228,35 +257,17 @@ extension RoutineViewController {
         
         tableView.deselectRow(at: indexPath, animated: true)
         
+        routineName = workout.routineArray[indexPath.row]
+        
         if editCells {
             
             isNew = false
-            
-            routineName = workout.routineArray[indexPath.row]
             
             performSegue(withIdentifier: keywords.routineToAddRoutineSegue, sender: self)
             
         } else {
             
-            workout.saveLastUsedRoutine(routine: workout.routineArray[indexPath.row])
-            
-            workout.loadExercisesPerRoutine(routine: workout.lastUsedRoutine)
-            
-            workout.loadWorkoutDataPerRoutine(routine: workout.lastUsedRoutine)
-            
-            delegate?.updateFirstExercise()
-            
-            delegate2?.reloadExercisesPerRoutine()
-            
-            let workoutArray = workout.getWorkoutInfo(routine: workout.lastUsedRoutine)
-
-            delegate3?.setRest(minutes: Int(workoutArray.restMinutes), seconds: Int(workoutArray.restSeconds))
-            
-            delegate3?.setTransition(minutes: Int(workoutArray.transitionMinutes), seconds: Int(workoutArray.transitionSeconds))
-            
-            delegate3?.setSets(numberOfSets: Int(workoutArray.sets))
-
-            dismiss(animated: true, completion: nil)
+            loadWorkoutInfoAndReturnToMain(routine: routineName)
             
         }
         

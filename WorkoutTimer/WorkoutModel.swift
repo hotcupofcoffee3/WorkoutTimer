@@ -31,6 +31,7 @@ class Workout {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     var workoutInfoArray = [WorkoutInfo]()
+    var workoutInfo = WorkoutInfo()
     var exerciseArray = [Exercise]()
     var routineArray = [String]()
     
@@ -147,7 +148,7 @@ class Workout {
     
     func saveTransitionTime(routine: String, minutes: Int, seconds: Int) {
         
-        let workoutInfo = getWorkoutInfo(routine: routine)
+        workoutInfo = getWorkoutInfo(routine: routine)
         
         workoutInfo.transitionMinutes = Int64(minutes)
         workoutInfo.transitionSeconds = Int64(seconds)
@@ -166,7 +167,7 @@ class Workout {
     
     func saveRestTime(routine: String, minutes: Int, seconds: Int) {
         
-        let workoutInfo = getWorkoutInfo(routine: routine)
+        workoutInfo = getWorkoutInfo(routine: routine)
         
         workoutInfo.restMinutes = Int64(minutes)
         workoutInfo.restSeconds = Int64(seconds)
@@ -185,7 +186,7 @@ class Workout {
     
     func saveSets(routine: String, sets: Int) {
         
-        let workoutInfo = getWorkoutInfo(routine: routine)
+        workoutInfo = getWorkoutInfo(routine: routine)
         
         workoutInfo.sets = Int64(sets)
         
@@ -234,14 +235,16 @@ class Workout {
             return print("'workoutInfoArray' had no object in it.")
             
         } else if workoutInfoArray.count > 1 {
-            
-            return print("'workoutInfoArray' has \(workoutInfoArray.count)")
+            for item in workoutInfoArray {
+                print(item.routine!)
+            }
+            return print("Loaded per routine. 'workoutInfoArray' has \(workoutInfoArray.count)")
             
         }
         
     }
     
-    func loadWorkoutData() {
+    func loadAllWorkoutData() {
         
         let request: NSFetchRequest<WorkoutInfo> = WorkoutInfo.fetchRequest()
         
@@ -261,7 +264,7 @@ class Workout {
             
         } else if workoutInfoArray.count > 1 {
             
-            return print("'workoutInfoArray' has \(workoutInfoArray.count)")
+            return print("Loaded all. 'workoutInfoArray' has \(workoutInfoArray.count)")
             
         }
         
@@ -318,15 +321,7 @@ class Workout {
             return print("'exerciseArray' had no object in it.")
             
         }
-        
-//        print(routineArray)
-//        for exercise in exerciseArray {
-//            
-//            print("\(exercise.name!): \(exercise.routine!)")
-//            
-//        }
-        
-
+       
     }
     
     func loadRoutines() {
@@ -525,11 +520,29 @@ class Workout {
     
     func deleteAllSavedWorkoutInfoObjects() {
         
-        loadWorkoutData()
+        loadAllWorkoutData()
         
         for item in workoutInfoArray {
             
             context.delete(item)
+            
+        }
+        
+        saveData()
+        
+    }
+    
+    func deleteWorkoutInfo(routine: String) {
+        
+        loadAllWorkoutData()
+        
+        for workoutInfo in workoutInfoArray {
+            
+            if workoutInfo.routine == routine {
+                
+                context.delete(workoutInfo)
+                
+            }
             
         }
         
@@ -562,6 +575,8 @@ class Workout {
             }
 
         }
+        
+        deleteWorkoutInfo(routine: routineToDelete)
         
         saveData()
         
@@ -744,7 +759,7 @@ class Workout {
         
         // Set properties to their saved values.
         
-        let workoutInfo = getWorkoutInfo(routine: lastUsedRoutine)
+        workoutInfo = getWorkoutInfo(routine: lastUsedRoutine)
 
         self.setNumberOfSets = Int(workoutInfo.sets)
         
