@@ -26,6 +26,8 @@ class SetsTransitionAndRestViewController: UIViewController, UIPickerViewDelegat
     
     
     
+    let workoutTimer = WorkoutTimer()
+    
     var delegate: SetSetsTransitionsAndRestDelegate?
     
     var isTime = Bool()
@@ -125,7 +127,7 @@ class SetsTransitionAndRestViewController: UIViewController, UIPickerViewDelegat
             
         }
         
-        chosenPickerInfoLabel.text = isTime ? "\(zero(unit: minutes))\(minutes):\(zero(unit: seconds))\(seconds)" : "\(numberOfSets)"
+        chosenPickerInfoLabel.text = isTime ? "\(workoutTimer.zero(unit: minutes))\(minutes):\(workoutTimer.zero(unit: seconds))\(seconds)" : "\(numberOfSets)"
         
     }
     
@@ -134,28 +136,6 @@ class SetsTransitionAndRestViewController: UIViewController, UIPickerViewDelegat
 
 
 extension SetsTransitionAndRestViewController {
-    
-    
-    
-    // ******
-    // *** MARK: - Functions - Zero and Check if Name Already Exists
-    // ******
-    
-    
-    
-    func zero(unit: Int) -> String {
-        
-        var zero = ""
-        
-        if unit <= 9 {
-            
-            zero = "0"
-            
-        }
-        
-        return zero
-        
-    }
     
     
     
@@ -197,7 +177,7 @@ extension SetsTransitionAndRestViewController {
                 
             }
             
-            chosenPickerInfoLabel.text = "\(zero(unit: minutes))\(minutes):\(zero(unit: seconds))\(seconds)"
+            chosenPickerInfoLabel.text = "\(workoutTimer.zero(unit: minutes))\(minutes):\(workoutTimer.zero(unit: seconds))\(seconds)"
             
         } else {
             

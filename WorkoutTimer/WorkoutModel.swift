@@ -534,8 +534,10 @@ class Workout {
     
     
     // ******
-    // *** Set Amounts to Remaining or Total Amounts
+    // *** Set Amounts to Remaining or Total Amounts or Zero Time Label
     // ******
+    
+    
     
     
     

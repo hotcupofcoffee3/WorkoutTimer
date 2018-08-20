@@ -39,6 +39,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     let keywords = Keywords()
     let workout = Workout()
+    let workoutTimer = WorkoutTimer()
     
     var currentTimer = Workout.CurrentTimer.interval
     
@@ -68,6 +69,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var totalTimeInWorkout: UILabel!
     
     @IBOutlet weak var totalTimeLeft: UILabel!
+    
+    @IBOutlet weak var setsView: UIView!
     
     @IBOutlet weak var setCollectionView: UICollectionView!
     
@@ -233,7 +236,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         let restTapGesture = UITapGestureRecognizer(target: self, action: #selector(restTap))
         
         navBar.addGestureRecognizer(routineTitleTapGesture)
-        setCollectionView.addGestureRecognizer(setsTapGesture)
+        setsView.addGestureRecognizer(setsTapGesture)
         exerciseCollectionView.addGestureRecognizer(exerciseTapGesture)
         intervalView.addGestureRecognizer(intervalTapGesture)
         transitionView.addGestureRecognizer(transitionTapGesture)
@@ -243,9 +246,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         updateTotalWorkoutTimeAndLabels()
         
-        transitionLabel.text = "\(zero(unit: workout.setTransitionMinutes)):\(zero(unit: workout.setTransitionSeconds))"
+        transitionLabel.text = "\(workoutTimer.zero(unit: workout.setTransitionMinutes)):\(workoutTimer.zero(unit: workout.setTransitionSeconds))"
         
-        restLabel.text = "\(zero(unit: workout.setRestMinutes)):\(zero(unit: workout.setRestSeconds))"
+        restLabel.text = "\(workoutTimer.zero(unit: workout.setRestMinutes)):\(workoutTimer.zero(unit: workout.setRestSeconds))"
         
         timerProgress.progress = 0.0
         
@@ -357,9 +360,9 @@ extension ViewController {
         
         if Int(workout.exerciseArray[workout.currentExerciseIndex].intervalMinutes) == workout.remainingIntervalMinutes && Int(workout.exerciseArray[workout.currentExerciseIndex].intervalSeconds) == workout.remainingIntervalSeconds {
             
-            transitionLabel.text = "\(zero(unit: workout.remainingTransitionMinutes)):\(zero(unit: workout.remainingTransitionSeconds))"
+            transitionLabel.text = "\(workoutTimer.zero(unit: workout.remainingTransitionMinutes)):\(workoutTimer.zero(unit: workout.remainingTransitionSeconds))"
             
-            restLabel.text = "\(zero(unit: workout.remainingRestMinutes)):\(zero(unit: workout.remainingRestSeconds))"
+            restLabel.text = "\(workoutTimer.zero(unit: workout.remainingRestMinutes)):\(workoutTimer.zero(unit: workout.remainingRestSeconds))"
             
         }
         
@@ -468,7 +471,7 @@ extension ViewController {
             
         }
         
-        intervalLabel.text = "\(zero(unit: workout.remainingIntervalMinutes)):\(zero(unit: workout.remainingIntervalSeconds))"
+        intervalLabel.text = "\(workoutTimer.zero(unit: workout.remainingIntervalMinutes)):\(workoutTimer.zero(unit: workout.remainingIntervalSeconds))"
         
         if currentTimer == .transition || currentTimer == .rest {
             
@@ -484,7 +487,7 @@ extension ViewController {
         
         if workout.setTransitionMinutes == workout.remainingTransitionMinutes && workout.setTransitionSeconds == workout.remainingTransitionSeconds {
             
-            intervalLabel.text = "\(zero(unit: Int(workout.exerciseArray[workout.currentExerciseIndex].intervalMinutes))):\(zero(unit: Int(workout.exerciseArray[workout.currentExerciseIndex].intervalSeconds)))"
+            intervalLabel.text = "\(workoutTimer.zero(unit: Int(workout.exerciseArray[workout.currentExerciseIndex].intervalMinutes))):\(workoutTimer.zero(unit: Int(workout.exerciseArray[workout.currentExerciseIndex].intervalSeconds)))"
             
         }
         
@@ -541,7 +544,7 @@ extension ViewController {
             
         }
         
-        transitionLabel.text = "\(zero(unit: workout.remainingTransitionMinutes)):\(zero(unit: workout.remainingTransitionSeconds))"
+        transitionLabel.text = "\(workoutTimer.zero(unit: workout.remainingTransitionMinutes)):\(workoutTimer.zero(unit: workout.remainingTransitionSeconds))"
         
         if currentTimer == .interval {
             
@@ -557,7 +560,7 @@ extension ViewController {
         
         if workout.setRestMinutes == workout.remainingRestMinutes && workout.setRestSeconds == workout.remainingRestSeconds {
             
-            intervalLabel.text = "\(zero(unit: Int(workout.exerciseArray[workout.currentExerciseIndex].intervalMinutes))):\(zero(unit: Int(workout.exerciseArray[workout.currentExerciseIndex].intervalSeconds)))"
+            intervalLabel.text = "\(workoutTimer.zero(unit: Int(workout.exerciseArray[workout.currentExerciseIndex].intervalMinutes))):\(workoutTimer.zero(unit: Int(workout.exerciseArray[workout.currentExerciseIndex].intervalSeconds)))"
             
         }
         
@@ -607,7 +610,7 @@ extension ViewController {
             
         }
         
-        restLabel.text = "\(zero(unit: workout.remainingRestMinutes)):\(zero(unit: workout.remainingRestSeconds))"
+        restLabel.text = "\(workoutTimer.zero(unit: workout.remainingRestMinutes)):\(workoutTimer.zero(unit: workout.remainingRestSeconds))"
         
         if currentTimer == .interval {
             
@@ -689,25 +692,11 @@ extension ViewController {
         
     }
     
-    func zero(unit: Int) -> String {
-        
-        var zero = "\(unit)"
-        
-        if unit <= 9 {
-            
-            zero = "0\(unit)"
-            
-        }
-        
-        return zero
-        
-    }
-    
     func updateIntervalLabelToFirstExercise() {
         
         let firstExercise = workout.exerciseArray[0]
         
-        intervalLabel.text = "\(zero(unit: Int(firstExercise.intervalMinutes))):\(zero(unit: Int(firstExercise.intervalSeconds)))"
+        intervalLabel.text = "\(workoutTimer.zero(unit: Int(firstExercise.intervalMinutes))):\(workoutTimer.zero(unit: Int(firstExercise.intervalSeconds)))"
         
     }
     
@@ -727,7 +716,7 @@ extension ViewController {
         
         updateIntervalLabelToFirstExercise()
         
-        transitionLabel.text = "\(zero(unit: workout.setTransitionMinutes)):\(zero(unit: workout.setTransitionSeconds))"
+        transitionLabel.text = "\(workoutTimer.zero(unit: workout.setTransitionMinutes)):\(workoutTimer.zero(unit: workout.setTransitionSeconds))"
         
         workout.setRemainingToSetAmounts()
         
@@ -853,7 +842,7 @@ extension ViewController {
     
     func updateRemainingWorkoutTime() {
         
-        totalTimeLeft.text = "\(zero(unit: workout.remainingWorkoutMinutes)):\(zero(unit: workout.remainingWorkoutSeconds))"
+        totalTimeLeft.text = "\(workoutTimer.zero(unit: workout.remainingWorkoutMinutes)):\(workoutTimer.zero(unit: workout.remainingWorkoutSeconds))"
         
     }
     
@@ -863,7 +852,7 @@ extension ViewController {
         
         workout.setMinutesAndSecondsFromTotalWorkoutSeconds()
         
-        totalTimeInWorkout.text = "\(zero(unit: workout.setWorkoutMinutes)):\(zero(unit: workout.setWorkoutSeconds))"
+        totalTimeInWorkout.text = "\(workoutTimer.zero(unit: workout.setWorkoutMinutes)):\(workoutTimer.zero(unit: workout.setWorkoutSeconds))"
         
         updateRemainingWorkoutTime()
         
@@ -1011,7 +1000,7 @@ extension ViewController {
         
         workout.saveTransitionTime(minutes: minutes, seconds: seconds)
         
-        transitionLabel.text = "\(zero(unit: workout.setTransitionMinutes)):\(zero(unit: workout.setTransitionSeconds))"
+        transitionLabel.text = "\(workoutTimer.zero(unit: workout.setTransitionMinutes)):\(workoutTimer.zero(unit: workout.setTransitionSeconds))"
         
         updateTotalWorkoutTimeAndLabels()
         
@@ -1021,7 +1010,7 @@ extension ViewController {
         
         workout.saveRestTime(minutes: minutes, seconds: seconds)
         
-        restLabel.text = "\(zero(unit: workout.setRestMinutes)):\(zero(unit: workout.setRestSeconds))"
+        restLabel.text = "\(workoutTimer.zero(unit: workout.setRestMinutes)):\(workoutTimer.zero(unit: workout.setRestSeconds))"
         
         updateTotalWorkoutTimeAndLabels()
         
@@ -1033,7 +1022,7 @@ extension ViewController {
         
         workout.loadExercisesPerRoutine(routine: workout.lastUsedRoutine)
         
-        intervalLabel.text = "\(zero(unit: Int(workout.exerciseArray[0].intervalMinutes))):\(zero(unit: Int(workout.exerciseArray[0].intervalSeconds)))"
+        intervalLabel.text = "\(workoutTimer.zero(unit: Int(workout.exerciseArray[0].intervalMinutes))):\(workoutTimer.zero(unit: Int(workout.exerciseArray[0].intervalSeconds)))"
         
         workout.setTotalAndRemainingStartingIntervalAmounts()
         
@@ -1127,7 +1116,7 @@ extension ViewController {
             let currentExercise = workout.exerciseArray[indexPath.row]
             
             cell.exerciseNameLabel.text = "\(currentExercise.name!)"
-            cell.exerciseTimeLabel.text = "\(zero(unit: Int(currentExercise.intervalMinutes))):\(zero(unit: Int(currentExercise.intervalSeconds)))"
+            cell.exerciseTimeLabel.text = "\(workoutTimer.zero(unit: Int(currentExercise.intervalMinutes))):\(workoutTimer.zero(unit: Int(currentExercise.intervalSeconds)))"
             
             if beganWorkout {
                 
