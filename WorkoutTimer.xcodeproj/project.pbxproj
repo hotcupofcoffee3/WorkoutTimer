@@ -18,7 +18,7 @@
 		B5A07C9C21124C81006B0C5E /* RoutineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A07C9A21124C81006B0C5E /* RoutineTableViewCell.swift */; };
 		B5A07C9D21124C81006B0C5E /* RoutineTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A07C9B21124C81006B0C5E /* RoutineTableViewCell.xib */; };
 		B5C3251E21065A3E00A88FDB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C3251D21065A3E00A88FDB /* AppDelegate.swift */; };
-		B5C3252021065A3E00A88FDB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C3251F21065A3E00A88FDB /* ViewController.swift */; };
+		B5C3252021065A3E00A88FDB /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C3251F21065A3E00A88FDB /* MainViewController.swift */; };
 		B5C3252321065A3E00A88FDB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5C3252121065A3E00A88FDB /* Main.storyboard */; };
 		B5C3252621065A3E00A88FDB /* WorkoutTimer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B5C3252421065A3E00A88FDB /* WorkoutTimer.xcdatamodeld */; };
 		B5C3252821065A4100A88FDB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5C3252721065A4100A88FDB /* Assets.xcassets */; };
@@ -45,7 +45,7 @@
 		B5A07C9B21124C81006B0C5E /* RoutineTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoutineTableViewCell.xib; sourceTree = "<group>"; };
 		B5C3251A21065A3E00A88FDB /* FIT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FIT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5C3251D21065A3E00A88FDB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B5C3251F21065A3E00A88FDB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B5C3251F21065A3E00A88FDB /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		B5C3252221065A3E00A88FDB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B5C3252521065A3E00A88FDB /* WorkoutTimer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WorkoutTimer.xcdatamodel; sourceTree = "<group>"; };
 		B5C3252721065A4100A88FDB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -110,7 +110,7 @@
 				B5C3253A21068B5800A88FDB /* WorkoutModel.swift */,
 				B56BD57A212C644D009F8189 /* ProtocolModel.swift */,
 				B58B2B07212B202E003F8C6C /* TimerForWorkoutModel.swift */,
-				B5C3251F21065A3E00A88FDB /* ViewController.swift */,
+				B5C3251F21065A3E00A88FDB /* MainViewController.swift */,
 				B529CB79210BBD32005A0488 /* ExerciseViewController.swift */,
 				B506381D211111C7002451F9 /* RoutineViewController.swift */,
 				B506381F2111128B002451F9 /* AddRoutineViewController.swift */,
@@ -205,7 +205,7 @@
 				B56BD57B212C644D009F8189 /* ProtocolModel.swift in Sources */,
 				B5C3253821066B3000A88FDB /* SetsCollectionViewCell.swift in Sources */,
 				B5F659B1210C24C000099131 /* ExerciseTableViewCell.swift in Sources */,
-				B5C3252021065A3E00A88FDB /* ViewController.swift in Sources */,
+				B5C3252021065A3E00A88FDB /* MainViewController.swift in Sources */,
 				B5A07C9C21124C81006B0C5E /* RoutineTableViewCell.swift in Sources */,
 				B529CB7C210BC894005A0488 /* SetsTransitionAndRestViewController.swift in Sources */,
 				B5C3253B21068B5800A88FDB /* WorkoutModel.swift in Sources */,

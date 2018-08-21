@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MainViewController.swift
 //  WorkoutTimer
 //
 //  Created by Adam Moore on 7/23/18.
@@ -21,7 +21,7 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController {
+class MainViewController: UIViewController {
 
     
     
@@ -959,7 +959,7 @@ class ViewController: UIViewController {
 
 
 
-extension ViewController: SetSetsTransitionsAndRestDelegate, UpdateFirstExerciseDelegate, LoadRoutineExercisesDelegate {
+extension MainViewController: SetSetsTransitionsAndRestDelegate, UpdateFirstExerciseDelegate, LoadRoutineExercisesDelegate {
     
     func setSets(numberOfSets: Int) {
         
@@ -1039,7 +1039,7 @@ extension ViewController: SetSetsTransitionsAndRestDelegate, UpdateFirstExercise
 
 
 
-extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         

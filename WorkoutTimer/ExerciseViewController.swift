@@ -32,6 +32,8 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
     
     var isNew = Bool()
     
+    var isTime = Bool()
+    
     var isTenExercises = Bool()
     
     var editCells = false
@@ -86,7 +88,7 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
             
             isNew = true
             
-            performSegue(withIdentifier: keywords.exerciseToPickerSegue, sender: self)
+            performSegue(withIdentifier: keywords.exerciseToAddExerciseSegue, sender: self)
             
         }
 
@@ -120,13 +122,15 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == keywords.exerciseToPickerSegue {
+        if segue.identifier == keywords.exerciseToAddExerciseSegue {
             
             let destinationVC = segue.destination as! AddExerciseViewController
             
             destinationVC.setExerciseDelegate = self
             
             destinationVC.isNew = isNew
+            
+            destinationVC.isTime = isTime
             
             if !isNew {
                 
@@ -155,7 +159,7 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
 
     
     // ******
-    // *** Loadables
+    // *** MARK: - Loadables
     // ******
     
     
@@ -224,7 +228,7 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
     
     
     
-    func setExercise(oldName: String, newName: String, minutes: Int, seconds: Int, isNew: Bool) {
+    func setExercise(oldName: String, newName: String, minutes: Int, seconds: Int, reps: Int, isNew: Bool) {
         
         toggleEditAndDoneFunction(edit: false)
         
@@ -236,7 +240,7 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
             
         } else {
             
-            workout.updateExercise(named: oldName, newName: newName, newMinutes: minutes, newSeconds: seconds)
+            workout.updateExercise(named: oldName, newName: newName, newMinutes: minutes, newSeconds: seconds, newReps: reps)
             
         }
         
@@ -298,7 +302,9 @@ extension ExerciseViewController: UITableViewDelegate, UITableViewDataSource {
         
         isNew = false
         
-        performSegue(withIdentifier: keywords.exerciseToPickerSegue, sender: self)
+        isTime = (exercise.reps == 0)
+        
+        performSegue(withIdentifier: keywords.exerciseToAddExerciseSegue, sender: self)
         
     }
     

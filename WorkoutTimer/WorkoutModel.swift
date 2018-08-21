@@ -471,7 +471,7 @@ class Workout {
     
     
     
-    func updateExercise(named: String, newName: String, newMinutes: Int, newSeconds: Int) {
+    func updateExercise(named: String, newName: String, newMinutes: Int, newSeconds: Int, newReps: Int) {
         
         var updatingExercise: Exercise?
         
@@ -489,6 +489,7 @@ class Workout {
             
             updatingExercise.intervalMinutes = Int64(newMinutes)
             updatingExercise.intervalSeconds = Int64(newSeconds)
+            updatingExercise.reps = Int64(newReps)
             updatingExercise.name = newName
             
         } else {

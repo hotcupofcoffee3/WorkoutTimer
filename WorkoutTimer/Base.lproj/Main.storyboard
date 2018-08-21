@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="FIT" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MainViewController" customModule="FIT" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -388,17 +388,22 @@ warning</string>
                                 <color key="textColor" red="1" green="0.43137254899999999" blue="0.39607843139999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="iha-wq-mWf" userLabel="Interval Stack View">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="iha-wq-mWf" userLabel="Interval Stack View">
                                 <rect key="frame" x="0.0" y="217.5" width="375" height="96"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Interval" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iap-Tz-bap">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="24"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="e4t-zP-iVv">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="39"/>
+                                        <segments>
+                                            <segment title="Time"/>
+                                            <segment title="Reps"/>
+                                        </segments>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <action selector="toggleTimeOrRepsSegment:" destination="xw4-mn-naU" eventType="valueChanged" id="EeL-zc-YM5"/>
+                                        </connections>
+                                    </segmentedControl>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--:--" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZQg-hg-XdP">
-                                        <rect key="frame" x="0.0" y="48" width="375" height="48"/>
+                                        <rect key="frame" x="0.0" y="58" width="375" height="38"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="36"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -494,6 +499,7 @@ warning</string>
                         <outlet property="minLabel" destination="5L9-ia-BEp" id="HAu-5X-jaU"/>
                         <outlet property="numberPicker" destination="OA2-u5-1z3" id="H7i-PV-hO0"/>
                         <outlet property="secLabel" destination="uTn-jj-cG9" id="Hz6-m2-LDe"/>
+                        <outlet property="timeOrRepSegment" destination="e4t-zP-iVv" id="d4Y-vq-jjR"/>
                         <outlet property="warningLabel" destination="hO0-Fr-cLz" id="T7f-BV-bGx"/>
                     </connections>
                 </viewController>
@@ -603,7 +609,7 @@ warning</string>
                         <outlet property="editButton" destination="2zg-WP-Hm7" id="9TU-UQ-q8H"/>
                         <outlet property="exerciseTable" destination="Hmn-2q-sPw" id="REI-hx-lg3"/>
                         <outlet property="goToRoutinesButton" destination="fmF-Np-r0d" id="ac1-Ey-C49"/>
-                        <segue destination="xw4-mn-naU" kind="presentation" identifier="exerciseToPickerSegue" id="jbe-N9-YrA"/>
+                        <segue destination="xw4-mn-naU" kind="presentation" identifier="exerciseToAddExerciseSegue" id="jbe-N9-YrA"/>
                         <segue destination="0WI-Oe-cVr" kind="presentation" identifier="exerciseToRoutineSegue" id="3oA-4X-4Tb"/>
                     </connections>
                 </viewController>
@@ -916,6 +922,6 @@ warning</string>
         <image name="WorkoutTimer-OpeningBackground" width="1024" height="1024"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Uig-b2-Unb"/>
+        <segue reference="3oA-4X-4Tb"/>
     </inferredMetricsTieBreakers>
 </document>

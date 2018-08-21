@@ -17,7 +17,7 @@ class Keywords {
     
     let mainToRoutinesSegue = "mainToRoutinesSegue"
     
-    let exerciseToPickerSegue = "exerciseToPickerSegue"
+    let exerciseToAddExerciseSegue = "exerciseToAddExerciseSegue"
     
     let exerciseToRoutineSegue = "exerciseToRoutineSegue"
     

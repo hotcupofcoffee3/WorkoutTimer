@@ -28,13 +28,19 @@ class AddExerciseViewController: UIViewController {
     
     var newExerciseName = String()
     
+    var isTime = Bool()
+    
     var minutes = Int()
     
     var seconds = Int()
     
+    var reps = Int()
+    
     var isNew = Bool()
     
-    var pickerMinutesAndSeconds = Array(0...59)
+    let maxReps = 30
+    
+    let pickerMinutesAndSeconds = Array(0...59)
     
     
     
@@ -49,6 +55,8 @@ class AddExerciseViewController: UIViewController {
     @IBOutlet weak var exerciseNameTextField: UITextField!
     
     @IBOutlet weak var warningLabel: UILabel!
+    
+    @IBOutlet weak var timeOrRepSegment: UISegmentedControl!
     
     @IBOutlet weak var chosenPickerInfoLabel: UILabel!
     
@@ -72,31 +80,49 @@ class AddExerciseViewController: UIViewController {
         
     }
     
+    @IBAction func toggleTimeOrRepsSegment(_ sender: UISegmentedControl) {
+        
+        isTime = (sender.selectedSegmentIndex == 0)
+        
+        toggleMinAndSecLabels()
+        
+        chosenPickerInfoLabel.text = isTime ? "\(timerForWorkout.zero(unit: minutes)):\(timerForWorkout.zero(unit: seconds))" : "\(reps)"
+        
+        numberPicker.reloadAllComponents()
+        
+    }
+    
     @IBAction func setExercise(_ sender: UIButton) {
         
         if exerciseNameTextField.text == "" {
             
             return warningLabel.text = "You have to fill in a value for the exercise name."
             
-//             return
-            
         } else if workout.checkIfNameExists(isNew: isNew, oldExerciseName: exerciseName, newExerciseName: exerciseNameTextField.text!) {
             
-            warningLabel.text = "An exercise already exists with this name."
+            return warningLabel.text = "An exercise already exists with this name."
             
-            return
+        } else if isTime && minutes == 0 && seconds == 0 {
+       
+            return warningLabel.text = "The time cannot be set to 00:00."
             
-        } else if minutes == 0 && seconds == 0 {
+        } else if !isTime && reps == 0 {
             
-            warningLabel.text = "The time cannot be set to 00:00."
-            
-            return
+            return warningLabel.text = "Reps cannot be set to 0."
             
         }
         
         newExerciseName = exerciseNameTextField.text!
         
-        setExerciseDelegate?.setExercise(oldName: exerciseName, newName: newExerciseName, minutes: minutes, seconds: seconds, isNew: isNew)
+        if isTime {
+            
+            setExerciseDelegate?.setExercise(oldName: exerciseName, newName: newExerciseName, minutes: minutes, seconds: seconds, reps: 0, isNew: isNew)
+            
+        } else {
+            
+            setExerciseDelegate?.setExercise(oldName: exerciseName, newName: newExerciseName, minutes: 0, seconds: 0, reps: reps, isNew: isNew)
+            
+        }
         
         dismiss(animated: true, completion: nil)
         
@@ -105,14 +131,30 @@ class AddExerciseViewController: UIViewController {
     
     
     // ******
-    // *** MARK: - Tap Functions
+    // *** MARK: - Functions
     // ******
     
     
     
     @objc func exerciseTap() {
-        
+
         exerciseNameTextField.becomeFirstResponder()
+
+    }
+    
+    func toggleMinAndSecLabels() {
+        
+        if isTime {
+            
+            minLabel.text = "min"
+            secLabel.text = "sec"
+            
+        } else {
+            
+            minLabel.text = ""
+            secLabel.text = ""
+            
+        }
         
     }
 
@@ -130,19 +172,26 @@ class AddExerciseViewController: UIViewController {
         exerciseNameTextField.text = "\(exerciseName)"
         
         warningLabel.text = ""
-
-        numberPicker.selectRow(minutes, inComponent: 0, animated: true)
         
-        numberPicker.selectRow(seconds, inComponent: 1, animated: true)
+        if isTime {
+            
+            numberPicker.selectRow(minutes, inComponent: 0, animated: true)
+            numberPicker.selectRow(seconds, inComponent: 1, animated: true)
+            
+        } else {
+            
+            numberPicker.selectRow(reps, inComponent: 0, animated: true)
+            
+        }
         
-        minLabel.text = "min"
-        secLabel.text = "sec"
+        toggleMinAndSecLabels()
         
-        chosenPickerInfoLabel.text = "\(timerForWorkout.zero(unit: minutes)):\(timerForWorkout.zero(unit: seconds))"
+        chosenPickerInfoLabel.text = isTime ? "\(timerForWorkout.zero(unit: minutes)):\(timerForWorkout.zero(unit: seconds))" : "\(reps)"
         
         exerciseNameTextField.delegate = self
         
         let exerciseViewTap = UITapGestureRecognizer(target: self, action: #selector(exerciseTap))
+        
         exerciseNameView.addGestureRecognizer(exerciseViewTap)
 
     }
@@ -155,13 +204,13 @@ extension AddExerciseViewController: UIPickerViewDelegate, UIPickerViewDataSourc
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         
-        return 2
+        return isTime ? 2 : 1
         
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         
-        return pickerMinutesAndSeconds.count
+        return isTime ? pickerMinutesAndSeconds.count : maxReps
         
     }
     
@@ -173,21 +222,33 @@ extension AddExerciseViewController: UIPickerViewDelegate, UIPickerViewDataSourc
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
 
-        if component == 0 {
-
-            minutes = row
-
-        } else if component == 1 {
-
-            seconds = row
-
-        }
-
-        chosenPickerInfoLabel.text = "\(timerForWorkout.zero(unit: minutes)):\(timerForWorkout.zero(unit: seconds))"
+        if isTime {
             
+            if component == 0 {
+                
+                minutes = row
+                
+            } else if component == 1 {
+                
+                seconds = row
+                
+            }
+            
+            chosenPickerInfoLabel.text = "\(timerForWorkout.zero(unit: minutes)):\(timerForWorkout.zero(unit: seconds))"
+            
+        } else {
+            
+            reps = row
+            
+            chosenPickerInfoLabel.text = "\(reps)"
+            
+        }
+        
     }
     
 }
+
+
 
 extension AddExerciseViewController: UITextFieldDelegate {
     

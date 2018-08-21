@@ -28,7 +28,7 @@ protocol SetRoutineDelegate {
 
 protocol SetExerciseDelegate {
     
-    func setExercise(oldName: String, newName: String, minutes: Int, seconds: Int, isNew: Bool)
+    func setExercise(oldName: String, newName: String, minutes: Int, seconds: Int, reps: Int, isNew: Bool)
     
 }
 
