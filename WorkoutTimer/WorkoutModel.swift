@@ -31,7 +31,6 @@ class Workout {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     var workoutInfoArray = [WorkoutInfo]()
-    var workoutInfo = WorkoutInfo()
     var exerciseArray = [Exercise]()
     var routineArray = [String]()
     
@@ -148,7 +147,7 @@ class Workout {
     
     func saveTransitionTime(routine: String, minutes: Int, seconds: Int) {
         
-        workoutInfo = getWorkoutInfo(routine: routine)
+        let workoutInfo = getWorkoutInfo(routine: routine)
         
         workoutInfo.transitionMinutes = Int64(minutes)
         workoutInfo.transitionSeconds = Int64(seconds)
@@ -167,7 +166,7 @@ class Workout {
     
     func saveRestTime(routine: String, minutes: Int, seconds: Int) {
         
-        workoutInfo = getWorkoutInfo(routine: routine)
+        let workoutInfo = getWorkoutInfo(routine: routine)
         
         workoutInfo.restMinutes = Int64(minutes)
         workoutInfo.restSeconds = Int64(seconds)
@@ -186,7 +185,7 @@ class Workout {
     
     func saveSets(routine: String, sets: Int) {
         
-        workoutInfo = getWorkoutInfo(routine: routine)
+        let workoutInfo = getWorkoutInfo(routine: routine)
         
         workoutInfo.sets = Int64(sets)
         
@@ -820,7 +819,7 @@ class Workout {
         self.loadLastUsedRoutine()
         
         self.loadWorkoutDataPerRoutine(routine: lastUsedRoutine)
-
+        
         self.loadExercisesPerRoutine(routine: lastUsedRoutine)
         
 
@@ -828,13 +827,13 @@ class Workout {
         // For First Time Users, make sure initial amounts are set.
         
         self.makeSureInitialInfoIsCreatedAfterLoading()
-
+        
         
         
         // Set properties to their saved values.
         
-        workoutInfo = getWorkoutInfo(routine: lastUsedRoutine)
-
+        let workoutInfo = getWorkoutInfo(routine: lastUsedRoutine)
+        
         self.setNumberOfSets = Int(workoutInfo.sets)
         
         self.setTransitionMinutes = Int(workoutInfo.transitionMinutes)

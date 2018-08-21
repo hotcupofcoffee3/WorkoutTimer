@@ -30,7 +30,7 @@ class RoutineViewController: UIViewController, SetRoutineDelegate {
     
     var loadRoutineExercisesDelegate: LoadRoutineExercisesDelegate?
     
-    var setSetsTransitionsAndRestDelegate: SetSetsTransitionsAndRestDelegate?
+    var setSetsRepsTransitionsAndRestDelegate: SetSetsRepsTransitionsAndRestDelegate?
     
     
    
@@ -171,11 +171,11 @@ class RoutineViewController: UIViewController, SetRoutineDelegate {
         
         let workoutArray = workout.getWorkoutInfo(routine: workout.lastUsedRoutine)
         
-        setSetsTransitionsAndRestDelegate?.setRest(minutes: Int(workoutArray.restMinutes), seconds: Int(workoutArray.restSeconds))
+        setSetsRepsTransitionsAndRestDelegate?.setRest(minutes: Int(workoutArray.restMinutes), seconds: Int(workoutArray.restSeconds))
         
-        setSetsTransitionsAndRestDelegate?.setTransition(minutes: Int(workoutArray.transitionMinutes), seconds: Int(workoutArray.transitionSeconds))
+        setSetsRepsTransitionsAndRestDelegate?.setTransition(minutes: Int(workoutArray.transitionMinutes), seconds: Int(workoutArray.transitionSeconds))
         
-        setSetsTransitionsAndRestDelegate?.setSets(numberOfSets: Int(workoutArray.sets))
+        setSetsRepsTransitionsAndRestDelegate?.setSets(numberOfSets: Int(workoutArray.sets))
         
         dismiss(animated: true, completion: nil)
         

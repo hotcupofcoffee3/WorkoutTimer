@@ -1,5 +1,5 @@
 //
-//  SetsTranstionAndRestViewController.swift
+//  SetsRepsTranstionAndRestViewController.swift
 //  WorkoutTimer
 //
 //  Created by Adam Moore on 7/27/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SetsTransitionAndRestViewController: UIViewController {
+class SetsRepsTransitionAndRestViewController: UIViewController {
     
     
     
@@ -20,7 +20,7 @@ class SetsTransitionAndRestViewController: UIViewController {
     
     let timerForWorkout = TimerForWorkout()
     
-    var setSetsTransitionsAndRestDelegate: SetSetsTransitionsAndRestDelegate?
+    var setSetsRepsTransitionsAndRestDelegate: SetSetsRepsTransitionsAndRestDelegate?
     
     var isTime = Bool()
     
@@ -70,15 +70,15 @@ class SetsTransitionAndRestViewController: UIViewController {
         
         if isTime && isTransition {
             
-            setSetsTransitionsAndRestDelegate?.setTransition(minutes: minutes, seconds: seconds)
+            setSetsRepsTransitionsAndRestDelegate?.setTransition(minutes: minutes, seconds: seconds)
             
         } else if isTime && !isTransition {
             
-            setSetsTransitionsAndRestDelegate?.setRest(minutes: minutes, seconds: seconds)
+            setSetsRepsTransitionsAndRestDelegate?.setRest(minutes: minutes, seconds: seconds)
             
         } else {
             
-            setSetsTransitionsAndRestDelegate?.setSets(numberOfSets: numberOfSets)
+            setSetsRepsTransitionsAndRestDelegate?.setSets(numberOfSets: numberOfSets)
             
         }
         
@@ -127,7 +127,7 @@ class SetsTransitionAndRestViewController: UIViewController {
 
 
 
-extension SetsTransitionAndRestViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+extension SetsRepsTransitionAndRestViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         

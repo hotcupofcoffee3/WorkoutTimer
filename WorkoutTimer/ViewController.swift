@@ -21,7 +21,7 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController, SetSetsTransitionsAndRestDelegate, UpdateFirstExerciseDelegate, LoadRoutineExercisesDelegate {
+class ViewController: UIViewController {
 
     
     
@@ -172,7 +172,7 @@ class ViewController: UIViewController, SetSetsTransitionsAndRestDelegate, Updat
             
             destinationVC.loadRoutineExercisesDelegate = self
             
-            destinationVC.setSetsTransitionsAndRestDelegate = self
+            destinationVC.setSetsRepsTransitionsAndRestDelegate = self
             
         } else if segue.identifier == keywords.mainToExerciseSegue {
             
@@ -184,9 +184,9 @@ class ViewController: UIViewController, SetSetsTransitionsAndRestDelegate, Updat
             
         } else if segue.identifier == keywords.mainToSetsSegue {
             
-            let destinationVC = segue.destination as! SetsTransitionAndRestViewController
+            let destinationVC = segue.destination as! SetsRepsTransitionAndRestViewController
             
-            destinationVC.setSetsTransitionsAndRestDelegate = self
+            destinationVC.setSetsRepsTransitionsAndRestDelegate = self
             
             destinationVC.isTime = isTime
             
@@ -263,19 +263,7 @@ class ViewController: UIViewController, SetSetsTransitionsAndRestDelegate, Updat
         toggleNavBarTitle()
         
     }
-    
-}
 
-
-
-
-
-
-
-// --------------------------------------------------------------------------------------
-
-extension ViewController {
-    
     
     
     // ******
@@ -338,7 +326,7 @@ extension ViewController {
             
         }
         
-        updateRemainingWorkoutTime()
+        totalTimeLeft.text = "\(timerForWorkout.zero(unit: workout.remainingWorkoutMinutes)):\(timerForWorkout.zero(unit: workout.remainingWorkoutSeconds))"
         
     }
     
@@ -447,7 +435,7 @@ extension ViewController {
                         
                         workout.remainingWorkoutSeconds = 0
                         
-                        updateRemainingWorkoutTime()
+                        totalTimeLeft.text = "\(timerForWorkout.zero(unit: workout.remainingWorkoutMinutes)):\(timerForWorkout.zero(unit: workout.remainingWorkoutSeconds))"
                         
                         finishedWorkoutAlert()
                         
@@ -621,7 +609,7 @@ extension ViewController {
     
     
     // ******
-    // *** MARK: - Functions - Alert, Zero, Reset, Interval Label, and Toggle Button Colors
+    // *** MARK: - Functions - Alert, Reset, Interval Label, and Toggle Button Colors
     // ******
     
     
@@ -836,12 +824,6 @@ extension ViewController {
         
     }
     
-    func updateRemainingWorkoutTime() {
-        
-        totalTimeLeft.text = "\(timerForWorkout.zero(unit: workout.remainingWorkoutMinutes)):\(timerForWorkout.zero(unit: workout.remainingWorkoutSeconds))"
-        
-    }
-    
     func updateTotalWorkoutTimeAndLabels() {
         
         workout.setTotalWorkoutSeconds()
@@ -850,7 +832,7 @@ extension ViewController {
         
         totalTimeInWorkout.text = "\(timerForWorkout.zero(unit: workout.setWorkoutMinutes)):\(timerForWorkout.zero(unit: workout.setWorkoutSeconds))"
         
-        updateRemainingWorkoutTime()
+        totalTimeLeft.text = "\(timerForWorkout.zero(unit: workout.remainingWorkoutMinutes)):\(timerForWorkout.zero(unit: workout.remainingWorkoutSeconds))"
         
     }
  
@@ -972,13 +954,11 @@ extension ViewController {
         
     }
 
-    
-    
-    // ******
-    // *** MARK: - Delegates
-    // ******
+}
 
-    
+
+
+extension ViewController: SetSetsRepsTransitionsAndRestDelegate, UpdateFirstExerciseDelegate, LoadRoutineExercisesDelegate {
     
     func setSets(numberOfSets: Int) {
         
@@ -989,6 +969,12 @@ extension ViewController {
         setCollectionView.reloadData()
         
         updateTotalWorkoutTimeAndLabels()
+        
+    }
+    
+    func setReps(numberOfReps: Int) {
+        
+        
         
     }
     
@@ -1047,14 +1033,10 @@ extension ViewController {
         workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: 0)
         
     }
- 
-    
-
-    // ******
-    // *** MARK: - Collection View
-    // ******
 
 }
+
+
 
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     

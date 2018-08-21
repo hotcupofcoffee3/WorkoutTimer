@@ -32,9 +32,10 @@ protocol SetExerciseDelegate {
     
 }
 
-protocol SetSetsTransitionsAndRestDelegate {
+protocol SetSetsRepsTransitionsAndRestDelegate {
     
     func setSets(numberOfSets: Int)
+    func setReps(numberOfReps: Int)
     func setTransition(minutes: Int, seconds: Int)
     func setRest(minutes: Int, seconds: Int)
     
