@@ -195,6 +195,16 @@ class Workout {
         
     }
     
+    func saveReps(routine: String, exerciseRequested: String, reps: Int) {
+        
+        guard let exercise = loadSpecificExercise(routine: routine, specificExerciseRequested: exerciseRequested) else { return print("Could not save Reps because there was no exercise loaded from the 'loadSpecificExercise' function request.") }
+        
+        exercise.reps = Int64(reps)
+        
+        saveData()
+        
+    }
+    
     func saveLastUsedRoutine(routine: String) {
         
         UserDefaults.standard.set(routine, forKey: keywords.routineKey)
@@ -321,6 +331,50 @@ class Workout {
             
         }
        
+    }
+    
+    func loadSpecificExercise(routine: String, specificExerciseRequested: String) -> Exercise? {
+        
+        var currentExerciseArray = [Exercise]()
+        
+        var specificExercise: Exercise?
+        
+        let request: NSFetchRequest<Exercise> = Exercise.fetchRequest()
+        
+        let routinePredicate = NSPredicate(format: keywords.routineMatchesKey, routine)
+        
+        request.predicate = routinePredicate
+        
+        request.sortDescriptors = [NSSortDescriptor(key: keywords.orderNumberKey, ascending: true)]
+        
+        do {
+            
+            currentExerciseArray = try context.fetch(request)
+            
+        } catch {
+            
+            print("Error loading Workout Info: \(error)")
+            
+        }
+        
+        if currentExerciseArray.isEmpty {
+            
+            print("'currentExerciseArray' had no object in it.")
+            
+        }
+        
+        for exercise in currentExerciseArray {
+            
+            if exercise.name == specificExerciseRequested {
+                
+                specificExercise = exercise
+                
+            }
+            
+        }
+        
+        return specificExercise
+        
     }
     
     func loadRoutines() {

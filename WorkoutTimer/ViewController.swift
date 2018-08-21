@@ -46,6 +46,7 @@ class ViewController: UIViewController {
     var timerForTotalWorkout = Timer()
     
     var isTime = Bool()
+    var isSets = Bool()
     var isTransition = Bool()
     var isExercise = Bool()
     
@@ -189,6 +190,8 @@ class ViewController: UIViewController {
             destinationVC.setSetsRepsTransitionsAndRestDelegate = self
             
             destinationVC.isTime = isTime
+            
+            destinationVC.isSets = isSets
             
             destinationVC.isTransition = isTransition
             

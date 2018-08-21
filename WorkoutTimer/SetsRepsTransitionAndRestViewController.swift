@@ -24,15 +24,23 @@ class SetsRepsTransitionAndRestViewController: UIViewController {
     
     var isTime = Bool()
     
+    var isSets = Bool()
+    
     var isTransition = Bool()
     
+    let maxNumberOfSets = 10
+    
     var numberOfSets = Int()
+    
+    let maxNumberOfReps = 30
+    
+    var numberOfReps = Int()
     
     var minutes = Int()
     
     var seconds = Int()
     
-    var pickerMinutesAndSeconds = Array(0...59)
+    let pickerMinutesAndSeconds = Array(0...59)
     
     
     
@@ -137,7 +145,7 @@ extension SetsRepsTransitionAndRestViewController: UIPickerViewDelegate, UIPicke
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         
-        return isTime ? pickerMinutesAndSeconds.count : 10
+        return isTime ? pickerMinutesAndSeconds.count : maxNumberOfSets
         
     }
     
