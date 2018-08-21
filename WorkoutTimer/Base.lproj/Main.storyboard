@@ -611,10 +611,10 @@ warning</string>
             </objects>
             <point key="canvasLocation" x="821.60000000000002" y="133.5832083958021"/>
         </scene>
-        <!--Sets Reps Transition And Rest View Controller-->
+        <!--Sets Transition And Rest View Controller-->
         <scene sceneID="bRe-mr-Cen">
             <objects>
-                <viewController id="KsY-k3-I8Q" customClass="SetsRepsTransitionAndRestViewController" customModule="FIT" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="KsY-k3-I8Q" customClass="SetsTransitionAndRestViewController" customModule="FIT" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mCx-XT-hXj">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

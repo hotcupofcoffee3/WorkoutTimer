@@ -173,7 +173,7 @@ class ViewController: UIViewController {
             
             destinationVC.loadRoutineExercisesDelegate = self
             
-            destinationVC.setSetsRepsTransitionsAndRestDelegate = self
+            destinationVC.setSetsTransitionsAndRestDelegate = self
             
         } else if segue.identifier == keywords.mainToExerciseSegue {
             
@@ -185,13 +185,11 @@ class ViewController: UIViewController {
             
         } else if segue.identifier == keywords.mainToSetsSegue {
             
-            let destinationVC = segue.destination as! SetsRepsTransitionAndRestViewController
+            let destinationVC = segue.destination as! SetsTransitionAndRestViewController
             
-            destinationVC.setSetsRepsTransitionsAndRestDelegate = self
+            destinationVC.setSetsTransitionsAndRestDelegate = self
             
             destinationVC.isTime = isTime
-            
-            destinationVC.isSets = isSets
             
             destinationVC.isTransition = isTransition
             
@@ -961,7 +959,7 @@ class ViewController: UIViewController {
 
 
 
-extension ViewController: SetSetsRepsTransitionsAndRestDelegate, UpdateFirstExerciseDelegate, LoadRoutineExercisesDelegate {
+extension ViewController: SetSetsTransitionsAndRestDelegate, UpdateFirstExerciseDelegate, LoadRoutineExercisesDelegate {
     
     func setSets(numberOfSets: Int) {
         

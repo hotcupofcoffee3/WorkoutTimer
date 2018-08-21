@@ -1,5 +1,5 @@
 //
-//  SetsRepsTranstionAndRestViewController.swift
+//  SetsTranstionAndRestViewController.swift
 //  WorkoutTimer
 //
 //  Created by Adam Moore on 7/27/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SetsRepsTransitionAndRestViewController: UIViewController {
+class SetsTransitionAndRestViewController: UIViewController {
     
     
     
@@ -20,21 +20,15 @@ class SetsRepsTransitionAndRestViewController: UIViewController {
     
     let timerForWorkout = TimerForWorkout()
     
-    var setSetsRepsTransitionsAndRestDelegate: SetSetsRepsTransitionsAndRestDelegate?
+    var setSetsTransitionsAndRestDelegate: SetSetsTransitionsAndRestDelegate?
     
     var isTime = Bool()
-    
-    var isSets = Bool()
     
     var isTransition = Bool()
     
     let maxNumberOfSets = 10
     
     var numberOfSets = Int()
-    
-    let maxNumberOfReps = 30
-    
-    var numberOfReps = Int()
     
     var minutes = Int()
     
@@ -78,15 +72,15 @@ class SetsRepsTransitionAndRestViewController: UIViewController {
         
         if isTime && isTransition {
             
-            setSetsRepsTransitionsAndRestDelegate?.setTransition(minutes: minutes, seconds: seconds)
+            setSetsTransitionsAndRestDelegate?.setTransition(minutes: minutes, seconds: seconds)
             
         } else if isTime && !isTransition {
             
-            setSetsRepsTransitionsAndRestDelegate?.setRest(minutes: minutes, seconds: seconds)
+            setSetsTransitionsAndRestDelegate?.setRest(minutes: minutes, seconds: seconds)
             
         } else {
             
-            setSetsRepsTransitionsAndRestDelegate?.setSets(numberOfSets: numberOfSets)
+            setSetsTransitionsAndRestDelegate?.setSets(numberOfSets: numberOfSets)
             
         }
         
@@ -135,7 +129,7 @@ class SetsRepsTransitionAndRestViewController: UIViewController {
 
 
 
-extension SetsRepsTransitionAndRestViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+extension SetsTransitionAndRestViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         
