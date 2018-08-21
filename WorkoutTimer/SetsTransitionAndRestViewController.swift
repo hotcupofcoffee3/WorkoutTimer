@@ -8,15 +8,7 @@
 
 import UIKit
 
-protocol SetSetsTransitionsAndRestDelegate {
-    
-    func setSets(numberOfSets: Int)
-    func setTransition(minutes: Int, seconds: Int)
-    func setRest(minutes: Int, seconds: Int)
-    
-}
-
-class SetsTransitionAndRestViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class SetsTransitionAndRestViewController: UIViewController {
     
     
     
@@ -28,7 +20,7 @@ class SetsTransitionAndRestViewController: UIViewController, UIPickerViewDelegat
     
     let timerForWorkout = TimerForWorkout()
     
-    var delegate: SetSetsTransitionsAndRestDelegate?
+    var setSetsTransitionsAndRestDelegate: SetSetsTransitionsAndRestDelegate?
     
     var isTime = Bool()
     
@@ -78,15 +70,15 @@ class SetsTransitionAndRestViewController: UIViewController, UIPickerViewDelegat
         
         if isTime && isTransition {
             
-            delegate?.setTransition(minutes: minutes, seconds: seconds)
+            setSetsTransitionsAndRestDelegate?.setTransition(minutes: minutes, seconds: seconds)
             
         } else if isTime && !isTransition {
             
-            delegate?.setRest(minutes: minutes, seconds: seconds)
+            setSetsTransitionsAndRestDelegate?.setRest(minutes: minutes, seconds: seconds)
             
         } else {
             
-            delegate?.setSets(numberOfSets: numberOfSets)
+            setSetsTransitionsAndRestDelegate?.setSets(numberOfSets: numberOfSets)
             
         }
         
@@ -135,15 +127,7 @@ class SetsTransitionAndRestViewController: UIViewController, UIPickerViewDelegat
 
 
 
-extension SetsTransitionAndRestViewController {
-    
-    
-    
-    // ******
-    // *** MARK: - PickerView
-    // ******
-    
-    
+extension SetsTransitionAndRestViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         

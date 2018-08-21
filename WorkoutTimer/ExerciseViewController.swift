@@ -8,13 +8,7 @@
 
 import UIKit
 
-protocol UpdateFirstExerciseDelegate {
-    
-    func updateFirstExercise()
-    
-}
-
-class ExerciseViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SetExerciseDelegate, LoadRoutineExercises {
+class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutineExercisesDelegate {
     
     
     
@@ -44,9 +38,9 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     
-    var delegate: UpdateFirstExerciseDelegate?
+    var updateFirstExerciseDelegate: UpdateFirstExerciseDelegate?
     
-    var delegate2: LoadRoutineExercises?
+    var loadRoutineExercisesDelegate: LoadRoutineExercisesDelegate?
     
     
     
@@ -100,9 +94,9 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBAction func back(_ sender: UIBarButtonItem) {
         
-        delegate?.updateFirstExercise()
+        updateFirstExerciseDelegate?.updateFirstExercise()
         
-        delegate2?.reloadExercisesPerRoutine()
+        loadRoutineExercisesDelegate?.reloadExercisesPerRoutine()
         
         dismiss(animated: true, completion: nil)
         
@@ -130,7 +124,7 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
             
             let destinationVC = segue.destination as! AddExerciseViewController
             
-            destinationVC.delegate = self
+            destinationVC.setExerciseDelegate = self
             
             destinationVC.isNew = isNew
             
@@ -152,7 +146,7 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
             
             let destinationVC = segue.destination as! RoutineViewController
             
-            destinationVC.delegate2 = self
+            destinationVC.loadRoutineExercisesDelegate = self
             
         }
         
@@ -185,12 +179,6 @@ class ExerciseViewController: UIViewController, UITableViewDelegate, UITableView
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-}
-
-
-
-extension ExerciseViewController {
     
     
     
@@ -274,13 +262,11 @@ extension ExerciseViewController {
         
     }
     
+}
     
     
-    // ******
-    // *** MARK: - TableView
-    // ******
     
-    
+extension ExerciseViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return workout.exerciseArray.count

@@ -8,13 +8,7 @@
 
 import UIKit
 
-protocol SetRoutineDelegate {
-    
-    func setRoutine(oldName: String, newName: String, isNew: Bool)
-    
-}
-
-class AddRoutineViewController: UIViewController, UITextFieldDelegate {
+class AddRoutineViewController: UIViewController {
     
     
     
@@ -26,7 +20,7 @@ class AddRoutineViewController: UIViewController, UITextFieldDelegate {
     
     let workout = Workout()
     
-    var delegate: SetRoutineDelegate?
+    var setRoutineDelegate: SetRoutineDelegate?
     
     var routineName = String()
     
@@ -68,11 +62,9 @@ class AddRoutineViewController: UIViewController, UITextFieldDelegate {
             
             return warningLabel.text = "You have to fill in a value for the exercise name."
             
-            //             return
+        } else if workout.checkIfNameExists(isNew: isNew, oldRoutineName: routineName, newRoutineName: routineNameTextField.text!) {
             
-        } else if checkIfNameExists(newRoutineName: routineNameTextField.text!) {
-            
-            warningLabel.text = "An exercise already exists with this name."
+            warningLabel.text = "A routine already has this name."
             
             return
             
@@ -80,9 +72,23 @@ class AddRoutineViewController: UIViewController, UITextFieldDelegate {
         
         newRoutineName = routineNameTextField.text!
         
-        delegate?.setRoutine(oldName: routineName, newName: newRoutineName, isNew: isNew)
+        setRoutineDelegate?.setRoutine(oldName: routineName, newName: newRoutineName, isNew: isNew)
         
         dismiss(animated: true, completion: nil)
+        
+    }
+    
+    
+    
+    // ******
+    // *** MARK: - Tap Functions
+    // ******
+    
+    
+    
+    @objc func routineTap() {
+        
+        routineNameTextField.becomeFirstResponder()
         
     }
     
@@ -112,65 +118,7 @@ class AddRoutineViewController: UIViewController, UITextFieldDelegate {
 
 
 
-extension AddRoutineViewController {
-    
-    
-    
-    // ******
-    // *** MARK: - Functions - Check if Routine Already Exists
-    // ******
-    
-    
-    
-    func checkIfNameExists(newRoutineName: String) -> Bool {
-        
-        var isSame = false
-        
-        for routine in workout.routineArray {
-            
-            if !isNew && routine.lowercased() == routineName.lowercased() {
-                
-                continue
-                
-            } else {
-                
-                if routine.lowercased() == newRoutineName.lowercased() {
-                    
-                    warningLabel.text = "A routine already has this name."
-                    
-                    isSame = true
-                    
-                }
-                
-            }
-            
-        }
-        
-        return isSame
-        
-    }
-    
-    
-    
-    // ******
-    // *** MARK: - Tap Functions
-    // ******
-    
-    
-    
-    @objc func routineTap() {
-        
-        routineNameTextField.becomeFirstResponder()
-        
-    }
-    
-    
-    
-    // ******
-    // *** MARK: - TextField Delegates
-    // ******
-    
-    
+extension AddRoutineViewController: UITextFieldDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         

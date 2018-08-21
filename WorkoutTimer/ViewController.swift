@@ -6,10 +6,6 @@
 //  Copyright © 2018 Adam Moore. All rights reserved.
 //
 
-// ******
-// *** TODO:
-// ******
-
 
 
 // 1306 - Tock clicking sound (Keyboard click)
@@ -25,7 +21,7 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SetSetsTransitionsAndRestDelegate, UpdateFirstExerciseDelegate, LoadRoutineExercises {
+class ViewController: UIViewController, SetSetsTransitionsAndRestDelegate, UpdateFirstExerciseDelegate, LoadRoutineExercisesDelegate {
 
     
     
@@ -172,25 +168,25 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
             let destinationVC = segue.destination as! RoutineViewController
             
-            destinationVC.delegate = self
+            destinationVC.updateFirstExerciseDelegate = self
             
-            destinationVC.delegate2 = self
+            destinationVC.loadRoutineExercisesDelegate = self
             
-            destinationVC.delegate3 = self
+            destinationVC.setSetsTransitionsAndRestDelegate = self
             
         } else if segue.identifier == keywords.mainToExerciseSegue {
             
             let destinationVC = segue.destination as! ExerciseViewController
             
-            destinationVC.delegate = self
+            destinationVC.updateFirstExerciseDelegate = self
             
-            destinationVC.delegate2 = self
+            destinationVC.loadRoutineExercisesDelegate = self
             
         } else if segue.identifier == keywords.mainToSetsSegue {
             
             let destinationVC = segue.destination as! SetsTransitionAndRestViewController
             
-            destinationVC.delegate = self
+            destinationVC.setSetsTransitionsAndRestDelegate = self
             
             destinationVC.isTime = isTime
             
@@ -1058,7 +1054,9 @@ extension ViewController {
     // *** MARK: - Collection View
     // ******
 
-    
+}
+
+extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
@@ -1164,15 +1162,11 @@ extension ViewController {
             
             if workout.exerciseArray.count < 6 {
                 
-//                cell.exerciseNameLabel.font = UIFont(name: "Helvetica Neue", size: 24)
-//                cell.exerciseTimeLabel.font = UIFont(name: "Helvetica Neue", size: 24)
                 cell.exerciseNameLabel.font = cell.exerciseNameLabel.font.withSize(24)
                 cell.exerciseTimeLabel.font = cell.exerciseTimeLabel.font.withSize(24)
                 
             } else {
                 
-//                cell.exerciseNameLabel.font = UIFont(name: "Helvetica Neue", size: 18)
-//                cell.exerciseTimeLabel.font = UIFont(name: "Helvetica Neue", size: 18)
                 cell.exerciseNameLabel.font = cell.exerciseNameLabel.font.withSize(18)
                 cell.exerciseTimeLabel.font = cell.exerciseTimeLabel.font.withSize(18)
                 

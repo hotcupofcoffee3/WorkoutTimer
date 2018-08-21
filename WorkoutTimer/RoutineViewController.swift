@@ -8,13 +8,7 @@
 
 import UIKit
 
-protocol LoadRoutineExercises {
-    
-    func reloadExercisesPerRoutine()
-    
-}
-
-class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SetRoutineDelegate {
+class RoutineViewController: UIViewController, SetRoutineDelegate {
     
     
     
@@ -32,11 +26,11 @@ class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var routineName = String()
     
-    var delegate: UpdateFirstExerciseDelegate?
+    var updateFirstExerciseDelegate: UpdateFirstExerciseDelegate?
     
-    var delegate2: LoadRoutineExercises?
+    var loadRoutineExercisesDelegate: LoadRoutineExercisesDelegate?
     
-    var delegate3: SetSetsTransitionsAndRestDelegate?
+    var setSetsTransitionsAndRestDelegate: SetSetsTransitionsAndRestDelegate?
     
     
    
@@ -76,9 +70,9 @@ class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func back(_ sender: UIBarButtonItem) {
         
-        delegate2?.reloadExercisesPerRoutine()
+        loadRoutineExercisesDelegate?.reloadExercisesPerRoutine()
         
-        delegate?.updateFirstExercise()
+        updateFirstExerciseDelegate?.updateFirstExercise()
         
         dismiss(animated: true, completion: nil)
         
@@ -108,7 +102,7 @@ class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             let destinationVC = segue.destination as! AddRoutineViewController
             
-            destinationVC.delegate = self
+            destinationVC.setRoutineDelegate = self
             
             destinationVC.isNew = isNew
             
@@ -149,12 +143,6 @@ class RoutineViewController: UIViewController, UITableViewDelegate, UITableViewD
         
     }
     
-}
-
-
-
-extension RoutineViewController {
-    
     
     
     // ******
@@ -177,17 +165,17 @@ extension RoutineViewController {
         
         workout.loadWorkoutDataPerRoutine(routine: workout.lastUsedRoutine)
         
-        delegate?.updateFirstExercise()
+        updateFirstExerciseDelegate?.updateFirstExercise()
         
-        delegate2?.reloadExercisesPerRoutine()
+        loadRoutineExercisesDelegate?.reloadExercisesPerRoutine()
         
         let workoutArray = workout.getWorkoutInfo(routine: workout.lastUsedRoutine)
         
-        delegate3?.setRest(minutes: Int(workoutArray.restMinutes), seconds: Int(workoutArray.restSeconds))
+        setSetsTransitionsAndRestDelegate?.setRest(minutes: Int(workoutArray.restMinutes), seconds: Int(workoutArray.restSeconds))
         
-        delegate3?.setTransition(minutes: Int(workoutArray.transitionMinutes), seconds: Int(workoutArray.transitionSeconds))
+        setSetsTransitionsAndRestDelegate?.setTransition(minutes: Int(workoutArray.transitionMinutes), seconds: Int(workoutArray.transitionSeconds))
         
-        delegate3?.setSets(numberOfSets: Int(workoutArray.sets))
+        setSetsTransitionsAndRestDelegate?.setSets(numberOfSets: Int(workoutArray.sets))
         
         dismiss(animated: true, completion: nil)
         
@@ -225,13 +213,11 @@ extension RoutineViewController {
         
     }
     
+}
+
     
     
-    // ******
-    // *** MARK: - TableView
-    // ******
-    
-    
+extension RoutineViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return workout.routineArray.count

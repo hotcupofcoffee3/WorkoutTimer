@@ -593,6 +593,80 @@ class Workout {
     
     
     // ******
+    // *** MARK: - Checks for New and Updating Workout Info and Exercises
+    // ******
+    
+    
+    
+    // Check if Exercise name already exists.
+    
+    func checkIfNameExists(isNew: Bool, oldExerciseName: String, newExerciseName: String) -> Bool {
+        
+        var isSame = false
+        
+        for exercise in exerciseArray {
+            
+            if isNew {
+                
+                if exercise.name!.lowercased() == newExerciseName.lowercased() {
+                    
+                    isSame = true
+                    
+                }
+                
+            } else {
+                
+                if exercise.name!.lowercased() == oldExerciseName.lowercased() {
+                    
+                    continue
+                    
+                } else if exercise.name!.lowercased() == newExerciseName.lowercased() {
+                    
+                    isSame = true
+                    
+                }
+                
+            }
+            
+        }
+        
+        return isSame
+        
+    }
+    
+    
+    
+    // Check if Routine name already exists.
+    
+    func checkIfNameExists(isNew: Bool, oldRoutineName: String, newRoutineName: String) -> Bool {
+        
+        var isSame = false
+        
+        for routine in routineArray {
+            
+            if !isNew && routine.lowercased() == oldRoutineName.lowercased() {
+                
+                continue
+                
+            } else {
+                
+                if routine.lowercased() == newRoutineName.lowercased() {
+                    
+                    isSame = true
+                    
+                }
+                
+            }
+            
+        }
+        
+        return isSame
+        
+    }
+    
+    
+    
+    // ******
     // *** MARK: - Set Amounts to Remaining or Total Amounts or Zero Time Label
     // ******
     

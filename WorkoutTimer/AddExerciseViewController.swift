@@ -6,17 +6,9 @@
 //  Copyright © 2018 Adam Moore. All rights reserved.
 //
 
-
-
 import UIKit
 
-protocol SetExerciseDelegate {
-
-    func setExercise(oldName: String, newName: String, minutes: Int, seconds: Int, isNew: Bool)
-    
-}
-
-class AddExerciseViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+class AddExerciseViewController: UIViewController {
     
     
     
@@ -30,7 +22,7 @@ class AddExerciseViewController: UIViewController, UIPickerViewDelegate, UIPicke
     
     let timerForWorkout = TimerForWorkout()
     
-    var delegate: SetExerciseDelegate?
+    var setExerciseDelegate: SetExerciseDelegate?
     
     var exerciseName = String()
     
@@ -88,7 +80,7 @@ class AddExerciseViewController: UIViewController, UIPickerViewDelegate, UIPicke
             
 //             return
             
-        } else if checkIfNameExists(newExerciseName: exerciseNameTextField.text!) {
+        } else if workout.checkIfNameExists(isNew: isNew, oldExerciseName: exerciseName, newExerciseName: exerciseNameTextField.text!) {
             
             warningLabel.text = "An exercise already exists with this name."
             
@@ -104,9 +96,23 @@ class AddExerciseViewController: UIViewController, UIPickerViewDelegate, UIPicke
         
         newExerciseName = exerciseNameTextField.text!
         
-        delegate?.setExercise(oldName: exerciseName, newName: newExerciseName, minutes: minutes, seconds: seconds, isNew: isNew)
+        setExerciseDelegate?.setExercise(oldName: exerciseName, newName: newExerciseName, minutes: minutes, seconds: seconds, isNew: isNew)
         
         dismiss(animated: true, completion: nil)
+        
+    }
+    
+    
+    
+    // ******
+    // *** MARK: - Tap Functions
+    // ******
+    
+    
+    
+    @objc func exerciseTap() {
+        
+        exerciseNameTextField.becomeFirstResponder()
         
     }
 
@@ -145,65 +151,7 @@ class AddExerciseViewController: UIViewController, UIPickerViewDelegate, UIPicke
 
 
 
-extension AddExerciseViewController {
-    
-    
-    
-    // ******
-    // *** MARK: - Functions - Check if Name Already Exists
-    // ******
-    
-    
-    
-    func checkIfNameExists(newExerciseName: String) -> Bool {
-        
-        var isSame = false
-        
-        for exercise in workout.exerciseArray {
-            
-            if isNew {
-                
-                if exercise.name!.lowercased() == newExerciseName.lowercased() {
-                    
-                    warningLabel.text = "An exercise already has this name."
-                    
-                    isSame = true
-                    
-                }
-                
-            } else {
-                
-                if exercise.name!.lowercased() == exerciseName.lowercased() {
-                    
-                    continue
-                    
-                } else if exercise.name!.lowercased() == newExerciseName.lowercased() {
-                    
-//                    print(exerciseName)
-//                    
-//                    print(newExerciseName)
-                    
-                    warningLabel.text = "An exercise already has this name."
-                    
-                    isSame = true
-                    
-                }
-                
-            }
-            
-        }
-        
-        return isSame
-        
-    }
-    
-    
-    
-    // ******
-    // *** MARK: - PickerView
-    // ******
-    
-    
+extension AddExerciseViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         
@@ -239,27 +187,9 @@ extension AddExerciseViewController {
             
     }
     
-    
-    
-    // ******
-    // *** MARK: - Tap Functions
-    // ******
-    
-    
-    
-    @objc func exerciseTap() {
-        
-        exerciseNameTextField.becomeFirstResponder()
-        
-    }
-    
-    
-    
-    // ******
-    // *** MARK: - TextField Delegates
-    // ******
-    
-    
+}
+
+extension AddExerciseViewController: UITextFieldDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
