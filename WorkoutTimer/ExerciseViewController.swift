@@ -30,6 +30,8 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
     
     var exerciseSeconds = Int()
     
+    var exerciseReps = Int()
+    
     var isNew = Bool()
     
     var isTime = Bool()
@@ -130,8 +132,6 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
             
             destinationVC.isNew = isNew
             
-            destinationVC.isTime = isTime
-            
             if !isNew {
                 
                 destinationVC.exerciseName = exerciseName
@@ -140,7 +140,13 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
                 
                 destinationVC.seconds = exerciseSeconds
                 
+                destinationVC.reps = exerciseReps
+                
+                destinationVC.isTime = isTime
+                
             } else {
+                
+                destinationVC.isTime = true
                 
                 destinationVC.seconds = 30
                 
@@ -167,10 +173,6 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-        
-//        workout.loadExercisesPerRoutine(routine: workout.lastUsedRoutine)
-        
         exerciseTable.register(UINib(nibName: "ExerciseTableViewCell", bundle: nil), forCellReuseIdentifier: "exerciseTableCell")
         
         goToRoutinesButton.setTitle(editCells ? "Edit Routines" : workout.exerciseArray[0].routine!, for: .normal)
@@ -179,11 +181,6 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
         
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     
     
     // ******
@@ -204,19 +201,18 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
         
         editButton.title = edit ? "Done" : "Edit"
         
-//        goToRoutinesButton.setTitle(edit ? "Edit Routines" : workout.exerciseArray[0].routine!, for: .normal)
-        
         exerciseTable.setEditing(edit, animated: true)
         
         exerciseTable.reloadData()
         
     }
     
-    func setExerciseVariables(named: String, minutes: Int, seconds: Int) {
+    func setExerciseVariables(named: String, minutes: Int, seconds: Int, reps: Int) {
         
         exerciseName = named
         exerciseMinutes = minutes
         exerciseSeconds = seconds
+        exerciseReps = reps
         
     }
     
@@ -232,11 +228,11 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
         
         toggleEditAndDoneFunction(edit: false)
         
-        setExerciseVariables(named: newName, minutes: minutes, seconds: seconds)
+        setExerciseVariables(named: newName, minutes: minutes, seconds: seconds, reps: reps)
         
         if isNew {
             
-            workout.saveNewExercise(named: newName, minutes: minutes, seconds: seconds, routine: workout.lastUsedRoutine)
+            workout.saveNewExercise(named: newName, minutes: minutes, seconds: seconds, routine: workout.lastUsedRoutine, reps: reps)
             
         } else {
             
@@ -283,7 +279,17 @@ extension ExerciseViewController: UITableViewDelegate, UITableViewDataSource {
         
         cell.exerciseNameLabel.text = "\(currentExercise.name!)"
         
-        cell.exerciseTimeLabel.text = "\(timerForWorkout.zero(unit: Int(currentExercise.intervalMinutes))):\(timerForWorkout.zero(unit: Int(currentExercise.intervalSeconds)))"
+        if currentExercise.reps != 0 {
+            
+            cell.exerciseTimeLabel.text = "\(Int(currentExercise.reps))"
+            
+        } else {
+            
+            cell.exerciseTimeLabel.text = "\(timerForWorkout.zero(unit: Int(currentExercise.intervalMinutes))):\(timerForWorkout.zero(unit: Int(currentExercise.intervalSeconds)))"
+            
+        }
+        
+        
         
         return cell
     }
@@ -298,7 +304,7 @@ extension ExerciseViewController: UITableViewDelegate, UITableViewDataSource {
         
         let exercise = workout.exerciseArray[indexPath.row]
         
-        setExerciseVariables(named: exercise.name!, minutes: Int(exercise.intervalMinutes), seconds: Int(exercise.intervalSeconds))
+        setExerciseVariables(named: exercise.name!, minutes: Int(exercise.intervalMinutes), seconds: Int(exercise.intervalSeconds), reps: Int(exercise.reps))
         
         isNew = false
         

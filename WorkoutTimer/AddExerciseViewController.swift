@@ -90,6 +90,17 @@ class AddExerciseViewController: UIViewController {
         
         numberPicker.reloadAllComponents()
         
+        if isTime {
+            
+            numberPicker.selectRow(minutes, inComponent: 0, animated: true)
+            numberPicker.selectRow(seconds, inComponent: 1, animated: true)
+            
+        } else {
+            
+            numberPicker.selectRow(reps, inComponent: 0, animated: true)
+            
+        }
+        
     }
     
     @IBAction func setExercise(_ sender: UIButton) {
@@ -175,11 +186,13 @@ class AddExerciseViewController: UIViewController {
         
         if isTime {
             
+            timeOrRepSegment.selectedSegmentIndex = 0
             numberPicker.selectRow(minutes, inComponent: 0, animated: true)
             numberPicker.selectRow(seconds, inComponent: 1, animated: true)
             
         } else {
             
+            timeOrRepSegment.selectedSegmentIndex = 1
             numberPicker.selectRow(reps, inComponent: 0, animated: true)
             
         }
