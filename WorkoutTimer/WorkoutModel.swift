@@ -800,7 +800,23 @@ class Workout {
             
         }
         
-        totalWorkoutSeconds = totalSeconds
+        // Accounting for Reps as pauses.
+        
+        let exercisesWithReps = 0
+        
+//        for exercise in exerciseArray {
+//
+//            if exercise.reps != 0 {
+//
+//                exercisesWithReps += 1
+//
+//            }
+//
+//        }
+//
+//        exercisesWithReps = (exercisesWithReps * setNumberOfSets)
+        
+        totalWorkoutSeconds = totalSeconds - exercisesWithReps
         
     }
     

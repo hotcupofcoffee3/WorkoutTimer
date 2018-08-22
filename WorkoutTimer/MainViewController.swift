@@ -49,9 +49,11 @@ class MainViewController: UIViewController {
     var isSets = Bool()
     var isTransition = Bool()
     var isExercise = Bool()
+    var wasResetClicked = Bool()
     
     var timerIsStarted = false
     var beganWorkout = false
+    var isCurrentlyDoingReps = false
     
     
     
@@ -106,6 +108,8 @@ class MainViewController: UIViewController {
     
     
     @IBAction func resetButton(_ sender: UIBarButtonItem) {
+        
+        wasResetClicked = true
         
         resetEverythingAlert(isTime: nil, isTransition: nil, isExercise: nil)
         
@@ -351,6 +355,15 @@ class MainViewController: UIViewController {
             
         }
         
+        // ******
+        // *** MARK: - TODO
+        // ******
+        
+        // Make this first interval section check if it is reps or time.
+        // Place popups for reps here, if it works.
+        
+        
+        
         if workout.remainingIntervalMinutes > 0 {
             
             if workout.remainingIntervalSeconds > 0 {
@@ -378,6 +391,7 @@ class MainViewController: UIViewController {
                 }
                 
             }
+            
             
             
             // End of Exercise Interval
@@ -424,7 +438,8 @@ class MainViewController: UIViewController {
                         workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: workout.currentExerciseIndex)
                         
                         
-                        // End of Workout
+                        
+                    // End of Workout
                         
                     } else if workout.currentSet > workout.setNumberOfSets {
                         
@@ -505,21 +520,36 @@ class MainViewController: UIViewController {
             }
             
             
+            
             // End of Transition
             
             if workout.remainingTransitionSeconds == 0 {
                 
                 if workout.exerciseArray.count > workout.currentExerciseIndex {
                     
-                    currentTimer = .interval
-                    
                     exerciseCollectionView.reloadData()
-                    
-                    toggleTimerViews()
                     
                     timerProgress.progress = 0.0
                     
-                    workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: workout.currentExerciseIndex)
+                    if workout.exerciseArray[workout.currentExerciseIndex].reps == 0 {
+                        
+                        currentTimer = .interval
+                        
+                        workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: workout.currentExerciseIndex)
+                        
+                    } else {
+                        
+                        isCurrentlyDoingReps = true
+                        
+                        timerForProgress.invalidate()
+                        
+                        exerciseCollectionView.reloadData()
+                        
+                        presentRepsAlert()
+                        
+                    }
+    
+                    toggleTimerViews()
                     
                     AudioServicesPlaySystemSound(1255)
                     
@@ -577,6 +607,10 @@ class MainViewController: UIViewController {
                 
             }
             
+            
+            
+            // End of rest
+            
             if workout.remainingRestSeconds == 0 {
                 
                 currentTimer = .interval
@@ -615,6 +649,72 @@ class MainViewController: UIViewController {
     
     
     
+    func presentRepsAlert() {
+        
+        let alert = UIAlertController(title: "\(workout.exerciseArray[workout.currentExerciseIndex].name!)", message: "\(Int(workout.exerciseArray[workout.currentExerciseIndex].reps))", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Done", style: .default, handler: { (action) in
+            
+            self.workout.currentExerciseIndex += 1
+            
+            if self.workout.currentExerciseIndex < self.workout.exerciseArray.count {
+                
+                self.currentTimer = .transition
+                
+                self.workout.totalSecondsForProgress = self.workout.setTotalTransitionSeconds
+                
+                self.workout.remainingTransitionMinutes = self.workout.setTransitionMinutes
+                
+                self.workout.remainingTransitionSeconds = self.workout.setTransitionSeconds
+                
+                self.transitionLabel.text = "\(self.timerForWorkout.zero(unit: self.workout.remainingTransitionMinutes)):\(self.timerForWorkout.zero(unit: self.workout.remainingTransitionSeconds))"
+                
+            } else {
+                
+                self.currentTimer = .rest
+                
+                self.workout.currentExerciseIndex = 0
+                
+                self.workout.totalSecondsForProgress = self.workout.setTotalRestSeconds
+                
+                self.workout.remainingRestMinutes = self.workout.setRestMinutes
+                
+                self.workout.remainingRestSeconds = self.workout.setRestSeconds
+                
+                self.restLabel.text = "\(self.timerForWorkout.zero(unit: self.workout.remainingRestMinutes)):\(self.timerForWorkout.zero(unit: self.workout.remainingRestSeconds))"
+                
+            }
+            
+            self.workout.remainingIntervalMinutes = Int(self.workout.exerciseArray[self.workout.currentExerciseIndex].intervalMinutes)
+            
+            self.workout.remainingIntervalSeconds = Int(self.workout.exerciseArray[self.workout.currentExerciseIndex].intervalSeconds)
+            
+            self.mainTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.runTimer), userInfo: nil, repeats: true)
+            
+            self.timerForProgress = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.animateProgress), userInfo: nil, repeats: true)
+            
+            self.timerForTotalWorkout = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.runWorkoutTimer), userInfo: nil, repeats: true)
+            
+            self.isCurrentlyDoingReps = false
+            
+            self.toggleTimerViews()
+            
+            self.exerciseCollectionView.reloadData()
+            
+            AudioServicesPlaySystemSound(1256)
+            
+        }))
+        
+        present(alert, animated: true) {
+            
+            self.mainTimer.invalidate()
+            
+            self.timerForTotalWorkout.invalidate()
+            
+        }
+        
+    }
+    
     func finishedWorkoutAlert() {
         
         AudioServicesPlaySystemSound(1330)
@@ -651,7 +751,11 @@ class MainViewController: UIViewController {
                     
                 } else {
                     
-                    self.performSegue(withIdentifier: self.keywords.mainToRoutinesSegue, sender: self)
+                    if !self.wasResetClicked {
+                        
+                        self.performSegue(withIdentifier: self.keywords.mainToRoutinesSegue, sender: self)
+                        
+                    }
                     
                 }
                 
@@ -772,7 +876,7 @@ class MainViewController: UIViewController {
     }
     
     func toggleTimerViews() {
-        
+        print("\(currentTimer) for exercise index: \(workout.currentExerciseIndex)")
         if timerIsStarted {
             
             if currentTimer == .interval {
@@ -1072,7 +1176,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 cell.backgroundColor = keywords.currentExerciseColor
                 cell.setNumberLabel.textColor = UIColor.white
                 
-            }else if workout.currentSet > 1 && indexPath.row < (workout.currentSet - 1) && workout.currentSet != (indexPath.row + 1) && beganWorkout {
+            } else if workout.currentSet > 1 && indexPath.row < (workout.currentSet - 1) && workout.currentSet != (indexPath.row + 1) && beganWorkout {
                 
                 cell.backgroundColor = UIColor.white
                 cell.setNumberLabel.textColor = keywords.mainBackgroundColor
@@ -1112,7 +1216,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 
                 if workout.currentExerciseIndex == indexPath.row {
                     
-                    if currentTimer == .interval {
+                    if currentTimer == .interval || isCurrentlyDoingReps {
                         
                         cell.backgroundColor = keywords.currentExerciseColor
                         cell.exerciseNameLabel.textColor = UIColor.white
