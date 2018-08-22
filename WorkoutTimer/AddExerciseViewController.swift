@@ -253,7 +253,7 @@ extension AddExerciseViewController: UIPickerViewDelegate, UIPickerViewDataSourc
             
             reps = row
             
-            chosenPickerInfoLabel.text = "\(reps)"
+            chosenPickerInfoLabel.text = "\(reps) reps"
             
         }
         

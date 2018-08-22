@@ -1097,7 +1097,16 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             let currentExercise = workout.exerciseArray[indexPath.row]
             
             cell.exerciseNameLabel.text = "\(currentExercise.name!)"
-            cell.exerciseTimeLabel.text = "\(timerForWorkout.zero(unit: Int(currentExercise.intervalMinutes))):\(timerForWorkout.zero(unit: Int(currentExercise.intervalSeconds)))"
+            
+            if currentExercise.reps == 0 {
+
+                cell.exerciseTimeLabel.text = "\(timerForWorkout.zero(unit: Int(currentExercise.intervalMinutes))):\(timerForWorkout.zero(unit: Int(currentExercise.intervalSeconds)))"
+
+            } else {
+
+                cell.exerciseTimeLabel.text = "\(Int(currentExercise.reps)) reps"
+
+            }
             
             if beganWorkout {
                 
