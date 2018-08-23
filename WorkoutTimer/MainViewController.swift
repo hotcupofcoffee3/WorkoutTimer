@@ -18,6 +18,18 @@
 
 
 
+// ******
+// *** TODO:
+// ******
+
+// Convert the checks into functions of their own, such as 'endRepInterval' & 'endTimeInterval' & 'endSet' to reuse code throughout. Right now, the main transitions between each of the timers and intervals/transitions/rests are not well done, and they duplicate lots of code. So, consolidate into functions in order to make it more succinct and readable, as well as reusable. So, just like the popup for the reps is its own function, configure others that do the same for their purposes, so that multiple things, such as resetting the remainingMinutes and adding to the currentExerciseIndex and the currentSet are not spaced out so much and hard to follow.
+
+//These really only need to be done at the END of each timer, as during the timer, there is typical running going on.
+
+// Also, see if setting the final check when the seconds are up in each timer looks OK to set the labels back to their original, or if the zero showing up for 1 seconds, as it is now, works better.
+
+
+
 import UIKit
 import AVFoundation
 
@@ -117,7 +129,7 @@ class MainViewController: UIViewController {
     
     @IBAction func startButton(_ sender: UIButton) {
         
-        if !timerIsStarted && workout.setTotalIntervalSeconds > 0 {
+        if !timerIsStarted {
                 
             beganWorkout = true
             
@@ -127,11 +139,19 @@ class MainViewController: UIViewController {
             
             toggleTimerViews()
             
-            mainTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(runTimer), userInfo: nil, repeats: true)
-            
-            timerForProgress = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(animateProgress), userInfo: nil, repeats: true)
-            
-            timerForTotalWorkout = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(runWorkoutTimer), userInfo: nil, repeats: true)
+            if workout.exerciseArray[workout.currentExerciseIndex].reps == 0 {
+                
+                mainTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(runTimer), userInfo: nil, repeats: true)
+                
+                timerForProgress = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(animateProgress), userInfo: nil, repeats: true)
+                
+                timerForTotalWorkout = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(runWorkoutTimer), userInfo: nil, repeats: true)
+                
+            } else {
+                
+                presentRepsAlert()
+                
+            }
             
             exerciseCollectionView.reloadData()
             
@@ -280,7 +300,7 @@ class MainViewController: UIViewController {
     @objc func runTimer() {
         
         if currentTimer == .interval {
-            
+ 
             intervalTimer()
             
         } else if currentTimer == .transition {
@@ -355,15 +375,6 @@ class MainViewController: UIViewController {
             
         }
         
-        // ******
-        // *** MARK: - TODO
-        // ******
-        
-        // Make this first interval section check if it is reps or time.
-        // Place popups for reps here, if it works.
-        
-        
-        
         if workout.remainingIntervalMinutes > 0 {
             
             if workout.remainingIntervalSeconds > 0 {
@@ -417,7 +428,8 @@ class MainViewController: UIViewController {
                     workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: workout.currentExerciseIndex)
                     
                     
-                    // End of Set
+                    
+                // End of Set
                     
                 } else if workout.exerciseArray.count == workout.currentExerciseIndex {
                     
@@ -613,17 +625,63 @@ class MainViewController: UIViewController {
             
             if workout.remainingRestSeconds == 0 {
                 
-                currentTimer = .interval
+                
+                
+                
+                
+                // ******
+                // *** MARK: - TODO
+                // ******
+                
+                // Make this the same as the setup for the transition timer.
+                
+                // ******
                 
                 exerciseCollectionView.reloadData()
                 
-                toggleTimerViews()
-                
                 timerProgress.progress = 0.0
                 
-                workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: 0)
+                if workout.exerciseArray[workout.currentExerciseIndex].reps == 0 {
+                    
+                    currentTimer = .interval
+                    
+                    workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: 0)
+                    
+                } else {
+                    
+                    isCurrentlyDoingReps = true
+                    
+                    timerForProgress.invalidate()
+                    
+                    exerciseCollectionView.reloadData()
+                    
+                    presentRepsAlert()
+                    
+                }
+                
+                toggleTimerViews()
                 
                 AudioServicesPlaySystemSound(1255)
+                
+                // ******
+                
+                
+                
+                
+                
+//                exerciseCollectionView.reloadData()
+//
+//                timerProgress.progress = 0.0
+//
+//
+//                currentTimer = .interval
+//
+//                workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: 0)
+//
+//
+//                toggleTimerViews()
+//
+//                AudioServicesPlaySystemSound(1255)
                 
             }
             
@@ -876,7 +934,7 @@ class MainViewController: UIViewController {
     }
     
     func toggleTimerViews() {
-        print("\(currentTimer) for exercise index: \(workout.currentExerciseIndex)")
+        
         if timerIsStarted {
             
             if currentTimer == .interval {
