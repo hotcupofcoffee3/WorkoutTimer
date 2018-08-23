@@ -679,7 +679,7 @@ class MainViewController: UIViewController {
     
     
     // ******
-    // *** MARK: - Functions - Alert, Reset, Interval Label, and Toggle Button Colors
+    // *** MARK: - Functions - Present Reps Alert, Alert, Reset, Interval Label, and Toggle Button Colors
     // ******
     
     
@@ -1128,6 +1128,12 @@ class MainViewController: UIViewController {
 
 
 
+// ***********************************************************************************
+
+// ******
+// *** MARK: - Delegates
+// ******
+
 extension MainViewController: SetSetsTransitionsAndRestDelegate, UpdateFirstExerciseDelegate, LoadRoutineExercisesDelegate {
     
     func setSets(numberOfSets: Int) {
@@ -1139,12 +1145,6 @@ extension MainViewController: SetSetsTransitionsAndRestDelegate, UpdateFirstExer
         setCollectionView.reloadData()
         
         updateTotalWorkoutTimeAndLabels()
-        
-    }
-    
-    func setReps(numberOfReps: Int) {
-        
-        
         
     }
     
@@ -1208,6 +1208,12 @@ extension MainViewController: SetSetsTransitionsAndRestDelegate, UpdateFirstExer
 
 
 
+// ***********************************************************************************
+
+// ******
+// *** MARK: - Collection View
+// ******
+
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -1238,7 +1244,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             
             if beganWorkout {
                 
-                // Current Set
                 if workout.currentSet == (indexPath.row + 1) {
                     
                     cell.backgroundColor = UIColor.clear
