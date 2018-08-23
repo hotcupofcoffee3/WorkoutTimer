@@ -726,22 +726,52 @@ class Workout {
     
 
     
+    func setRemainingToSetAmounts(forTimer: CurrentTimer, withIndex: Int = 0) {
+        
+        switch forTimer {
+            
+        case .interval :
+            
+            remainingIntervalMinutes = Int(exerciseArray[withIndex].intervalMinutes)
+            
+            remainingIntervalSeconds = Int(exerciseArray[withIndex].intervalSeconds)
+            
+        case .transition :
+            
+            remainingTransitionMinutes = setTransitionMinutes
+            
+            remainingTransitionSeconds = setTransitionSeconds
+            
+        case .rest :
+            
+            remainingRestMinutes = setRestMinutes
+            
+            remainingRestSeconds = setRestSeconds
+        }
+        
+    }
+    
     func setTotalAndRemainingStartingIntervalAmounts() {
         
-        setTotalIntervalSeconds = (Int(exerciseArray[0].intervalMinutes * 60)) + Int(exerciseArray[0].intervalSeconds)
         
-        remainingIntervalMinutes = Int(exerciseArray[0].intervalMinutes)
-        remainingIntervalSeconds = Int(exerciseArray[0].intervalSeconds)
         
     }
 
     func setRemainingToSetAmounts() {
         
-        setTotalAndRemainingStartingIntervalAmounts()
+        setTotalIntervalSeconds = (Int(exerciseArray[0].intervalMinutes * 60)) + Int(exerciseArray[0].intervalSeconds)
+        
+        remainingIntervalMinutes = Int(exerciseArray[0].intervalMinutes)
+        
+        remainingIntervalSeconds = Int(exerciseArray[0].intervalSeconds)
         
         remainingTransitionMinutes = setTransitionMinutes
         
         remainingTransitionSeconds = setTransitionSeconds
+        
+        remainingRestMinutes = setRestMinutes
+        
+        remainingRestSeconds = setRestSeconds
         
     }
     

@@ -180,7 +180,9 @@
                                         <rect key="frame" x="177.5" y="0.0" width="157.5" height="90"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="36"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="Stop"/>
+                                        <state key="normal" title="Stop">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
                                         <connections>
                                             <action selector="stopButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hfc-V7-c1z"/>
                                         </connections>
@@ -922,6 +924,6 @@ warning</string>
         <image name="WorkoutTimer-OpeningBackground" width="1024" height="1024"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="3oA-4X-4Tb"/>
+        <segue reference="Uig-b2-Unb"/>
     </inferredMetricsTieBreakers>
 </document>
