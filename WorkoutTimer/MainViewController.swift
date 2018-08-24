@@ -26,15 +26,21 @@
 
 // Change the timers to match the progress timer in .1 seconds.
 
-// Update the timer labels at the end of the next timers, as we tried it for a bit, but it's kind of nice to have it say 0 at the end.
+// Make Workout Model extensions to add various functions to it to organize it better.
+
+// Work on popup screen for dealing with the reps.
+
+// Work on popup screen for instructions.
+
+
+
+// *** UI, IBACTION, & IBOUTLET CHANGES:
 
 // Make only the Transition and Rest labels at bottom.
 
 // Make each label in the collection view be the main countdown.
 
 // Just one Start/Stop button
-
-// Make Workout Model extensions to add various functions to it to organize it better.
 
 
 
