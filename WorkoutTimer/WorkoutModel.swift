@@ -17,6 +17,7 @@ class Workout {
         case interval
         case transition
         case rest
+        case workout
         
     }
     
@@ -35,6 +36,7 @@ class Workout {
     var routineArray = [String]()
     
     let keywords = Keywords()
+    let timerForWorkout = TimerForWorkout()
     
     var currentSet = 1
     var currentExerciseIndex = 0
@@ -747,30 +749,88 @@ class Workout {
             remainingRestMinutes = setRestMinutes
             
             remainingRestSeconds = setRestSeconds
+            
+        case .workout :
+            
+            remainingWorkoutMinutes = setWorkoutMinutes
+            
+            remainingWorkoutSeconds = setWorkoutSeconds
+            
         }
         
     }
     
-    func setTotalAndRemainingStartingIntervalAmounts() {
+    func setLabelTextForTimer(forTimer: CurrentTimer, withIndex: Int = 0, isRemaining: Bool) -> String {
         
+        var labelText = ""
         
+        switch forTimer {
+            
+        case .interval :
+            
+            if isRemaining {
+                
+                labelText = "\(timerForWorkout.zero(unit: remainingIntervalMinutes)):\(timerForWorkout.zero(unit: remainingIntervalSeconds))"
+                
+            } else {
+                
+                labelText = "\(timerForWorkout.zero(unit: Int(exerciseArray[withIndex].intervalMinutes))):\(timerForWorkout.zero(unit: Int(exerciseArray[withIndex].intervalSeconds)))"
+                
+            }
+            
+        case .transition :
+            
+            if isRemaining {
+                
+                labelText = "\(timerForWorkout.zero(unit: remainingTransitionMinutes)):\(timerForWorkout.zero(unit: remainingTransitionSeconds))"
+                
+            } else {
+                
+                labelText = "\(timerForWorkout.zero(unit: setTransitionMinutes)):\(timerForWorkout.zero(unit: setTransitionSeconds))"
+                
+            }
+            
+        case .rest :
+            
+            if isRemaining {
+                
+                labelText = "\(timerForWorkout.zero(unit: remainingRestMinutes)):\(timerForWorkout.zero(unit: remainingRestSeconds))"
+                
+            } else {
+                
+                labelText = "\(timerForWorkout.zero(unit: setRestMinutes)):\(timerForWorkout.zero(unit: setRestSeconds))"
+                
+            }
+            
+        case .workout :
+            
+            if isRemaining {
+                
+                labelText = "\(timerForWorkout.zero(unit: remainingWorkoutMinutes)):\(timerForWorkout.zero(unit: remainingWorkoutSeconds))"
+                
+            } else {
+                
+                labelText = "\(timerForWorkout.zero(unit: setWorkoutMinutes)):\(timerForWorkout.zero(unit: setWorkoutSeconds))"
+                
+            }
+            
+        }
+        
+        return labelText
         
     }
-
+    
     func setRemainingToSetAmounts() {
         
         setTotalIntervalSeconds = (Int(exerciseArray[0].intervalMinutes * 60)) + Int(exerciseArray[0].intervalSeconds)
         
         remainingIntervalMinutes = Int(exerciseArray[0].intervalMinutes)
-        
         remainingIntervalSeconds = Int(exerciseArray[0].intervalSeconds)
         
         remainingTransitionMinutes = setTransitionMinutes
-        
         remainingTransitionSeconds = setTransitionSeconds
         
         remainingRestMinutes = setRestMinutes
-        
         remainingRestSeconds = setRestSeconds
         
     }

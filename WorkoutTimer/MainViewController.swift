@@ -6,8 +6,6 @@
 //  Copyright © 2018 Adam Moore. All rights reserved.
 //
 
-
-
 // 1306 - Tock clicking sound (Keyboard click)
 // 1072 - Kinda like a busy tone
 // 1013 - Sounds kind of like a symbol or chime.
@@ -24,21 +22,19 @@
 
 // Convert the checks into functions of their own, such as 'endRepInterval' & 'endTimeInterval' & 'endSet' to reuse code throughout.
 
-// Blue background for the exercises.
-
-// No outline for the exercises.
-
 // Continue organizing the timers and functionality of the timers.
 
 // Change the timers to match the progress timer in .1 seconds.
 
 // Update the timer labels at the end of the next timers, as we tried it for a bit, but it's kind of nice to have it say 0 at the end.
 
-// Toggle the buttons and make them actually work with enabling and disabling.
-
 // Make only the Transition and Rest labels at bottom.
 
 // Make each label in the collection view be the main countdown.
+
+// Just one Start/Stop button
+
+// Make Workout Model extensions to add various functions to it to organize it better.
 
 
 
@@ -90,11 +86,9 @@ class MainViewController: UIViewController {
     @IBOutlet weak var navBar: UINavigationBar!
     
     @IBOutlet weak var totalTimeInWorkout: UILabel!
-    
     @IBOutlet weak var totalTimeLeft: UILabel!
     
     @IBOutlet weak var setsView: UIView!
-    
     @IBOutlet weak var setCollectionView: UICollectionView!
     
     @IBOutlet weak var exerciseCollectionView: UICollectionView!
@@ -102,25 +96,18 @@ class MainViewController: UIViewController {
     @IBOutlet weak var timerProgress: UIProgressView!
     
     @IBOutlet weak var intervalView: UIView!
-    
     @IBOutlet weak var intervalTitle: UILabel!
-    
     @IBOutlet weak var intervalLabel: UILabel!
     
     @IBOutlet weak var transitionView: UIView!
-    
     @IBOutlet weak var transitionTitle: UILabel!
-    
     @IBOutlet weak var transitionLabel: UILabel!
     
     @IBOutlet weak var restView: UIView!
-    
     @IBOutlet weak var restTitle: UILabel!
-    
     @IBOutlet weak var restLabel: UILabel!
     
     @IBOutlet weak var startButtonOutlet: UIButton!
-    
     @IBOutlet weak var stopButtonOutlet: UIButton!
     
     
@@ -257,7 +244,6 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         
         setCollectionView.register(UINib(nibName: "SetsCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "setCell")
-        
         exerciseCollectionView.register(UINib(nibName: "ExerciseCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "exerciseCell")
         
         let routineTitleTapGesture = UITapGestureRecognizer(target: self, action: #selector(routineTitleTap))
@@ -275,12 +261,10 @@ class MainViewController: UIViewController {
         restView.addGestureRecognizer(restTapGesture)
         
         updateIntervalLabelToFirstExercise()
-        
         updateTotalWorkoutTimeAndLabels()
         
-        transitionLabel.text = "\(timerForWorkout.zero(unit: workout.setTransitionMinutes)):\(timerForWorkout.zero(unit: workout.setTransitionSeconds))"
-        
-        restLabel.text = "\(timerForWorkout.zero(unit: workout.setRestMinutes)):\(timerForWorkout.zero(unit: workout.setRestSeconds))"
+        transitionLabel.text = workout.setLabelTextForTimer(forTimer: .transition, isRemaining: false)
+        restLabel.text = workout.setLabelTextForTimer(forTimer: .rest, isRemaining: false)
         
         timerProgress.progress = 0.0
         
@@ -293,7 +277,6 @@ class MainViewController: UIViewController {
         stopButtonOutlet.layer.cornerRadius = 45
         
         toggleButtonColors(reset: true)
-        
         toggleNavBarTitle()
         
     }
@@ -309,17 +292,17 @@ class MainViewController: UIViewController {
     @objc func runTimer() {
         
         if currentTimer == .interval {
- 
+
             intervalTimer()
-            
+
         } else if currentTimer == .transition {
-            
+
             transitionTimer()
-            
+
         } else if currentTimer == .rest {
-            
+
             restTimer()
-            
+
         }
         
     }
@@ -360,7 +343,7 @@ class MainViewController: UIViewController {
             
         }
         
-        totalTimeLeft.text = "\(timerForWorkout.zero(unit: workout.remainingWorkoutMinutes)):\(timerForWorkout.zero(unit: workout.remainingWorkoutSeconds))"
+        totalTimeLeft.text = workout.setLabelTextForTimer(forTimer: .workout, isRemaining: true)
         
     }
     
@@ -375,12 +358,16 @@ class MainViewController: UIViewController {
     func intervalTimer() {
         
         // The first time it is called, it resets the labels of the others.
-        
+
         if Int(workout.exerciseArray[workout.currentExerciseIndex].intervalMinutes) == workout.remainingIntervalMinutes && Int(workout.exerciseArray[workout.currentExerciseIndex].intervalSeconds) == workout.remainingIntervalSeconds {
+
+            workout.setRemainingToSetAmounts(forTimer: .transition)
             
-            transitionLabel.text = "\(timerForWorkout.zero(unit: workout.remainingTransitionMinutes)):\(timerForWorkout.zero(unit: workout.remainingTransitionSeconds))"
+            workout.setRemainingToSetAmounts(forTimer: .rest)
             
-            restLabel.text = "\(timerForWorkout.zero(unit: workout.remainingRestMinutes)):\(timerForWorkout.zero(unit: workout.remainingRestSeconds))"
+            transitionLabel.text = workout.setLabelTextForTimer(forTimer: .transition, isRemaining: false)
+            
+            restLabel.text = workout.setLabelTextForTimer(forTimer: .rest, isRemaining: false)
             
         }
         
@@ -426,7 +413,7 @@ class MainViewController: UIViewController {
                 
                 
                 
-                // If there are more exercises.
+                // More exercises.
                 
                 if workout.exerciseArray.count > workout.currentExerciseIndex {
                     
@@ -454,7 +441,7 @@ class MainViewController: UIViewController {
                     
                     
                     
-                    // If there are more sets.
+                    // More sets
                     
                     if workout.currentSet <= workout.setNumberOfSets {
                         
@@ -480,7 +467,7 @@ class MainViewController: UIViewController {
                         
                         workout.remainingWorkoutSeconds = 0
                         
-                        totalTimeLeft.text = "\(timerForWorkout.zero(unit: workout.remainingWorkoutMinutes)):\(timerForWorkout.zero(unit: workout.remainingWorkoutSeconds))"
+                        totalTimeLeft.text = workout.setLabelTextForTimer(forTimer: .workout, isRemaining: true)
                         
                         finishedWorkoutAlert()
                         
@@ -488,19 +475,19 @@ class MainViewController: UIViewController {
                     
                 }
                 
+                timerProgress.progress = 0.0
+                
                 exerciseCollectionView.reloadData()
                 
-                workout.setRemainingToSetAmounts(forTimer: .interval, withIndex: workout.currentExerciseIndex)
-                
-                timerProgress.progress = 0.0
+                toggleTimerViews()
                 
             }
             
         }
         
-        intervalLabel.text = "\(timerForWorkout.zero(unit: workout.remainingIntervalMinutes)):\(timerForWorkout.zero(unit: workout.remainingIntervalSeconds))"
+        intervalLabel.text = workout.setLabelTextForTimer(forTimer: .interval, isRemaining: true)
         
-        if currentTimer == .transition || currentTimer == .rest {
+        if currentTimer != .interval {
             
             workout.setRemainingToSetAmounts(forTimer: .interval, withIndex: workout.currentExerciseIndex)
             
@@ -512,8 +499,13 @@ class MainViewController: UIViewController {
         
         if workout.setTransitionMinutes == workout.remainingTransitionMinutes && workout.setTransitionSeconds == workout.remainingTransitionSeconds {
             
-            intervalLabel.text = "\(timerForWorkout.zero(unit: Int(workout.exerciseArray[workout.currentExerciseIndex].intervalMinutes))):\(timerForWorkout.zero(unit: Int(workout.exerciseArray[workout.currentExerciseIndex].intervalSeconds)))"
+            workout.setRemainingToSetAmounts(forTimer: .interval, withIndex: workout.currentExerciseIndex)
             
+            workout.setRemainingToSetAmounts(forTimer: .rest)
+            
+            intervalLabel.text = workout.setLabelTextForTimer(forTimer: .interval, withIndex: workout.currentExerciseIndex, isRemaining: false)
+            
+            restLabel.text = workout.setLabelTextForTimer(forTimer: .rest, isRemaining: false)
         }
         
         if workout.remainingTransitionMinutes > 0 {
@@ -550,10 +542,6 @@ class MainViewController: UIViewController {
             
             if workout.remainingTransitionSeconds == 0 {
 
-                exerciseCollectionView.reloadData()
-                
-                timerProgress.progress = 0.0
-                
                 if workout.exerciseArray[workout.currentExerciseIndex].reps == 0 {
                     
                     currentTimer = .interval
@@ -566,14 +554,14 @@ class MainViewController: UIViewController {
                     
                     toggleTimers(runTimer: false)
                     
-                    exerciseCollectionView.reloadData()
-                    
                     presentRepsAlert()
                     
                 }
                 
-                workout.setRemainingToSetAmounts(forTimer: .transition)
-
+                timerProgress.progress = 0.0
+                
+                exerciseCollectionView.reloadData()
+                
                 toggleTimerViews()
                 
                 AudioServicesPlaySystemSound(1255)
@@ -582,9 +570,9 @@ class MainViewController: UIViewController {
             
         }
         
-        transitionLabel.text = "\(timerForWorkout.zero(unit: workout.remainingTransitionMinutes)):\(timerForWorkout.zero(unit: workout.remainingTransitionSeconds))"
+        transitionLabel.text = workout.setLabelTextForTimer(forTimer: .transition, isRemaining: true)
         
-        if currentTimer == .interval {
+        if currentTimer != .transition {
             
             workout.setRemainingToSetAmounts(forTimer: .transition)
             
@@ -596,7 +584,13 @@ class MainViewController: UIViewController {
         
         if workout.setRestMinutes == workout.remainingRestMinutes && workout.setRestSeconds == workout.remainingRestSeconds {
             
-            intervalLabel.text = "\(timerForWorkout.zero(unit: Int(workout.exerciseArray[workout.currentExerciseIndex].intervalMinutes))):\(timerForWorkout.zero(unit: Int(workout.exerciseArray[workout.currentExerciseIndex].intervalSeconds)))"
+            workout.setRemainingToSetAmounts(forTimer: .interval, withIndex: 0)
+            
+            workout.setRemainingToSetAmounts(forTimer: .transition)
+            
+            intervalLabel.text = workout.setLabelTextForTimer(forTimer: .interval, withIndex: 0, isRemaining: false)
+            
+            transitionLabel.text = workout.setLabelTextForTimer(forTimer: .transition, isRemaining: false)
             
         }
         
@@ -634,13 +628,11 @@ class MainViewController: UIViewController {
             
             if workout.remainingRestSeconds == 0 {
                 
-                exerciseCollectionView.reloadData()
-                
-                timerProgress.progress = 0.0
+                currentTimer = .interval
                 
                 if workout.exerciseArray[workout.currentExerciseIndex].reps == 0 {
                     
-                    currentTimer = .interval
+//                    currentTimer = .interval
                     
                     workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: 0)
                     
@@ -650,13 +642,13 @@ class MainViewController: UIViewController {
                     
                     toggleTimers(runTimer: false)
                     
-                    exerciseCollectionView.reloadData()
-                    
                     presentRepsAlert()
                     
                 }
                 
-                workout.setRemainingToSetAmounts(forTimer: .rest)
+                timerProgress.progress = 0.0
+                
+                exerciseCollectionView.reloadData()
                 
                 toggleTimerViews()
                 
@@ -666,9 +658,9 @@ class MainViewController: UIViewController {
             
         }
         
-        restLabel.text = "\(timerForWorkout.zero(unit: workout.remainingRestMinutes)):\(timerForWorkout.zero(unit: workout.remainingRestSeconds))"
+        restLabel.text = workout.setLabelTextForTimer(forTimer: .rest, isRemaining: true)
         
-        if currentTimer == .interval {
+        if currentTimer != .rest {
             
             workout.setRemainingToSetAmounts(forTimer: .rest)
             
@@ -700,7 +692,7 @@ class MainViewController: UIViewController {
                 
                 self.workout.setRemainingToSetAmounts(forTimer: .transition)
                 
-                self.transitionLabel.text = "\(self.timerForWorkout.zero(unit: self.workout.remainingTransitionMinutes)):\(self.timerForWorkout.zero(unit: self.workout.remainingTransitionSeconds))"
+                self.transitionLabel.text = self.workout.setLabelTextForTimer(forTimer: .transition, isRemaining: true)
               
             } else if self.workout.exerciseArray.count == self.workout.currentExerciseIndex {
                 
@@ -718,7 +710,7 @@ class MainViewController: UIViewController {
                     
                     self.workout.setRemainingToSetAmounts(forTimer: .rest)
                     
-                    self.restLabel.text = "\(self.timerForWorkout.zero(unit: self.workout.remainingRestMinutes)):\(self.timerForWorkout.zero(unit: self.workout.remainingRestSeconds))"
+                    self.restLabel.text = self.workout.setLabelTextForTimer(forTimer: .rest, isRemaining: true)
                     
                 } else if self.workout.setTotalRestSeconds == 0 && self.workout.currentSet <= self.workout.setNumberOfSets {
                     
@@ -734,7 +726,7 @@ class MainViewController: UIViewController {
                     
                     self.workout.remainingWorkoutSeconds = 0
                     
-                    self.totalTimeLeft.text = "\(self.timerForWorkout.zero(unit: self.workout.remainingWorkoutMinutes)):\(self.timerForWorkout.zero(unit: self.workout.remainingWorkoutSeconds))"
+                    self.totalTimeLeft.text = self.workout.setLabelTextForTimer(forTimer: .workout, isRemaining: true)
                     
                     self.finishedWorkoutAlert()
                     
@@ -757,6 +749,12 @@ class MainViewController: UIViewController {
                 self.exerciseCollectionView.reloadData()
                 
                 AudioServicesPlaySystemSound(1256)
+                
+            }
+            
+            if self.currentTimer != .interval {
+                
+                self.workout.setRemainingToSetAmounts(forTimer: .interval, withIndex: self.workout.currentExerciseIndex)
                 
             }
             
@@ -830,9 +828,7 @@ class MainViewController: UIViewController {
     
     func updateIntervalLabelToFirstExercise() {
         
-        let firstExercise = workout.exerciseArray[0]
-        
-        intervalLabel.text = "\(timerForWorkout.zero(unit: Int(firstExercise.intervalMinutes))):\(timerForWorkout.zero(unit: Int(firstExercise.intervalSeconds)))"
+        intervalLabel.text = workout.setLabelTextForTimer(forTimer: .interval, withIndex: 0, isRemaining: false)
         
     }
     
@@ -854,9 +850,9 @@ class MainViewController: UIViewController {
         
         workout.setRemainingToSetAmounts(forTimer: .interval, withIndex: 0)
         
-        transitionLabel.text = "\(timerForWorkout.zero(unit: workout.setTransitionMinutes)):\(timerForWorkout.zero(unit: workout.setTransitionSeconds))"
+        transitionLabel.text = workout.setLabelTextForTimer(forTimer: .transition, isRemaining: false)
         
-        restLabel.text = "\(timerForWorkout.zero(unit: workout.setRestMinutes)):\(timerForWorkout.zero(unit: workout.setRestSeconds))"
+        restLabel.text = workout.setLabelTextForTimer(forTimer: .rest, isRemaining: false)
         
         updateTotalWorkoutTimeAndLabels()
         
@@ -1000,9 +996,9 @@ class MainViewController: UIViewController {
         
         workout.setMinutesAndSecondsFromTotalWorkoutSeconds()
         
-        totalTimeInWorkout.text = "\(timerForWorkout.zero(unit: workout.setWorkoutMinutes)):\(timerForWorkout.zero(unit: workout.setWorkoutSeconds))"
+        totalTimeInWorkout.text = workout.setLabelTextForTimer(forTimer: .workout, isRemaining: false)
         
-        totalTimeLeft.text = "\(timerForWorkout.zero(unit: workout.remainingWorkoutMinutes)):\(timerForWorkout.zero(unit: workout.remainingWorkoutSeconds))"
+        totalTimeLeft.text = workout.setLabelTextForTimer(forTimer: .workout, isRemaining: true)
         
     }
  
@@ -1152,7 +1148,7 @@ extension MainViewController: SetSetsTransitionsAndRestDelegate, UpdateFirstExer
         
         workout.saveTransitionTime(routine: workout.lastUsedRoutine, minutes: minutes, seconds: seconds)
         
-        transitionLabel.text = "\(timerForWorkout.zero(unit: workout.setTransitionMinutes)):\(timerForWorkout.zero(unit: workout.setTransitionSeconds))"
+        transitionLabel.text = workout.setLabelTextForTimer(forTimer: .transition, isRemaining: false)
         
         updateTotalWorkoutTimeAndLabels()
         
@@ -1162,7 +1158,7 @@ extension MainViewController: SetSetsTransitionsAndRestDelegate, UpdateFirstExer
         
         workout.saveRestTime(routine: workout.lastUsedRoutine, minutes: minutes, seconds: seconds)
         
-        restLabel.text = "\(timerForWorkout.zero(unit: workout.setRestMinutes)):\(timerForWorkout.zero(unit: workout.setRestSeconds))"
+        restLabel.text = workout.setLabelTextForTimer(forTimer: .rest, isRemaining: false)
         
         updateTotalWorkoutTimeAndLabels()
         
@@ -1174,7 +1170,7 @@ extension MainViewController: SetSetsTransitionsAndRestDelegate, UpdateFirstExer
         
         workout.loadExercisesPerRoutine(routine: workout.lastUsedRoutine)
         
-        intervalLabel.text = "\(timerForWorkout.zero(unit: Int(workout.exerciseArray[0].intervalMinutes))):\(timerForWorkout.zero(unit: Int(workout.exerciseArray[0].intervalSeconds)))"
+        intervalLabel.text = workout.setLabelTextForTimer(forTimer: .interval, withIndex: 0, isRemaining: false)
         
         workout.setRemainingToSetAmounts(forTimer: .interval)
         
@@ -1255,7 +1251,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
                     
                     cell.backgroundColor = UIColor.white
                     cell.setNumberLabel.isEnabled = true
-                    cell.setNumberLabel.textColor = keywords.mainBackgroundColor
+                    cell.setNumberLabel.textColor = keywords.darkBluishColor
                     
                 } else {
                     
@@ -1289,7 +1285,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             
             if currentExercise.reps == 0 {
 
-                cell.exerciseTimeLabel.text = "\(timerForWorkout.zero(unit: Int(currentExercise.intervalMinutes))):\(timerForWorkout.zero(unit: Int(currentExercise.intervalSeconds)))"
+                cell.exerciseTimeLabel.text = workout.setLabelTextForTimer(forTimer: .interval, withIndex: indexPath.row, isRemaining: false)
 
             } else {
 
@@ -1311,8 +1307,8 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 } else if workout.currentExerciseIndex > indexPath.row {
                     
                     cell.backgroundColor = UIColor.white
-                    cell.exerciseNameLabel.textColor = keywords.mainBackgroundColor
-                    cell.exerciseTimeLabel.textColor = keywords.mainBackgroundColor
+                    cell.exerciseNameLabel.textColor = keywords.darkBluishColor
+                    cell.exerciseTimeLabel.textColor = keywords.darkBluishColor
                     
                     cell.exerciseNameLabel.isEnabled = true
                     cell.exerciseTimeLabel.isEnabled = true

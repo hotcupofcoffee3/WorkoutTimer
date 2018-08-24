@@ -21,8 +21,8 @@ class ExerciseCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        exerciseCellView.layer.borderColor = UIColor.white.cgColor
-        exerciseCellView.layer.borderWidth = 1
+//        exerciseCellView.layer.borderColor = UIColor.white.cgColor
+//        exerciseCellView.layer.borderWidth = 1
     }
 
 }
