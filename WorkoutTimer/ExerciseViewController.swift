@@ -36,7 +36,7 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
     
     var isTime = Bool()
     
-    var isTenExercises = Bool()
+    var isTwelveExercises = Bool()
     
     var editCells = false
     
@@ -78,9 +78,9 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
     
     @IBAction func addExercise(_ sender: UIBarButtonItem) {
         
-        if isTenExercises {
+        if isTwelveExercises {
             
-            let alert = UIAlertController(title: "Exercise Limit", message: "You can have a maximum of 10 exercises.", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Exercise Limit", message: "You can have a maximum of 12 exercises.", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             
@@ -191,7 +191,7 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
     
     func toggleIsTenExercises() {
         
-        isTenExercises = (workout.exerciseArray.count == 10)
+        isTwelveExercises = (workout.exerciseArray.count == 12)
         
     }
     

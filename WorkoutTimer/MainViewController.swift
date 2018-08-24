@@ -20,27 +20,31 @@
 // *** TODO:
 // ******
 
-// Convert the checks into functions of their own, such as 'endRepInterval' & 'endTimeInterval' & 'endSet' to reuse code throughout.
-
-// Continue organizing the timers and functionality of the timers.
-
-// Change the timers to match the progress timer in .1 seconds.
-
 // Make Workout Model extensions to add various functions to it to organize it better.
 
-// Work on popup screen for dealing with the reps.
-
-// Work on popup screen for instructions.
+// Exercises & Routines VC: Make 'Add' stop the editing.
 
 
 
-// *** UI, IBACTION, & IBOUTLET CHANGES:
+// *** Continue organizing the timers and functionality of the timers.
 
-// Make only the Transition and Rest labels at bottom.
+// *** Convert the checks into functions of their own, such as 'endRepInterval' & 'endTimeInterval' & 'endSet' to reuse code throughout.
 
-// Make each label in the collection view be the main countdown.
+// *** Make end of Interval Timer and Rep Popup match.
 
-// Just one Start/Stop button
+// *** Make end of Transition and Rest match.
+
+
+
+// LONG: Change the timers to match the progress timer in .1 seconds.
+
+// LONG: Make only the Transition and Rest labels at bottom.
+
+// LONG: Make each label in the collection view be the main countdown.
+
+// LONG: Work on popup screen for dealing with the reps.
+
+// LONG: Work on popup screen for instructions.
 
 
 
@@ -91,15 +95,17 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var navBar: UINavigationBar!
     
+    @IBOutlet weak var workoutTimerView: UIView!
     @IBOutlet weak var totalTimeInWorkout: UILabel!
     @IBOutlet weak var totalTimeLeft: UILabel!
     
     @IBOutlet weak var setsView: UIView!
     @IBOutlet weak var setCollectionView: UICollectionView!
     
-    @IBOutlet weak var exerciseCollectionView: UICollectionView!
-    
     @IBOutlet weak var timerProgress: UIProgressView!
+    
+    @IBOutlet weak var exerciseCollectionView: UICollectionView!
+    @IBOutlet weak var exerciseCollectionViewHeight: NSLayoutConstraint!
     
     @IBOutlet weak var intervalView: UIView!
     @IBOutlet weak var intervalTitle: UILabel!
@@ -113,8 +119,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var restTitle: UILabel!
     @IBOutlet weak var restLabel: UILabel!
     
-    @IBOutlet weak var startButtonOutlet: UIButton!
-    @IBOutlet weak var stopButtonOutlet: UIButton!
+    @IBOutlet weak var startStopButtonOutlet: UIButton!
     
     
     
@@ -132,7 +137,7 @@ class MainViewController: UIViewController {
         
     }
     
-    @IBAction func startButton(_ sender: UIButton) {
+    @IBAction func startStopButton(_ sender: UIButton) {
         
         if !timerIsStarted {
             
@@ -158,7 +163,7 @@ class MainViewController: UIViewController {
             
             }
             
-            toggleButtonColors(reset: false)
+            toggleStartStopButton()
             
             toggleTimerViews()
             
@@ -166,19 +171,13 @@ class MainViewController: UIViewController {
             
             setCollectionView.reloadData()
             
-        }
-        
-    }
-    
-    @IBAction func stopButton(_ sender: UIButton) {
-        
-        if timerIsStarted {
+        } else {
             
             toggleTimers(runTimer: false)
             
             timerIsStarted = false
             
-            toggleButtonColors(reset: false)
+            toggleStartStopButton()
             
         }
         
@@ -255,11 +254,13 @@ class MainViewController: UIViewController {
         let routineTitleTapGesture = UITapGestureRecognizer(target: self, action: #selector(routineTitleTap))
         let setsTapGesture = UITapGestureRecognizer(target: self, action: #selector(setsTap))
         let exerciseTapGesture = UITapGestureRecognizer(target: self, action: #selector(exerciseTap))
+        let workoutTimerTapGesture = UITapGestureRecognizer(target: self, action: #selector(workoutTimerTap))
         let intervalTapGesture = UITapGestureRecognizer(target: self, action: #selector(intervalTap))
         let transitionTapGesture = UITapGestureRecognizer(target: self, action: #selector(transitionTap))
         let restTapGesture = UITapGestureRecognizer(target: self, action: #selector(restTap))
         
         navBar.addGestureRecognizer(routineTitleTapGesture)
+        workoutTimerView.addGestureRecognizer(workoutTimerTapGesture)
         setsView.addGestureRecognizer(setsTapGesture)
         exerciseCollectionView.addGestureRecognizer(exerciseTapGesture)
         intervalView.addGestureRecognizer(intervalTapGesture)
@@ -274,15 +275,7 @@ class MainViewController: UIViewController {
         
         timerProgress.progress = 0.0
         
-        startButtonOutlet.layer.borderColor = UIColor.white.cgColor
-        startButtonOutlet.layer.borderWidth = 2
-        startButtonOutlet.layer.cornerRadius = 45
-        
-        stopButtonOutlet.layer.borderColor = UIColor.white.cgColor
-        stopButtonOutlet.layer.borderWidth = 2
-        stopButtonOutlet.layer.cornerRadius = 45
-        
-        toggleButtonColors(reset: true)
+        toggleStartStopButton()
         toggleNavBarTitle()
         
     }
@@ -864,7 +857,7 @@ class MainViewController: UIViewController {
         
         toggleTimerViews()
         
-        toggleButtonColors(reset: true)
+        toggleStartStopButton()
         
     }
     
@@ -892,29 +885,17 @@ class MainViewController: UIViewController {
         
     }
     
-    func toggleButtonColors(reset: Bool) {
+    func toggleStartStopButton() {
         
-        if reset {
-            
-            startButtonOutlet.isEnabled = true
-
-            stopButtonOutlet.isEnabled = false
+        if timerIsStarted {
+    
+            startStopButtonOutlet.setTitle("Stop", for: .normal)
+            startStopButtonOutlet.layer.backgroundColor = keywords.stopColor.cgColor
             
         } else {
             
-            if beganWorkout && timerIsStarted {
-                
-                startButtonOutlet.isEnabled = false
-                
-                stopButtonOutlet.isEnabled = true
-                
-            } else if beganWorkout && !timerIsStarted {
-                
-                startButtonOutlet.isEnabled = true
-                
-                stopButtonOutlet.isEnabled = false
-                
-            }
+            startStopButtonOutlet.setTitle("Start", for: .normal)
+            startStopButtonOutlet.layer.backgroundColor = keywords.startColor.cgColor
             
         }
         
@@ -1055,7 +1036,25 @@ class MainViewController: UIViewController {
     }
     
     @objc func exerciseTap() {
+        print("Dog")
+        if !timerIsStarted {
+            
+            if beganWorkout {
+                
+                resetEverythingAlert(isTime: false, isTransition: false, isExercise: true)
+                
+            } else {
+                
+                setAndTimeTapSegue(isTime: false, isTransition: false, isExercise: true)
+                
+            }
+            
+        }
         
+    }
+    
+    @objc func workoutTimerTap() {
+
         if !timerIsStarted {
             
             if beganWorkout {
@@ -1347,8 +1346,8 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             
             if workout.exerciseArray.count < 6 {
                 
-                cell.exerciseNameLabel.font = cell.exerciseNameLabel.font.withSize(24)
-                cell.exerciseTimeLabel.font = cell.exerciseTimeLabel.font.withSize(24)
+                cell.exerciseNameLabel.font = cell.exerciseNameLabel.font.withSize(21)
+                cell.exerciseTimeLabel.font = cell.exerciseTimeLabel.font.withSize(21)
                 
             } else {
                 
@@ -1369,32 +1368,68 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         if collectionView == self.setCollectionView {
             
-            let size = viewWidth / CGFloat(workout.setNumberOfSets)
+            let width = viewWidth / CGFloat(workout.setNumberOfSets)
             
-            return CGSize(width: size, height: 48)
+            return CGSize(width: width, height: 36)
             
         // Exercise Collection
         } else {
             
-            var size = CGFloat()
+            var width = CGFloat()
             
             var height = CGFloat()
             
-            if workout.exerciseArray.count < 6 {
+            let exerciseCount = workout.exerciseArray.count
+            
+            if exerciseCount <= 6 {
                 
-                size = viewWidth / CGFloat(1)
+                width = viewWidth / CGFloat(1)
                 
-                height = 48
+                if exerciseCount <= 3 {
+                    
+                    height = 60
+                    
+                } else if exerciseCount == 4 {
+                    
+                    height = 48
+                    
+                } else {
+                    
+                    height = 42
+                  
+                }
+                
+                exerciseCollectionViewHeight.constant = CGFloat(exerciseCount) * height
                 
             } else {
                 
-                size = viewWidth / CGFloat(2)
+                width = viewWidth / CGFloat(2)
                 
-                height = 36
+                if exerciseCount == 7 || exerciseCount == 8 {
+                    
+                    height = 48
+                    
+                    exerciseCollectionViewHeight.constant = 4 * height
+                    
+                } else if exerciseCount == 9 || exerciseCount == 10 {
+                    
+                    height = 36
+                    
+                    exerciseCollectionViewHeight.constant = 5 * height
+                    
+                } else {
+                    
+                    height = 36
+                    
+                    exerciseCollectionViewHeight.constant = 6 * height
+                    
+                }
                 
             }
             
-            return CGSize(width: size, height: height)
+            collectionView.reloadData()
+            
+            return CGSize(width: width, height: height)
             
         }
 
