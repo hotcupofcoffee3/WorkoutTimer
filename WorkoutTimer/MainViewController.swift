@@ -22,6 +22,8 @@
 
 
 
+// SEE IF INTERVAL OR TRANSITION TIMER RESET THE REMAINING INTERVAL TIMES
+
 // *** Continue organizing the timers and functionality of the timers.
 
 // *** Make end of Interval Timer and Rep Popup match.
