@@ -26,8 +26,6 @@ class RoutineViewController: UIViewController, SetRoutineDelegate {
     
     var routineName = String()
     
-    var updateFirstExerciseDelegate: UpdateFirstExerciseDelegate?
-    
     var loadRoutineExercisesDelegate: LoadRoutineExercisesDelegate?
     
     var setSetsTransitionsAndRestDelegate: SetSetsTransitionsAndRestDelegate?
@@ -75,8 +73,6 @@ class RoutineViewController: UIViewController, SetRoutineDelegate {
     @IBAction func back(_ sender: UIBarButtonItem) {
         
         loadRoutineExercisesDelegate?.reloadExercisesPerRoutine()
-        
-        updateFirstExerciseDelegate?.updateFirstExercise()
         
         dismiss(animated: true, completion: nil)
         
@@ -176,8 +172,6 @@ class RoutineViewController: UIViewController, SetRoutineDelegate {
         workout.loadExercisesPerRoutine(routine: workout.lastUsedRoutine)
         
         workout.loadWorkoutDataPerRoutine(routine: workout.lastUsedRoutine)
-        
-        updateFirstExerciseDelegate?.updateFirstExercise()
         
         loadRoutineExercisesDelegate?.reloadExercisesPerRoutine()
         

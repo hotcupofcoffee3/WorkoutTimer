@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AVFoundation
 import UIKit
 import CoreData
 
@@ -735,9 +736,9 @@ class Workout {
         case .interval :
             
             remainingIntervalMinutes = Int(exerciseArray[withIndex].intervalMinutes)
-            
+
             remainingIntervalSeconds = Int(exerciseArray[withIndex].intervalSeconds)
-            
+           
         case .transition :
             
             remainingTransitionMinutes = setTransitionMinutes
@@ -755,6 +756,67 @@ class Workout {
             remainingWorkoutMinutes = setWorkoutMinutes
             
             remainingWorkoutSeconds = setWorkoutSeconds
+            
+        }
+        
+    }
+    
+    func updateRemainingTimerMinutesAndSeconds(typeOfTimer: CurrentTimer) {
+        
+        var remainingMinutes = Int()
+        var remainingSeconds = Int()
+        
+        switch typeOfTimer {
+            
+        case .interval :
+            remainingMinutes = remainingIntervalMinutes
+            remainingSeconds = remainingIntervalSeconds
+            
+        case .rest :
+            remainingMinutes = remainingRestMinutes
+            remainingSeconds = remainingRestSeconds
+            
+        case .transition :
+            remainingMinutes = remainingTransitionMinutes
+            remainingSeconds = remainingTransitionSeconds
+            
+        case .workout :
+            remainingMinutes = remainingWorkoutMinutes
+            remainingSeconds = remainingWorkoutSeconds
+            
+        }
+        
+        if remainingMinutes > 0 {
+            if remainingSeconds > 0 {
+                remainingSeconds -= 1
+            } else {
+                remainingMinutes -= 1
+                remainingSeconds = 59
+            }
+        } else {
+            remainingSeconds -= 1
+            if remainingSeconds <= 5 && remainingSeconds > 0 && typeOfTimer != .workout {
+                AudioServicesPlaySystemSound(1057)
+            }
+        }
+        
+        switch typeOfTimer {
+            
+        case .interval :
+            remainingIntervalMinutes = remainingMinutes
+            remainingIntervalSeconds = remainingSeconds
+            
+        case .rest :
+            remainingRestMinutes = remainingMinutes
+            remainingRestSeconds = remainingSeconds
+            
+        case .transition :
+            remainingTransitionMinutes = remainingMinutes
+            remainingTransitionSeconds = remainingSeconds
+            
+        case .workout :
+            remainingWorkoutMinutes = remainingMinutes
+            remainingWorkoutSeconds = remainingSeconds
             
         }
         

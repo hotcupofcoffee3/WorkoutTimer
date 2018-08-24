@@ -42,8 +42,6 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
     
     
     
-    var updateFirstExerciseDelegate: UpdateFirstExerciseDelegate?
-    
     var loadRoutineExercisesDelegate: LoadRoutineExercisesDelegate?
     
     
@@ -99,8 +97,6 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
     }
     
     @IBAction func back(_ sender: UIBarButtonItem) {
-        
-        updateFirstExerciseDelegate?.updateFirstExercise()
         
         loadRoutineExercisesDelegate?.reloadExercisesPerRoutine()
         

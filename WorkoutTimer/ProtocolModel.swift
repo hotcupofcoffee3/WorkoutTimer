@@ -8,12 +8,6 @@
 
 import Foundation
 
-protocol UpdateFirstExerciseDelegate {
-    
-    func updateFirstExercise()
-    
-}
-
 protocol LoadRoutineExercisesDelegate {
     
     func reloadExercisesPerRoutine()
