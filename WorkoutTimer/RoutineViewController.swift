@@ -36,6 +36,8 @@ class RoutineViewController: UIViewController, SetRoutineDelegate {
    
     var isNew = Bool()
     
+    var newRoutineWasCanceled = false
+    
     var editCells = false
     
     
@@ -64,6 +66,8 @@ class RoutineViewController: UIViewController, SetRoutineDelegate {
         
         isNew = true
         
+        toggleEditAndDoneFunction(edit: false)
+        
         performSegue(withIdentifier: keywords.routineToAddRoutineSegue, sender: self)
         
     }
@@ -82,9 +86,7 @@ class RoutineViewController: UIViewController, SetRoutineDelegate {
         
         editCells = !editCells
         
-        editButton.title = editCells ? "Done" : "Edit"
-        
-        routineTable.reloadData()
+        toggleEditAndDoneFunction(edit: editCells)
         
     }
     
@@ -135,7 +137,7 @@ class RoutineViewController: UIViewController, SetRoutineDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         
-        if isNew {
+        if isNew && !newRoutineWasCanceled {
             
             loadWorkoutInfoAndReturnToMain(routine: routineName)
             
@@ -150,6 +152,16 @@ class RoutineViewController: UIViewController, SetRoutineDelegate {
     // ******
     
 
+    
+    func toggleEditAndDoneFunction(edit: Bool) {
+        
+        editCells = edit
+        
+        editButton.title = edit ? "Done" : "Edit"
+        
+        routineTable.reloadData()
+        
+    }
     
     func setRoutineVariable(named: String) {
         
@@ -191,25 +203,35 @@ class RoutineViewController: UIViewController, SetRoutineDelegate {
     
     func setRoutine(oldName: String, newName: String, isNew: Bool) {
         
-        editCells = false
-        
-        editButton.title = editCells ? "Done" : "Edit"
-        
-        setRoutineVariable(named: newName)
-        
-        if isNew {
+        if !newRoutineWasCanceled {
             
-            workout.saveNewRoutine(routine: newName)
+            editCells = false
             
-        } else {
+            editButton.title = editCells ? "Done" : "Edit"
             
-            workout.updateRoutineName(oldName: oldName, newName: newName)
+            setRoutineVariable(named: newName)
+            
+            if isNew {
+                
+                workout.saveNewRoutine(routine: newName)
+                
+            } else {
+                
+                workout.updateRoutineName(oldName: oldName, newName: newName)
+                
+            }
+            
+            workout.loadRoutines()
+            
+            routineTable.reloadData()
             
         }
+    
+    }
+    
+    func settingRoutine(wasCanceled: Bool) {
         
-        workout.loadRoutines()
-        
-        routineTable.reloadData()
+        newRoutineWasCanceled = wasCanceled
         
     }
     

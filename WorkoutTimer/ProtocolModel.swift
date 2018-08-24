@@ -23,6 +23,7 @@ protocol LoadRoutineExercisesDelegate {
 protocol SetRoutineDelegate {
     
     func setRoutine(oldName: String, newName: String, isNew: Bool)
+    func settingRoutine(wasCanceled: Bool)
     
 }
 

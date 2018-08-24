@@ -78,6 +78,8 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
     
     @IBAction func addExercise(_ sender: UIBarButtonItem) {
         
+        toggleEditAndDoneFunction(edit: false)
+        
         if isTwelveExercises {
             
             let alert = UIAlertController(title: "Exercise Limit", message: "You can have a maximum of 12 exercises.", preferredStyle: .alert)

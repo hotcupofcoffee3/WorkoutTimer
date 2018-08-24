@@ -52,6 +52,8 @@ class AddRoutineViewController: UIViewController {
     
     @IBAction func cancel(_ sender: UIButton) {
         
+        setRoutineDelegate?.settingRoutine(wasCanceled: true)
+        
         dismiss(animated: true, completion: nil)
         
     }
@@ -71,6 +73,8 @@ class AddRoutineViewController: UIViewController {
         }
         
         newRoutineName = routineNameTextField.text!
+        
+        setRoutineDelegate?.settingRoutine(wasCanceled: false)
         
         setRoutineDelegate?.setRoutine(oldName: routineName, newName: newRoutineName, isNew: isNew)
         

@@ -129,48 +129,20 @@
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="jFa-JG-9TB" userLabel="Label Stack">
                                 <rect key="frame" x="0.0" y="485" width="375" height="72"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bv8-6d-ybd" userLabel="Interval View">
-                                        <rect key="frame" x="0.0" y="0.0" width="125" height="72"/>
-                                        <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="uGe-dI-KPs" userLabel="Interval Stack">
-                                                <rect key="frame" x="0.0" y="0.0" width="125" height="72"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Interval" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CF4-46-N2J">
-                                                        <rect key="frame" x="0.0" y="0.0" width="125" height="36"/>
-                                                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="24"/>
-                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1:30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ae8-M1-jND">
-                                                        <rect key="frame" x="0.0" y="36" width="125" height="36"/>
-                                                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="24"/>
-                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                            </stackView>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="uGe-dI-KPs" secondAttribute="bottom" id="4Z9-VF-ffg"/>
-                                            <constraint firstItem="uGe-dI-KPs" firstAttribute="top" secondItem="bv8-6d-ybd" secondAttribute="top" id="Gj3-GQ-Vvg"/>
-                                            <constraint firstAttribute="trailing" secondItem="uGe-dI-KPs" secondAttribute="trailing" id="Gw5-wU-v6d"/>
-                                            <constraint firstItem="uGe-dI-KPs" firstAttribute="leading" secondItem="bv8-6d-ybd" secondAttribute="leading" id="nfj-eF-RY1"/>
-                                        </constraints>
-                                    </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W7A-Qf-H0T" userLabel="Transition View">
-                                        <rect key="frame" x="125" y="0.0" width="125" height="72"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="187.5" height="72"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Fzz-25-Cuh" userLabel="Transition Stack">
-                                                <rect key="frame" x="0.0" y="0.0" width="125" height="72"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="187.5" height="72"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transition" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Mz-Vb-mp2">
-                                                        <rect key="frame" x="0.0" y="0.0" width="125" height="36"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="187.5" height="36"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="24"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wvM-ih-wMl">
-                                                        <rect key="frame" x="0.0" y="36" width="125" height="36"/>
+                                                        <rect key="frame" x="0.0" y="36" width="187.5" height="36"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="24"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -186,19 +158,19 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aii-OY-C40" userLabel="Rest View">
-                                        <rect key="frame" x="250" y="0.0" width="125" height="72"/>
+                                        <rect key="frame" x="187.5" y="0.0" width="187.5" height="72"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="eUP-hG-j7o" userLabel="Rest Stack">
-                                                <rect key="frame" x="0.0" y="0.0" width="125" height="72"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="187.5" height="72"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rest" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lqg-aZ-vSO" userLabel="Rest">
-                                                        <rect key="frame" x="0.0" y="0.0" width="125" height="36"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="187.5" height="36"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="24"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3XI-ap-4Yn">
-                                                        <rect key="frame" x="0.0" y="36" width="125" height="36"/>
+                                                        <rect key="frame" x="0.0" y="36" width="187.5" height="36"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="24"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -331,9 +303,6 @@
                     <connections>
                         <outlet property="exerciseCollectionView" destination="d6J-5j-EFY" id="iO5-ci-vyL"/>
                         <outlet property="exerciseCollectionViewHeight" destination="YyE-Dk-Tb1" id="1bd-zm-9Pe"/>
-                        <outlet property="intervalLabel" destination="Ae8-M1-jND" id="Dvi-Xx-vnr"/>
-                        <outlet property="intervalTitle" destination="CF4-46-N2J" id="02I-SF-utY"/>
-                        <outlet property="intervalView" destination="bv8-6d-ybd" id="grt-dC-SLR"/>
                         <outlet property="navBar" destination="J3b-HB-qcu" id="a6H-bM-efQ"/>
                         <outlet property="restLabel" destination="3XI-ap-4Yn" id="kiI-Ld-ZB6"/>
                         <outlet property="restTitle" destination="lqg-aZ-vSO" id="kxS-UC-OX8"/>
