@@ -22,17 +22,7 @@
 
 
 
-// *** Make first exercise not enabled until after the rest time.
-
-// *** Don't toggle the Transition and Rest to be enabled until the reps get clicked.
-
-// *** Check to see if the main Interval timer updates the transition and rest labels, or if they are just in the goToTransitionOrRest function.
-
-
-
 // LONG: Change the timers to match the progress timer in .1 seconds.
-
-// LONG: Make each label in the collection view be the main countdown.
 
 
 
@@ -352,21 +342,7 @@ class MainViewController: UIViewController {
             
             if workout.currentExerciseIndex < workout.exerciseArray.count {
                 
-//                if workout.setTotalTransitionSeconds > 0 {
-//
-//                    currentTimer = .transition
-//
-//                    toggleTimerViews()
-//
-//                    workout.totalSecondsForProgress = workout.setTotalTransitionSeconds
-//
-//                } else if workout.setTotalTransitionSeconds == 0 {
-//
-//                    workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: workout.currentExerciseIndex)
-//
-//                }
-                
-                toggleGoToTransitionOrRest(goToTransition: true)
+                toggleGoToTransitionOrRest(goToTransition: true, isReps: false)
                 
             // End of Set
                 
@@ -382,21 +358,7 @@ class MainViewController: UIViewController {
                 
                 if workout.currentSet <= workout.setNumberOfSets {
                     
-//                    if workout.setTotalRestSeconds > 0 {
-//
-//                        currentTimer = .rest
-//
-//                        toggleTimerViews()
-//
-//                        workout.totalSecondsForProgress = workout.setTotalRestSeconds
-//
-//                    } else if workout.setTotalRestSeconds == 0 {
-//
-//                        workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: workout.currentExerciseIndex)
-//
-//                    }
-                    
-                    toggleGoToTransitionOrRest(goToTransition: false)
+                    toggleGoToTransitionOrRest(goToTransition: false, isReps: false)
                  
                 // End of Workout
                     
@@ -433,6 +395,7 @@ class MainViewController: UIViewController {
             workout.setRemainingToSetAmounts(forTimer: .rest)
             
             restLabel.text = workout.setLabelTextForTimer(forTimer: .rest, isRemaining: false)
+            
         }
         
         workout.updateRemainingTimerMinutesAndSeconds(typeOfTimer: .transition)
@@ -462,12 +425,6 @@ class MainViewController: UIViewController {
             workout.setRemainingToSetAmounts(forTimer: .interval, withIndex: 0)
             
             workout.setRemainingToSetAmounts(forTimer: .transition)
-            
-            // ******
-            // *** MARK: - UPDATE CELL HERE
-            // ******
-            
-            // intervalLabel.text = workout.setLabelTextForTimer(forTimer: .interval, withIndex: 0, isRemaining: false)
             
             transitionLabel.text = workout.setLabelTextForTimer(forTimer: .transition, isRemaining: false)
             
@@ -579,6 +536,8 @@ class MainViewController: UIViewController {
                 
             }
             
+            self.toggleTimerViews()
+            
         }))
         
         present(alert, animated: true) {
@@ -591,7 +550,9 @@ class MainViewController: UIViewController {
             
             if self.workout.currentExerciseIndex < self.workout.exerciseArray.count {
                 
-                self.toggleGoToTransitionOrRest(goToTransition: true)
+                self.workout.setRemainingToSetAmounts(forTimer: .transition)
+                
+                self.toggleGoToTransitionOrRest(goToTransition: true, isReps: true)
                 
             // Sets
                 
@@ -602,8 +563,10 @@ class MainViewController: UIViewController {
                 self.workout.currentExerciseIndex = 0
                 
                 if self.workout.currentSet <= self.workout.setNumberOfSets {
+                    
+                    self.workout.setRemainingToSetAmounts(forTimer: .rest)
                         
-                    self.toggleGoToTransitionOrRest(goToTransition: false)
+                    self.toggleGoToTransitionOrRest(goToTransition: false, isReps: true)
                     
                 }
                 
@@ -807,7 +770,7 @@ class MainViewController: UIViewController {
         
     }
     
-    func toggleGoToTransitionOrRest(goToTransition: Bool) {
+    func toggleGoToTransitionOrRest(goToTransition: Bool, isReps: Bool) {
         
         if goToTransition {
             
@@ -843,7 +806,11 @@ class MainViewController: UIViewController {
             
         }
         
-        toggleTimerViews()
+        if !isReps {
+            
+            toggleTimerViews()
+            
+        }
         
     }
     
@@ -1141,7 +1108,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             
             if beganWorkout {
                 
-                if workout.currentExerciseIndex == indexPath.row {
+                if workout.currentExerciseIndex == indexPath.row && currentTimer == .interval {
                     
                     cell.backgroundColor = UIColor.clear
                     cell.exerciseNameLabel.textColor = UIColor.white
