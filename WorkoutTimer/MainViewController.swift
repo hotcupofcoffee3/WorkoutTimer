@@ -24,6 +24,11 @@
 
 // LONG: Change the timers to match the progress timer in .1 seconds.
 
+    // Change the Core Data to Double
+    // Change the timer firings to match the amounts.
+    // Change the timer checks and decrementing of amounts to update labels with the modulo (%) to check if divisible by 10 in order to update label, as this will be when the time changes.
+    // Change the setting and saving and updating of the times from the pickers in the model to convert the picker numbers into doubles to save, and vice versa when displaying the ones already set in the picker view.
+
 
 
 // EXTRA LONG: Work on popup screen for dealing with the reps.
