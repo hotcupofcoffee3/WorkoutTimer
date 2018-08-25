@@ -347,27 +347,25 @@ class MainViewController: UIViewController {
             
             AudioServicesPlaySystemSound(1256)
             
-            
-            
             // More exercises.
             
             if workout.currentExerciseIndex < workout.exerciseArray.count {
                 
-                if workout.setTotalTransitionSeconds > 0 {
-                    
-                    currentTimer = .transition
-                    
-                    toggleTimerViews()
-                    
-                    workout.totalSecondsForProgress = workout.setTotalTransitionSeconds
-                    
-                } else if workout.setTotalTransitionSeconds == 0 {
-                    
-                    workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: workout.currentExerciseIndex)
-                    
-                }
+//                if workout.setTotalTransitionSeconds > 0 {
+//
+//                    currentTimer = .transition
+//
+//                    toggleTimerViews()
+//
+//                    workout.totalSecondsForProgress = workout.setTotalTransitionSeconds
+//
+//                } else if workout.setTotalTransitionSeconds == 0 {
+//
+//                    workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: workout.currentExerciseIndex)
+//
+//                }
                 
-                
+                toggleGoToTransitionOrRest(goToTransition: true)
                 
             // End of Set
                 
@@ -377,28 +375,26 @@ class MainViewController: UIViewController {
                 
                 workout.currentExerciseIndex = 0
                 
-                
-                
                 // More sets
                 
                 if workout.currentSet <= workout.setNumberOfSets {
                     
-                    if workout.setTotalRestSeconds > 0 {
-                        
-                        currentTimer = .rest
-                        
-                        toggleTimerViews()
-                        
-                        workout.totalSecondsForProgress = workout.setTotalRestSeconds
-                        
-                    } else if workout.setTotalRestSeconds == 0 {
-                        
-                        workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: workout.currentExerciseIndex)
-                        
-                    }
+//                    if workout.setTotalRestSeconds > 0 {
+//
+//                        currentTimer = .rest
+//
+//                        toggleTimerViews()
+//
+//                        workout.totalSecondsForProgress = workout.setTotalRestSeconds
+//
+//                    } else if workout.setTotalRestSeconds == 0 {
+//
+//                        workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: workout.currentExerciseIndex)
+//
+//                    }
                     
-                    
-                    
+                    toggleGoToTransitionOrRest(goToTransition: false)
+                 
                 // End of Workout
                     
                 } else if workout.currentSet > workout.setNumberOfSets {
@@ -414,12 +410,6 @@ class MainViewController: UIViewController {
                 }
                 
             }
-            
-//            timerProgress.progress = 0.0
-            
-//            exerciseCollectionView.reloadData()
-            
-//            toggleTimerViews()
             
         }
         
@@ -437,15 +427,7 @@ class MainViewController: UIViewController {
         
         if workout.setTransitionMinutes == workout.remainingTransitionMinutes && workout.setTransitionSeconds == workout.remainingTransitionSeconds {
             
-            workout.setRemainingToSetAmounts(forTimer: .interval, withIndex: workout.currentExerciseIndex)
-            
             workout.setRemainingToSetAmounts(forTimer: .rest)
-            
-            // ******
-            // *** MARK: - UPDATE CELL HERE
-            // ******
-            
-            // intervalLabel.text = workout.setLabelTextForTimer(forTimer: .interval, withIndex: workout.currentExerciseIndex, isRemaining: false)
             
             restLabel.text = workout.setLabelTextForTimer(forTimer: .rest, isRemaining: false)
         }
@@ -716,14 +698,6 @@ class MainViewController: UIViewController {
         
         timerProgress.progress = 0.0
         
-        
-        
-        // ******
-        // *** MARK: - UPDATE ALL CELLS HERE
-        // ******
-        
-        // updateIntervalLabelToFirstExercise()
-        
         workout.setRemainingToSetAmounts(forTimer: .interval, withIndex: 0)
         
         transitionLabel.text = workout.setLabelTextForTimer(forTimer: .transition, isRemaining: false)
@@ -839,6 +813,42 @@ class MainViewController: UIViewController {
             timerForTotalWorkout.invalidate()
             
         }
+        
+    }
+    
+    func toggleGoToTransitionOrRest(goToTransition: Bool) {
+        
+        if goToTransition {
+            
+            if workout.setTotalTransitionSeconds > 0 {
+                
+                currentTimer = .transition
+                
+                workout.totalSecondsForProgress = workout.setTotalTransitionSeconds
+                
+            } else {
+                
+                workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: workout.currentExerciseIndex)
+                
+            }
+            
+        } else {
+            
+            if workout.setTotalRestSeconds > 0 {
+                
+                currentTimer = .rest
+                
+                workout.totalSecondsForProgress = workout.setTotalRestSeconds
+                
+            } else {
+                
+                workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: workout.currentExerciseIndex)
+                
+            }
+            
+        }
+        
+        toggleTimerViews()
         
     }
     
@@ -1119,6 +1129,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             
             if currentExercise.reps == 0 {
 
+                // This one resets the starting times.
                 cell.exerciseTimeLabel.text = workout.setLabelTextForTimer(forTimer: .interval, withIndex: indexPath.row, isRemaining: false)
                 
                 if timerIsStarted && workout.currentExerciseIndex == indexPath.row {
