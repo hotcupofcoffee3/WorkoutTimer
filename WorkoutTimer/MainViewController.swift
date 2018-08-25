@@ -22,13 +22,11 @@
 
 
 
-// SEE IF INTERVAL OR TRANSITION TIMER RESET THE REMAINING INTERVAL TIMES
+// *** Make first exercise not enabled until after the rest time.
 
-// *** Continue organizing the timers and functionality of the timers.
+// *** Don't toggle the Transition and Rest to be enabled until the reps get clicked.
 
-// *** Make end of Interval Timer and Rep Popup match.
-
-// *** Make end of Transition and Rest match.
+// *** Check to see if the main Interval timer updates the transition and rest labels, or if they are just in the goToTransitionOrRest function.
 
 
 
@@ -41,6 +39,11 @@
 // EXTRA LONG: Work on popup screen for dealing with the reps.
 
 // EXTRA LONG: Work on popup screen for instructions.
+
+
+// LAST: Record Gif of app use for screenshots.
+
+// LAST: Add InApp purchase for more than 1 routine.
 
 
 
@@ -343,8 +346,6 @@ class MainViewController: UIViewController {
             
             timerProgress.progress = 0.0
             
-            setCollectionView.reloadData()
-            
             AudioServicesPlaySystemSound(1256)
             
             // More exercises.
@@ -375,7 +376,9 @@ class MainViewController: UIViewController {
                 
                 workout.currentExerciseIndex = 0
                 
-                // More sets
+                setCollectionView.reloadData()
+                
+                // More Sets
                 
                 if workout.currentSet <= workout.setNumberOfSets {
                     
@@ -532,51 +535,27 @@ class MainViewController: UIViewController {
         
         alert.addAction(UIAlertAction(title: "Done", style: .default, handler: { (action) in
             
-            self.workout.currentExerciseIndex += 1
+            AudioServicesPlaySystemSound(1256)
+            
+            // Transition.
             
             if self.workout.currentExerciseIndex < self.workout.exerciseArray.count {
                 
-                if self.workout.setTotalTransitionSeconds > 0 {
-                    
-                    self.currentTimer = .transition
-                    
-                    self.workout.totalSecondsForProgress = self.workout.setTotalTransitionSeconds
-                    
-                } else if self.workout.setTotalTransitionSeconds == 0 {
-                    
-                    self.workout.totalSecondsForProgress = self.workout.setTotalSecondsForProgressForExercise(index: self.workout.currentExerciseIndex)
-                    
-                }
+                self.toggleTimers(runTimer: true)
                 
-                self.workout.setRemainingToSetAmounts(forTimer: .transition)
+            // Rest.
                 
-                self.transitionLabel.text = self.workout.setLabelTextForTimer(forTimer: .transition, isRemaining: true)
-              
             } else if self.workout.exerciseArray.count == self.workout.currentExerciseIndex {
                 
-                self.workout.currentSet += 1
+                self.setCollectionView.reloadData()
                 
-                self.workout.currentExerciseIndex = 0
+                // More Sets
                 
-                if self.workout.setTotalRestSeconds > 0 && self.workout.currentSet <= self.workout.setNumberOfSets {
+                if self.workout.currentSet <= self.workout.setNumberOfSets {
                     
-                    self.currentTimer = .rest
+                    self.toggleTimers(runTimer: true)
                     
-                    self.toggleTimerViews()
-                    
-                    self.workout.totalSecondsForProgress = self.workout.setTotalRestSeconds
-                    
-                    self.workout.setRemainingToSetAmounts(forTimer: .rest)
-                    
-                    self.restLabel.text = self.workout.setLabelTextForTimer(forTimer: .rest, isRemaining: true)
-                    
-                } else if self.workout.setTotalRestSeconds == 0 && self.workout.currentSet <= self.workout.setNumberOfSets {
-                    
-                    self.workout.totalSecondsForProgress = self.workout.setTotalSecondsForProgressForExercise(index: self.workout.currentExerciseIndex)
-                    
-                    
-                    
-                    // End of Workout
+                // End of Workout
                     
                 } else if self.workout.currentSet > self.workout.setNumberOfSets {
                     
@@ -590,25 +569,9 @@ class MainViewController: UIViewController {
                     
                 }
                 
-                self.setCollectionView.reloadData()
-                
             }
             
-            if self.workout.currentSet <= self.workout.setNumberOfSets {
-           
-                self.workout.setRemainingToSetAmounts(forTimer: .interval, withIndex: self.workout.currentExerciseIndex)
-                
-                self.toggleTimers(runTimer: true)
-                
-                self.isCurrentlyDoingReps = false
-                
-                self.toggleTimerViews()
-                
-                self.exerciseCollectionView.reloadData()
-                
-                AudioServicesPlaySystemSound(1256)
-                
-            }
+            self.exerciseCollectionView.reloadData()
             
             if self.currentTimer != .interval {
                 
@@ -618,7 +581,35 @@ class MainViewController: UIViewController {
             
         }))
         
-        present(alert, animated: true, completion: nil)
+        present(alert, animated: true) {
+            
+            self.workout.currentExerciseIndex += 1
+            
+            self.timerProgress.progress = 0.0
+            
+            // More Exercises.
+            
+            if self.workout.currentExerciseIndex < self.workout.exerciseArray.count {
+                
+                self.toggleGoToTransitionOrRest(goToTransition: true)
+                
+            // Sets
+                
+            } else if self.workout.exerciseArray.count == self.workout.currentExerciseIndex {
+                
+                self.workout.currentSet += 1
+                
+                self.workout.currentExerciseIndex = 0
+                
+                if self.workout.currentSet <= self.workout.setNumberOfSets {
+                        
+                    self.toggleGoToTransitionOrRest(goToTransition: false)
+                    
+                }
+                
+            }
+            
+        }
         
     }
     
@@ -826,6 +817,8 @@ class MainViewController: UIViewController {
                 
                 workout.totalSecondsForProgress = workout.setTotalTransitionSeconds
                 
+                transitionLabel.text = workout.setLabelTextForTimer(forTimer: .transition, isRemaining: false)
+                
             } else {
                 
                 workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: workout.currentExerciseIndex)
@@ -839,6 +832,8 @@ class MainViewController: UIViewController {
                 currentTimer = .rest
                 
                 workout.totalSecondsForProgress = workout.setTotalRestSeconds
+                
+                restLabel.text = workout.setLabelTextForTimer(forTimer: .rest, isRemaining: false)
                 
             } else {
                 
