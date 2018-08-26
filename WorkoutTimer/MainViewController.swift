@@ -24,10 +24,7 @@
 
 // LONG: Change the timers to match the progress timer in .1 seconds.
 
-    // Change the Core Data to Double
-    // Change the timer firings to match the amounts.
     // Change the timer checks and decrementing of amounts to update labels with the modulo (%) to check if divisible by 10 in order to update label, as this will be when the time changes.
-    // Change the setting and saving and updating of the times from the pickers in the model to convert the picker numbers into doubles to save, and vice versa when displaying the ones already set in the picker view.
 
 
 
@@ -211,7 +208,7 @@ class MainViewController: UIViewController {
                 
                 destinationVC.minutes = isTransition ? workout.setTransitionMinutes : workout.setRestMinutes
                 
-                destinationVC.seconds = isTransition ? workout.setTransitionSeconds : workout.setRestSeconds
+                destinationVC.seconds = isTransition ? Int(workout.setTransitionSeconds) : Int(workout.setRestSeconds)
                 
             } else if !isTime {
                 
@@ -303,7 +300,11 @@ class MainViewController: UIViewController {
             
         }
         
-        totalTimeLeft.text = workout.setLabelTextForTimer(forTimer: .workout, isRemaining: true)
+        if Int(workout.remainingWorkoutSeconds * 10) % 10 == 0 {
+            
+            totalTimeLeft.text = workout.setLabelTextForTimer(forTimer: .workout, isRemaining: true)
+            
+        }
         
     }
     
@@ -319,7 +320,7 @@ class MainViewController: UIViewController {
         
         // The first time it is called, it resets the labels of the others.
 
-        if Int(workout.exerciseArray[workout.currentExerciseIndex].intervalMinutes) == workout.remainingIntervalMinutes && Int(workout.exerciseArray[workout.currentExerciseIndex].intervalSeconds) == workout.remainingIntervalSeconds {
+        if Int(workout.exerciseArray[workout.currentExerciseIndex].intervalMinutes) == workout.remainingIntervalMinutes && workout.exerciseArray[workout.currentExerciseIndex].intervalSeconds == workout.remainingIntervalSeconds {
 
             workout.setRemainingToSetAmounts(forTimer: .transition)
             
@@ -332,11 +333,12 @@ class MainViewController: UIViewController {
         }
         
         workout.updateRemainingTimerMinutesAndSeconds(typeOfTimer: .interval)
+        print(workout.remainingIntervalSeconds)
         
         // End of Exercise Interval
         
         if workout.remainingIntervalMinutes == 0 && workout.remainingIntervalSeconds == 0 && workout.exerciseArray[workout.currentExerciseIndex].reps == 0 {
-            
+            print("Dog")
             workout.currentExerciseIndex += 1
             
             timerProgress.progress = 0.0
@@ -383,7 +385,11 @@ class MainViewController: UIViewController {
             
         }
         
-        exerciseCollectionView.reloadData()
+        if Int(workout.remainingIntervalSeconds * 10) % 10 == 0 {
+        
+            exerciseCollectionView.reloadData()
+            
+        }
         
         if currentTimer != .interval {
             
@@ -413,7 +419,11 @@ class MainViewController: UIViewController {
             
         }
         
-        transitionLabel.text = workout.setLabelTextForTimer(forTimer: .transition, isRemaining: true)
+        if Int(workout.remainingTransitionSeconds * 10) % 10 == 0 {
+        
+            transitionLabel.text = workout.setLabelTextForTimer(forTimer: .transition, isRemaining: true)
+            
+        }
         
         if currentTimer != .transition {
             
@@ -445,7 +455,11 @@ class MainViewController: UIViewController {
             
         }
         
-        restLabel.text = workout.setLabelTextForTimer(forTimer: .rest, isRemaining: true)
+        if Int(workout.remainingRestSeconds * 10) % 10 == 0 {
+        
+            restLabel.text = workout.setLabelTextForTimer(forTimer: .rest, isRemaining: true)
+            
+        }
         
         if currentTimer != .rest {
             
@@ -757,11 +771,11 @@ class MainViewController: UIViewController {
         
         if runTimer {
             
-            mainTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.runTimer), userInfo: nil, repeats: true)
+            mainTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.runTimer), userInfo: nil, repeats: true)
             
             timerForProgress = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.animateProgress), userInfo: nil, repeats: true)
             
-            timerForTotalWorkout = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.runWorkoutTimer), userInfo: nil, repeats: true)
+            timerForTotalWorkout = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.runWorkoutTimer), userInfo: nil, repeats: true)
             
         } else {
             
