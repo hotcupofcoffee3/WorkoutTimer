@@ -789,22 +789,22 @@ class Workout {
         if remainingMinutes > 0 {
             if remainingSeconds > 0 {
                 remainingSeconds = ((remainingSeconds * 100).rounded() / 100) - 0.1
-//                remainingSeconds -= 0.2
             } else {
                 remainingMinutes -= 1
                 remainingSeconds = 59
             }
         } else {
             remainingSeconds = ((remainingSeconds * 100).rounded() / 100) - 0.1
-//            remainingSeconds -= 0.2
             if remainingSeconds <= 5 && (Int(remainingSeconds * 10) % 10 == 0) && remainingSeconds > 0 && typeOfTimer != .workout {
+                
+                // ADD CHECK TO SEE IF AND WHEN THIS IS CALLED, WITH AMOUNT
+                // IF NOT, ADD CHECK THAT RESETS THE INCREMENT FOR THE PROGRESS BAR TO THE REMAINING SECONDS AGAIN, SO THAT THE .1f  SETUP OF WHERE IT WOULD BE BACK AT THE STARTING SECOND.
+                
                 AudioServicesPlaySystemSound(1057)
             }
         }
         
         switch typeOfTimer {
-            
-            // ROUND TO NEAREST 0.1, so that it works out.
             
         case .interval :
             remainingIntervalMinutes = remainingMinutes
