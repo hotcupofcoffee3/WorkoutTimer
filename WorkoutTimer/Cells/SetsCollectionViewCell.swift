@@ -15,8 +15,8 @@ class SetsCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        setNumberLabel.layer.borderColor = UIColor.white.cgColor
-        setNumberLabel.layer.borderWidth = 1
+//        setNumberLabel.layer.borderColor = UIColor.white.cgColor
+//        setNumberLabel.layer.borderWidth = 1
     }
 
 }

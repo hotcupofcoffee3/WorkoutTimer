@@ -22,21 +22,7 @@
 
 
 
-// SHORT: Edit animation.
-
-// SHORT: Change saved and set seconds to Ints, as they are saved as that.
-
-// MEDIUM: Animate reload cells (watch video).
-
-// LONG: Change the timers to match the progress timer in .1 seconds.
-
-    // Change the timer checks and decrementing of amounts to update labels with the modulo (%) to check if divisible by 10 in order to update label, as this will be when the time changes.
-
-
-
-// EXTRA LONG: Work on popup screen for dealing with the reps.
-
-// EXTRA LONG: Work on popup screen for instructions.
+// REALLY LONG: Work on popup screen for instructions.
 
 
 // LAST: Record Gif of app use for screenshots.
@@ -44,12 +30,16 @@
 // LAST: Add InApp purchase for more than 1 routine.
 
 
+// EXTRA: Animate reload cells (watch video).
+
+// EXTRA: Edit animation.
+
 
 import UIKit
 import AVFoundation
 
 class MainViewController: UIViewController {
-
+    
     
     
     // ******
@@ -326,7 +316,7 @@ class MainViewController: UIViewController {
         
         // The first time it is called, it resets the labels of the others.
 
-        if Int(workout.exerciseArray[workout.currentExerciseIndex].intervalMinutes) == workout.remainingIntervalMinutes && workout.exerciseArray[workout.currentExerciseIndex].intervalSeconds == workout.remainingIntervalSeconds {
+        if Int(workout.exerciseArray[workout.currentExerciseIndex].intervalMinutes) == workout.remainingIntervalMinutes && Double(workout.exerciseArray[workout.currentExerciseIndex].intervalSeconds) == workout.remainingIntervalSeconds {
 
             workout.setRemainingToSetAmounts(forTimer: .transition)
             
@@ -390,8 +380,8 @@ class MainViewController: UIViewController {
             
         }
         
-        if Int(workout.remainingIntervalSeconds * 10) % 10 == 0 {
-        
+        if workout.checkIfSecondsAreEven(seconds: workout.remainingIntervalSeconds) {
+            
             exerciseCollectionView.reloadData()
             
         }
@@ -424,7 +414,7 @@ class MainViewController: UIViewController {
             
         }
         
-        if Int(workout.remainingTransitionSeconds * 10) % 10 == 0 {
+        if workout.checkIfSecondsAreEven(seconds: workout.remainingTransitionSeconds) {
         
             transitionLabel.text = workout.setLabelTextForTimer(forTimer: .transition, isRemaining: true)
             
@@ -460,7 +450,7 @@ class MainViewController: UIViewController {
             
         }
         
-        if Int(workout.remainingRestSeconds * 10) % 10 == 0 {
+        if workout.checkIfSecondsAreEven(seconds: workout.remainingRestSeconds) {
         
             restLabel.text = workout.setLabelTextForTimer(forTimer: .rest, isRemaining: true)
             
@@ -512,9 +502,21 @@ class MainViewController: UIViewController {
     
     func presentRepsAlert() {
         
-        let alert = UIAlertController(title: "\(workout.exerciseArray[workout.currentExerciseIndex].name!)", message: "\(Int(workout.exerciseArray[workout.currentExerciseIndex].reps)) reps.", preferredStyle: .alert)
+        let exercise = workout.exerciseArray[workout.currentExerciseIndex].name!
         
-        alert.addAction(UIAlertAction(title: "Done", style: .default, handler: { (action) in
+        let reps = "\(workout.exerciseArray[workout.currentExerciseIndex].reps) reps"
+        
+        let alert = UIAlertController(title: "\(exercise)", message: "\(reps)", preferredStyle: .alert)
+        
+        let title = NSAttributedString(string: "\(exercise)", attributes: [NSAttributedStringKey.foregroundColor:keywords.darkBluishColor, NSAttributedStringKey.font:UIFont(name: "Helvetica", size: 24)!])
+        
+        let message = NSAttributedString(string: "\n\(reps)", attributes: [NSAttributedStringKey.foregroundColor:keywords.mainBackgroundColor, NSAttributedStringKey.font:UIFont(name: "Helvetica", size: 21)!])
+        
+        alert.setValue(title, forKey: "attributedTitle")
+        
+        alert.setValue(message, forKey: "attributedMessage")
+        
+        let action = UIAlertAction(title: "Done", style: .default, handler: { (action) in
             
             AudioServicesPlaySystemSound(1256)
             
@@ -562,9 +564,19 @@ class MainViewController: UIViewController {
             
             self.toggleTimerViews()
             
-        }))
+        })
+        
+        action.setValue(keywords.lighterTealishColor, forKey: "titleTextColor")
+        
+        alert.addAction(action)
         
         present(alert, animated: true) {
+            
+            if self.workout.currentExerciseIndex == 0 {
+                
+                self.toggleGoToTransitionOrRest(goToTransition: false, isReps: true)
+                
+            }
             
             self.workout.currentExerciseIndex += 1
             
@@ -1202,7 +1214,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             
             let width = viewWidth / CGFloat(workout.setNumberOfSets)
             
-            return CGSize(width: width, height: 36)
+            return CGSize(width: width, height: 48)
             
         // Exercise Collection
         } else {

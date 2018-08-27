@@ -320,6 +320,8 @@ extension ExerciseViewController: UITableViewDelegate, UITableViewDataSource {
                 
                 workout.deleteExercise(workout.exerciseArray[indexPath.row])
                 
+                tableView.deleteRows(at: [indexPath], with: .left)
+                
                 toggleIsTenExercises()
                 
             } else {

@@ -127,7 +127,7 @@ class Workout {
         let newExercise = Exercise(context: context)
         
         newExercise.intervalMinutes = Int64(minutes)
-        newExercise.intervalSeconds = Double(seconds)
+        newExercise.intervalSeconds = Int64(seconds)
         newExercise.name = named
         newExercise.orderNumber = Int64(exerciseArray.count)
         newExercise.routine = routine
@@ -142,7 +142,7 @@ class Workout {
         guard let exercise = getExercise(named: exerciseName) else { return }
         
         exercise.intervalMinutes = Int64(minutes)
-        exercise.intervalSeconds = Double(seconds)
+        exercise.intervalSeconds = Int64(seconds)
         
         saveData()
         
@@ -153,7 +153,7 @@ class Workout {
         let workoutInfo = getWorkoutInfo(routine: routine)
         
         workoutInfo.transitionMinutes = Int64(minutes)
-        workoutInfo.transitionSeconds = Double(seconds)
+        workoutInfo.transitionSeconds = Int64(seconds)
         
         saveData()
         
@@ -172,7 +172,7 @@ class Workout {
         let workoutInfo = getWorkoutInfo(routine: routine)
         
         workoutInfo.restMinutes = Int64(minutes)
-        workoutInfo.restSeconds = Double(seconds)
+        workoutInfo.restSeconds = Int64(seconds)
         
         saveData()
         
@@ -491,7 +491,7 @@ class Workout {
         if let updatingExercise = updatingExercise {
             
             updatingExercise.intervalMinutes = Int64(newMinutes)
-            updatingExercise.intervalSeconds = Double(newSeconds)
+            updatingExercise.intervalSeconds = Int64(newSeconds)
             updatingExercise.reps = Int64(newReps)
             updatingExercise.name = newName
             
@@ -650,7 +650,7 @@ class Workout {
     
     
     // ******
-    // *** MARK: - Checks for New and Updating Workout Info and Exercises
+    // *** MARK: - Checks for New and Updating Workout Info and Exercises, and for even seconds.
     // ******
     
     
@@ -721,13 +721,27 @@ class Workout {
         
     }
     
+    // Check for if the remaining seconds is an even second.
+    
+    func checkIfSecondsAreEven(seconds: Double) -> Bool {
+        
+        return Int((seconds * 10).truncatingRemainder(dividingBy: 10).rounded()) % 10 == 0
+        
+    }
+    
     
     
     // ******
-    // *** MARK: - Set Amounts to Remaining or Total Amounts or Zero Time Label
+    // *** MARK: - Set Amounts to Remaining or Total Amounts or Zero Time Label, and Convert Seconds
     // ******
     
 
+    
+    func convertSecondsToUsableDouble(seconds: Double) -> Double {
+        
+        return (seconds * 10).rounded() / 10
+        
+    }
     
     func setRemainingToSetAmounts(forTimer: CurrentTimer, withIndex: Int = 0) {
         
@@ -737,7 +751,7 @@ class Workout {
             
             remainingIntervalMinutes = Int(exerciseArray[withIndex].intervalMinutes)
 
-            remainingIntervalSeconds = exerciseArray[withIndex].intervalSeconds
+            remainingIntervalSeconds = Double(exerciseArray[withIndex].intervalSeconds)
            
         case .transition :
             
@@ -787,20 +801,25 @@ class Workout {
         }
         
         if remainingMinutes > 0 {
+            
             if remainingSeconds > 0 {
-                remainingSeconds = ((remainingSeconds * 100).rounded() / 100) - 0.1
+                
+                remainingSeconds = ((remainingSeconds * 10).rounded() / 10) - 0.1
+                
             } else {
+                
                 remainingMinutes -= 1
-                remainingSeconds = 59
+                
+                remainingSeconds = 59.9
             }
         } else {
-            remainingSeconds = ((remainingSeconds * 100).rounded() / 100) - 0.1
-            if remainingSeconds <= 5 && (Int(remainingSeconds * 10) % 10 == 0) && remainingSeconds > 0 && typeOfTimer != .workout {
-                
-                // ADD CHECK TO SEE IF AND WHEN THIS IS CALLED, WITH AMOUNT
-                // IF NOT, ADD CHECK THAT RESETS THE INCREMENT FOR THE PROGRESS BAR TO THE REMAINING SECONDS AGAIN, SO THAT THE .1f  SETUP OF WHERE IT WOULD BE BACK AT THE STARTING SECOND.
+            
+            remainingSeconds = ((remainingSeconds * 10).rounded() / 10) - 0.1
+            
+            if remainingSeconds <= 5 && (checkIfSecondsAreEven(seconds: remainingSeconds)) && remainingSeconds > 0 && typeOfTimer != .workout {
                 
                 AudioServicesPlaySystemSound(1057)
+                
             }
         }
         
@@ -836,7 +855,9 @@ class Workout {
             
             if isRemaining {
                 
-                labelText = "\(timerForWorkout.zero(unit: remainingIntervalMinutes)):\(timerForWorkout.zero(unit: Int(remainingIntervalSeconds)))"
+                let seconds = convertSecondsToUsableDouble(seconds: remainingIntervalSeconds)
+                
+                labelText = "\(timerForWorkout.zero(unit: remainingIntervalMinutes)):\(timerForWorkout.zero(unit: Int(seconds)))"
                 
             } else {
                 
@@ -848,7 +869,9 @@ class Workout {
             
             if isRemaining {
                 
-                labelText = "\(timerForWorkout.zero(unit: remainingTransitionMinutes)):\(timerForWorkout.zero(unit: Int(remainingTransitionSeconds)))"
+                let seconds = convertSecondsToUsableDouble(seconds: remainingTransitionSeconds)
+                
+                labelText = "\(timerForWorkout.zero(unit: remainingTransitionMinutes)):\(timerForWorkout.zero(unit: Int(seconds)))"
                 
             } else {
                 
@@ -860,7 +883,9 @@ class Workout {
             
             if isRemaining {
                 
-                labelText = "\(timerForWorkout.zero(unit: remainingRestMinutes)):\(timerForWorkout.zero(unit: Int(remainingRestSeconds)))"
+                let seconds = convertSecondsToUsableDouble(seconds: remainingRestSeconds)
+                
+                labelText = "\(timerForWorkout.zero(unit: remainingRestMinutes)):\(timerForWorkout.zero(unit: Int(seconds)))"
                 
             } else {
                 
@@ -872,7 +897,9 @@ class Workout {
             
             if isRemaining {
                 
-                labelText = "\(timerForWorkout.zero(unit: remainingWorkoutMinutes)):\(timerForWorkout.zero(unit: Int(remainingWorkoutSeconds)))"
+                let seconds = convertSecondsToUsableDouble(seconds: remainingWorkoutSeconds)
+                
+                labelText = "\(timerForWorkout.zero(unit: remainingWorkoutMinutes)):\(timerForWorkout.zero(unit: Int(seconds)))"
                 
             } else {
                 
@@ -888,10 +915,10 @@ class Workout {
     
     func setRemainingToSetAmounts() {
         
-        setTotalIntervalSeconds = Double(exerciseArray[0].intervalMinutes * 60) + exerciseArray[0].intervalSeconds
+        setTotalIntervalSeconds = Double(exerciseArray[0].intervalMinutes * 60) + Double(exerciseArray[0].intervalSeconds)
         
         remainingIntervalMinutes = Int(exerciseArray[0].intervalMinutes)
-        remainingIntervalSeconds = exerciseArray[0].intervalSeconds
+        remainingIntervalSeconds = Double(exerciseArray[0].intervalSeconds)
         
         remainingTransitionMinutes = setTransitionMinutes
         remainingTransitionSeconds = setTransitionSeconds
@@ -905,7 +932,7 @@ class Workout {
         
         let exercise = exerciseArray[index]
         
-        let seconds = Double(exercise.intervalMinutes * 60) + exercise.intervalSeconds
+        let seconds = Double(exercise.intervalMinutes * 60) + Double(exercise.intervalSeconds)
         
         return seconds
         
@@ -922,7 +949,7 @@ class Workout {
             for _ in 1...setNumberOfSets {
                 
                 totalSeconds += Double(exercise.intervalMinutes * 60)
-                totalSeconds += exercise.intervalSeconds
+                totalSeconds += Double(exercise.intervalSeconds)
                 
             }
 
@@ -1064,17 +1091,17 @@ class Workout {
         self.setNumberOfSets = Int(workoutInfo.sets)
         
         self.setTransitionMinutes = Int(workoutInfo.transitionMinutes)
-        self.setTransitionSeconds = workoutInfo.transitionSeconds
+        self.setTransitionSeconds = Double(workoutInfo.transitionSeconds)
         
         self.setRestMinutes = Int(workoutInfo.restMinutes)
-        self.setRestSeconds = workoutInfo.restSeconds
+        self.setRestSeconds = Double(workoutInfo.restSeconds)
         
         self.setTotalIntervalSeconds = setTotalSecondsForProgressForExercise(index: 0)
         self.setTotalTransitionSeconds = Double(setTransitionMinutes * 60) + setTransitionSeconds
         self.setTotalRestSeconds = Double(setRestMinutes * 60) + setRestSeconds
         
         self.remainingIntervalMinutes = Int(exerciseArray[0].intervalMinutes)
-        self.remainingIntervalSeconds = exerciseArray[0].intervalSeconds
+        self.remainingIntervalSeconds = Double(exerciseArray[0].intervalSeconds)
         
         self.remainingTransitionMinutes = setTransitionMinutes
         self.remainingTransitionSeconds = setTransitionSeconds
