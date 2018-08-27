@@ -330,7 +330,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="128.80000000000001" y="133.5832083958021"/>
+            <point key="canvasLocation" x="129" y="-275"/>
         </scene>
         <!--Add Exercise View Controller-->
         <scene sceneID="DzX-rv-rtV">
@@ -492,6 +492,7 @@ warning</string>
                         <outlet property="secLabel" destination="uTn-jj-cG9" id="Hz6-m2-LDe"/>
                         <outlet property="timeOrRepSegment" destination="e4t-zP-iVv" id="d4Y-vq-jjR"/>
                         <outlet property="warningLabel" destination="hO0-Fr-cLz" id="T7f-BV-bGx"/>
+                        <segue destination="dcZ-T5-2t9" kind="presentation" identifier="addExerciseToInstructionsSegue" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="JHD-O7-HJ4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d5U-fF-kRw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -602,6 +603,7 @@ warning</string>
                         <outlet property="goToRoutinesButton" destination="fmF-Np-r0d" id="ac1-Ey-C49"/>
                         <segue destination="xw4-mn-naU" kind="presentation" identifier="exerciseToAddExerciseSegue" id="jbe-N9-YrA"/>
                         <segue destination="0WI-Oe-cVr" kind="presentation" identifier="exerciseToRoutineSegue" id="3oA-4X-4Tb"/>
+                        <segue destination="dcZ-T5-2t9" kind="presentation" identifier="exercisesToInstructionsSegue" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="mdX-O3-3c9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sis-0g-xQV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -713,11 +715,12 @@ warning</string>
                         <outlet property="minLabel" destination="mTu-R0-ayO" id="L0s-Rk-Q0J"/>
                         <outlet property="numberPicker" destination="PmO-5H-lHU" id="NSG-3x-s15"/>
                         <outlet property="secLabel" destination="AtK-LT-xWJ" id="wS3-OH-Kok"/>
+                        <segue destination="dcZ-T5-2t9" kind="presentation" identifier="setsTransitionAndRestToInstructionsSegue" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="Cb6-O6-2Pd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FHa-KY-zD9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="129" y="887"/>
+            <point key="canvasLocation" x="129" y="431"/>
         </scene>
         <!--Instruction View Controller-->
         <scene sceneID="5Iy-jV-iGT">
@@ -762,7 +765,7 @@ warning</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HUy-gS-4HL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1129" y="887"/>
+            <point key="canvasLocation" x="2286" y="-276"/>
         </scene>
         <!--Routine View Controller-->
         <scene sceneID="wMW-J5-WFT">
@@ -850,6 +853,7 @@ warning</string>
                         <outlet property="editButton" destination="Ebn-Am-BHy" id="M4a-Xo-yW5"/>
                         <outlet property="routineTable" destination="5YQ-Yy-0cz" id="Wks-ih-jic"/>
                         <segue destination="bRc-YK-AfT" kind="presentation" identifier="routineToAddRoutineSegue" id="pHk-cT-RTf"/>
+                        <segue destination="dcZ-T5-2t9" kind="presentation" identifier="routinesToInstructionsSegue" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="mWe-AA-iiW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dx5-Mb-P3U" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -947,6 +951,7 @@ warning</string>
                         <outlet property="routineNameTextField" destination="QGa-IG-nce" id="tNG-8a-ZlI"/>
                         <outlet property="routineNameView" destination="wH9-jm-kwe" id="G3Y-CE-tna"/>
                         <outlet property="warningLabel" destination="AF8-2i-FVh" id="ak5-Cw-9N9"/>
+                        <segue destination="dcZ-T5-2t9" kind="presentation" identifier="addRoutineToInstructionsSegue" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="Sm7-TV-7GR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xzR-Ef-4si" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -959,5 +964,6 @@ warning</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Uig-b2-Unb"/>
+        <segue reference="Cb6-O6-2Pd"/>
     </inferredMetricsTieBreakers>
 </document>
