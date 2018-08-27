@@ -788,13 +788,15 @@ class Workout {
         
         if remainingMinutes > 0 {
             if remainingSeconds > 0 {
-                remainingSeconds -= 0.1
+                remainingSeconds = ((remainingSeconds * 100).rounded() / 100) - 0.1
+//                remainingSeconds -= 0.2
             } else {
                 remainingMinutes -= 1
                 remainingSeconds = 59
             }
         } else {
-            remainingSeconds -= 0.1
+            remainingSeconds = ((remainingSeconds * 100).rounded() / 100) - 0.1
+//            remainingSeconds -= 0.2
             if remainingSeconds <= 5 && (Int(remainingSeconds * 10) % 10 == 0) && remainingSeconds > 0 && typeOfTimer != .workout {
                 AudioServicesPlaySystemSound(1057)
             }

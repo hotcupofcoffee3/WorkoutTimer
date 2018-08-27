@@ -22,6 +22,12 @@
 
 
 
+// SHORT: Edit animation.
+
+// SHORT: Change saved and set seconds to Ints, as they are saved as that.
+
+// MEDIUM: Animate reload cells (watch video).
+
 // LONG: Change the timers to match the progress timer in .1 seconds.
 
     // Change the timer checks and decrementing of amounts to update labels with the modulo (%) to check if divisible by 10 in order to update label, as this will be when the time changes.
@@ -333,12 +339,11 @@ class MainViewController: UIViewController {
         }
         
         workout.updateRemainingTimerMinutesAndSeconds(typeOfTimer: .interval)
-        print(workout.remainingIntervalSeconds)
         
         // End of Exercise Interval
         
         if workout.remainingIntervalMinutes == 0 && workout.remainingIntervalSeconds == 0 && workout.exerciseArray[workout.currentExerciseIndex].reps == 0 {
-            print("Dog")
+            
             workout.currentExerciseIndex += 1
             
             timerProgress.progress = 0.0
