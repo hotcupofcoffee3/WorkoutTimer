@@ -24,10 +24,10 @@
 
 // REALLY LONG: Work on popup screen for instructions.
 
+// REALLY LONG: Add InApp purchase for more than 1 routine.
+
 
 // LAST: Record Gif of app use for screenshots.
-
-// LAST: Add InApp purchase for more than 1 routine.
 
 
 // EXTRA: Animate reload cells (watch video).
@@ -40,6 +40,9 @@ import AVFoundation
 
 class MainViewController: UIViewController {
     
+    @IBAction func popup(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: keywords.mainToInstructionsSegue, sender: self)
+    }
     
     
     // ******

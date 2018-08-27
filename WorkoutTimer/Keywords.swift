@@ -33,6 +33,22 @@ class Keywords {
     
     
     
+    // Instructions
+    
+    let mainToInstructionsSegue = "mainToInstructionsSegue"
+    
+    let exercisesToInstructionsSegue = "exercisesToInstructionsSegue"
+    
+    let routinesToInstructionsSegue = "routinesToInstructionsSegue"
+    
+    let addExerciseToInstructionsSegue = "addExerciseToInstructionsSegue"
+    
+    let addRoutineToInstructionsSegue = "addRoutineToInstructionsSegue"
+    
+    let setsTransitionAndRestToInstructionsSegue = "setsTransitionAndRestToInstructionsSegue"
+    
+    
+    
     // Warning: 255/110/101
     let reddishColor = UIColor.init(red: 255/255, green: 110/255, blue: 101/255, alpha: 1.0)
     

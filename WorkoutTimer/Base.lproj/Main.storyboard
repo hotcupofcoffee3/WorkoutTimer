@@ -32,6 +32,11 @@
                                 </textAttributes>
                                 <items>
                                     <navigationItem title="Workout Timer" id="tx2-HS-MMP">
+                                        <barButtonItem key="leftBarButtonItem" title="Item" id="Xpk-e0-vdq">
+                                            <connections>
+                                                <action selector="popup:" destination="BYZ-38-t0r" id="wwO-1a-u72"/>
+                                            </connections>
+                                        </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" title="Reset" id="KOd-5W-DAT">
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <connections>
@@ -320,6 +325,7 @@
                         <segue destination="Emh-bF-r0j" kind="presentation" identifier="mainToExerciseSegue" modalTransitionStyle="flipHorizontal" id="UvR-FY-7qA"/>
                         <segue destination="KsY-k3-I8Q" kind="presentation" identifier="mainToSetsSegue" modalPresentationStyle="overFullScreen" id="0pK-Us-tXt"/>
                         <segue destination="0WI-Oe-cVr" kind="presentation" identifier="mainToRoutinesSegue" id="Uig-b2-Unb"/>
+                        <segue destination="dcZ-T5-2t9" kind="presentation" identifier="mainToInstructionsSegue" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="Z7v-f9-gbo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -712,6 +718,51 @@ warning</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FHa-KY-zD9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="129" y="887"/>
+        </scene>
+        <!--Instruction View Controller-->
+        <scene sceneID="5Iy-jV-iGT">
+            <objects>
+                <viewController id="dcZ-T5-2t9" customClass="InstructionViewController" customModule="FIT" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cqD-zf-cfR">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SwQ-tc-WbH" userLabel="Instruction View">
+                                <rect key="frame" x="67" y="273.5" width="240" height="120"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XUK-Gy-fhj">
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="120"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.17254901959999999" green="0.24313725489999999" blue="0.43529411759999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.77791219950000001" green="0.86615604160000004" blue="0.50749742980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="XUK-Gy-fhj" firstAttribute="top" secondItem="SwQ-tc-WbH" secondAttribute="top" id="Cey-rA-iPJ"/>
+                                    <constraint firstAttribute="width" constant="240" id="VmJ-Cy-QXf"/>
+                                    <constraint firstAttribute="bottom" secondItem="XUK-Gy-fhj" secondAttribute="bottom" id="cJw-X6-3o9"/>
+                                    <constraint firstAttribute="height" constant="120" id="kwW-ok-yC1"/>
+                                    <constraint firstItem="XUK-Gy-fhj" firstAttribute="leading" secondItem="SwQ-tc-WbH" secondAttribute="leading" id="mFs-dz-73T"/>
+                                    <constraint firstAttribute="trailing" secondItem="XUK-Gy-fhj" secondAttribute="trailing" id="snb-DX-R0N"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.32507491438356162" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="SwQ-tc-WbH" firstAttribute="centerX" secondItem="cqD-zf-cfR" secondAttribute="centerX" id="nKC-ke-9gU"/>
+                            <constraint firstItem="SwQ-tc-WbH" firstAttribute="centerY" secondItem="cqD-zf-cfR" secondAttribute="centerY" id="oXH-9g-ehI"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="LWt-bN-vjv"/>
+                    </view>
+                    <connections>
+                        <outlet property="instructionLabel" destination="XUK-Gy-fhj" id="1tQ-fG-6hu"/>
+                        <outlet property="instructionView" destination="SwQ-tc-WbH" id="y1O-Bc-lNy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HUy-gS-4HL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1129" y="887"/>
         </scene>
         <!--Routine View Controller-->
         <scene sceneID="wMW-J5-WFT">
