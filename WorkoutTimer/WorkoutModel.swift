@@ -732,7 +732,7 @@ class Workout {
     
     
     // ******
-    // *** MARK: - Set Amounts to Remaining or Total Amounts or Zero Time Label, and Convert Seconds
+    // *** MARK: - Set Amounts to Remaining or Total Amounts or Zero Time, and Convert Seconds
     // ******
     
 
@@ -1031,10 +1031,12 @@ class Workout {
         }
         
         setWorkoutMinutes = minutes
-        setWorkoutSeconds = seconds
+//        setWorkoutSeconds = seconds
+        setWorkoutSeconds = convertSecondsToUsableDouble(seconds: seconds)
         
         remainingWorkoutMinutes = minutes
-        remainingWorkoutSeconds = seconds
+//        remainingWorkoutSeconds = seconds
+        remainingWorkoutSeconds = convertSecondsToUsableDouble(seconds: seconds)
         
     }
     

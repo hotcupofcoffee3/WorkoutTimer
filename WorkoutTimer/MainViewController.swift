@@ -22,15 +22,7 @@
 
 
 
-// REALLY LONG: Work on popup screen for instructions.
-
-    // Add 'x' to instructions view to serve as a 'close' indicator, even though touching anywhere closes it.
-
-    // Set up class to handle the instructions for each VC and the UserDefaults that'll be linked with them.
-
-        // Try to make functions that can use 'self' as the UIViewController parameter.
-
-        // Make the viewDidLoad method check to see if the UserDefault is set (in the model class), and if not, then present instructions; otherwise, do nothing.
+// MEDIUM: Make the workout timer reset back to the top of the seconds for the workout timer.
 
 
 // REALLY LONG: Add InApp purchase for more than 1 routine.
@@ -40,7 +32,6 @@
 
 
 // EXTRA: Animate reload cells (watch video).
-
 // EXTRA: Edit animation.
 
 
@@ -329,7 +320,7 @@ class MainViewController: UIViewController {
             
         }
         
-        if Int(workout.remainingWorkoutSeconds * 10) % 10 == 0 {
+        if workout.checkIfSecondsAreEven(seconds: workout.remainingWorkoutSeconds) {
             
             totalTimeLeft.text = workout.setLabelTextForTimer(forTimer: .workout, isRemaining: true)
             
@@ -563,6 +554,10 @@ class MainViewController: UIViewController {
                 
             } else if self.workout.exerciseArray.count == self.workout.currentExerciseIndex {
                 
+                self.workout.currentSet += 1
+                
+                self.workout.currentExerciseIndex = 0
+                
                 self.setCollectionView.reloadData()
                 
                 // More Sets
@@ -626,10 +621,6 @@ class MainViewController: UIViewController {
             // Sets
                 
             } else if self.workout.exerciseArray.count == self.workout.currentExerciseIndex {
-                
-                self.workout.currentSet += 1
-                
-                self.workout.currentExerciseIndex = 0
                 
                 if self.workout.currentSet <= self.workout.setNumberOfSets {
                     
