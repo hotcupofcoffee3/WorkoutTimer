@@ -745,7 +745,7 @@ class Workout {
     
     func convertWorkoutSecondsUpWhenTimersPaused() {
         
-        remainingWorkoutSeconds = remainingWorkoutSeconds.rounded(.down)
+        remainingWorkoutSeconds = remainingWorkoutSeconds.rounded()
         
     }
     
