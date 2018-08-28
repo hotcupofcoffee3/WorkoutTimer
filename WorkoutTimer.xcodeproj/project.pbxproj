@@ -29,6 +29,7 @@
 		B5C3253821066B3000A88FDB /* SetsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C3253621066B3000A88FDB /* SetsCollectionViewCell.swift */; };
 		B5C3253921066B3000A88FDB /* SetsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C3253721066B3000A88FDB /* SetsCollectionViewCell.xib */; };
 		B5C3253B21068B5800A88FDB /* WorkoutModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C3253A21068B5800A88FDB /* WorkoutModel.swift */; };
+		B5D851092134D15E00A82F2F /* InstructionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D851082134D15E00A82F2F /* InstructionModel.swift */; };
 		B5F659B1210C24C000099131 /* ExerciseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F659AF210C24C000099131 /* ExerciseTableViewCell.swift */; };
 		B5F659B2210C24C000099131 /* ExerciseTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5F659B0210C24C000099131 /* ExerciseTableViewCell.xib */; };
 /* End PBXBuildFile section */
@@ -58,6 +59,7 @@
 		B5C3253621066B3000A88FDB /* SetsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetsCollectionViewCell.swift; sourceTree = "<group>"; };
 		B5C3253721066B3000A88FDB /* SetsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SetsCollectionViewCell.xib; sourceTree = "<group>"; };
 		B5C3253A21068B5800A88FDB /* WorkoutModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutModel.swift; sourceTree = "<group>"; };
+		B5D851082134D15E00A82F2F /* InstructionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionModel.swift; sourceTree = "<group>"; };
 		B5F659AF210C24C000099131 /* ExerciseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseTableViewCell.swift; sourceTree = "<group>"; };
 		B5F659B0210C24C000099131 /* ExerciseTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExerciseTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -111,6 +113,7 @@
 				B5C3253221065DDF00A88FDB /* Keywords.swift */,
 				B5C3253A21068B5800A88FDB /* WorkoutModel.swift */,
 				B56BD57A212C644D009F8189 /* ProtocolModel.swift */,
+				B5D851082134D15E00A82F2F /* InstructionModel.swift */,
 				B58B2B07212B202E003F8C6C /* TimerForWorkoutModel.swift */,
 				B5C3251F21065A3E00A88FDB /* MainViewController.swift */,
 				B529CB79210BBD32005A0488 /* ExerciseViewController.swift */,
@@ -208,6 +211,7 @@
 				B56BD57B212C644D009F8189 /* ProtocolModel.swift in Sources */,
 				B5C3253821066B3000A88FDB /* SetsCollectionViewCell.swift in Sources */,
 				B5F659B1210C24C000099131 /* ExerciseTableViewCell.swift in Sources */,
+				B5D851092134D15E00A82F2F /* InstructionModel.swift in Sources */,
 				B5C3252021065A3E00A88FDB /* MainViewController.swift in Sources */,
 				B5A07C9C21124C81006B0C5E /* RoutineTableViewCell.swift in Sources */,
 				B529CB7C210BC894005A0488 /* SetsTransitionAndRestViewController.swift in Sources */,

@@ -65,6 +65,7 @@ class MainViewController: UIViewController {
     let keywords = Keywords()
     let workout = Workout()
     let timerForWorkout = TimerForWorkout()
+    let instructions = InstructionItem(type: .Main)
     
     var currentTimer = Workout.CurrentTimer.interval
     
@@ -238,6 +239,9 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print(instructions.message)
+        print(instructions.segueKey)
         
         setCollectionView.register(UINib(nibName: "SetsCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "setCell")
         exerciseCollectionView.register(UINib(nibName: "ExerciseCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "exerciseCell")
