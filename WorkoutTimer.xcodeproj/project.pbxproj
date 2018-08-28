@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		B506381E211111C7002451F9 /* RoutineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B506381D211111C7002451F9 /* RoutineViewController.swift */; };
 		B50638202111128B002451F9 /* AddRoutineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B506381F2111128B002451F9 /* AddRoutineViewController.swift */; };
+		B50854802136036000953A8D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B508547F2136036000953A8D /* StoreKit.framework */; };
 		B529CB77210BA50C005A0488 /* ExerciseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B529CB75210BA50C005A0488 /* ExerciseCollectionViewCell.swift */; };
 		B529CB78210BA50C005A0488 /* ExerciseCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B529CB76210BA50C005A0488 /* ExerciseCollectionViewCell.xib */; };
 		B529CB7A210BBD32005A0488 /* ExerciseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B529CB79210BBD32005A0488 /* ExerciseViewController.swift */; };
@@ -37,6 +38,7 @@
 /* Begin PBXFileReference section */
 		B506381D211111C7002451F9 /* RoutineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineViewController.swift; sourceTree = "<group>"; };
 		B506381F2111128B002451F9 /* AddRoutineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRoutineViewController.swift; sourceTree = "<group>"; };
+		B508547F2136036000953A8D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		B529CB75210BA50C005A0488 /* ExerciseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCollectionViewCell.swift; sourceTree = "<group>"; };
 		B529CB76210BA50C005A0488 /* ExerciseCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExerciseCollectionViewCell.xib; sourceTree = "<group>"; };
 		B529CB79210BBD32005A0488 /* ExerciseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseViewController.swift; sourceTree = "<group>"; };
@@ -69,12 +71,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B50854802136036000953A8D /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B508547E2136036000953A8D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B508547F2136036000953A8D /* StoreKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B529CB7D210BC9D4005A0488 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -95,6 +106,7 @@
 			children = (
 				B5C3251C21065A3E00A88FDB /* WorkoutTimer */,
 				B5C3251B21065A3E00A88FDB /* Products */,
+				B508547E2136036000953A8D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -164,6 +176,11 @@
 				TargetAttributes = {
 					B5C3251921065A3E00A88FDB = {
 						CreatedOnToolsVersion = 9.4.1;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};

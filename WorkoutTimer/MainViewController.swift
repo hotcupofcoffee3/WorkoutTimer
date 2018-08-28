@@ -22,8 +22,6 @@
 
 
 
-// MEDIUM: Make the workout timer reset back to the top of the seconds for the workout timer.
-
 // REALLY LONG: Add InApp purchase for more than 1 routine.
 
 // LAST: Record Gif of app use for screenshots.

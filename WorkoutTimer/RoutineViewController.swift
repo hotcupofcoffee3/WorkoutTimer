@@ -10,6 +10,32 @@ import UIKit
 
 class RoutineViewController: UIViewController, SetRoutineDelegate, InstructionsWereShownDelegate {
     
+    @IBAction func purchasesPopup(_ sender: UIBarButtonItem) {
+        
+        let alert = UIAlertController(title: "Purchase", message: "It costs $1.99", preferredStyle: .alert)
+        
+        let purchase = UIAlertAction(title: "Purchase", style: .default) { (action) in
+            print("Purchase")
+        }
+        
+        let restorePurchase = UIAlertAction(title: "Restore Purchase", style: .default) { (action) in
+            print("Restore Purchase")
+        }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(purchase)
+        alert.addAction(restorePurchase)
+        alert.addAction(cancel)
+        
+        present(alert, animated: true) {
+            print("In App Purchase popup presented.")
+        }
+        
+    }
+    
+    
+    
     
     
     // ******

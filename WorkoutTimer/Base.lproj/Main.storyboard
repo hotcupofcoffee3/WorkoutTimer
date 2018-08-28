@@ -811,6 +811,11 @@ warning</string>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="MHn-5s-CbP"/>
+                                    <barButtonItem title="Item" id="nLR-kp-ala">
+                                        <connections>
+                                            <action selector="purchasesPopup:" destination="0WI-Oe-cVr" id="o7S-a3-a2u"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="barTintColor" red="0.2733489871" green="0.42662027479999998" blue="0.4372464418" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -968,6 +973,6 @@ warning</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Uig-b2-Unb"/>
-        <segue reference="Z7v-f9-gbo"/>
+        <segue reference="mWe-AA-iiW"/>
     </inferredMetricsTieBreakers>
 </document>
