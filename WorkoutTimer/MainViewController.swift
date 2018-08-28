@@ -24,12 +24,9 @@
 
 // MEDIUM: Make the workout timer reset back to the top of the seconds for the workout timer.
 
-
 // REALLY LONG: Add InApp purchase for more than 1 routine.
 
-
 // LAST: Record Gif of app use for screenshots.
-
 
 // EXTRA: Animate reload cells (watch video).
 // EXTRA: Edit animation.
@@ -614,6 +611,10 @@ class MainViewController: UIViewController {
             
             if self.workout.currentExerciseIndex < self.workout.exerciseArray.count {
                 
+                self.workout.convertWorkoutSecondsUpWhenTimersPaused()
+                
+                self.totalTimeLeft.text = self.workout.setLabelTextForTimer(forTimer: .workout, isRemaining: true)
+                
                 self.workout.setRemainingToSetAmounts(forTimer: .transition)
                 
                 self.toggleGoToTransitionOrRest(goToTransition: true, isReps: true)
@@ -623,6 +624,10 @@ class MainViewController: UIViewController {
             } else if self.workout.exerciseArray.count == self.workout.currentExerciseIndex {
                 
                 if self.workout.currentSet <= self.workout.setNumberOfSets {
+                    
+                    self.workout.convertWorkoutSecondsUpWhenTimersPaused()
+                    
+                    self.totalTimeLeft.text = self.workout.setLabelTextForTimer(forTimer: .workout, isRemaining: true)
                     
                     self.workout.setRemainingToSetAmounts(forTimer: .rest)
                         

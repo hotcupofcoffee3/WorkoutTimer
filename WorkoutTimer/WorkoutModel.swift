@@ -743,6 +743,12 @@ class Workout {
         
     }
     
+    func convertWorkoutSecondsUpWhenTimersPaused() {
+        
+        remainingWorkoutSeconds = remainingWorkoutSeconds.rounded(.down)
+        
+    }
+    
     func setRemainingToSetAmounts(forTimer: CurrentTimer, withIndex: Int = 0) {
         
         switch forTimer {
