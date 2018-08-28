@@ -19,8 +19,11 @@ class AddExerciseViewController: UIViewController {
     
     
     let workout = Workout()
-    
     let timerForWorkout = TimerForWorkout()
+    let typeOfViewController = TypeOfViewController.AddExercise
+    var instructions = InstructionItem(type: .AddExercise)
+    
+    let keywords = Keywords()
     
     var setExerciseDelegate: SetExerciseDelegate?
     
@@ -168,6 +171,20 @@ class AddExerciseViewController: UIViewController {
         }
         
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+      
+        if segue.identifier == keywords.addExerciseToInstructionsSegue {
+            
+            let destinationVC = segue.destination as! InstructionViewController
+            
+            destinationVC.instructionsWereShownDelegate = self
+            
+            destinationVC.instructions = instructions.message
+            
+        }
+        
+    }
 
     
     
@@ -207,6 +224,24 @@ class AddExerciseViewController: UIViewController {
         
         exerciseNameView.addGestureRecognizer(exerciseViewTap)
 
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        if UserDefaults.standard.object(forKey: typeOfViewController.rawValue) == nil {
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                
+                self.performSegue(withIdentifier: self.instructions.segueKey, sender: self)
+                
+            }
+            
+        } else {
+            
+            //            UserDefaults.standard.set(nil, forKey: typeOfViewController.rawValue)
+            
+        }
+        
     }
     
 }
@@ -263,7 +298,12 @@ extension AddExerciseViewController: UIPickerViewDelegate, UIPickerViewDataSourc
 
 
 
-extension AddExerciseViewController: UITextFieldDelegate {
+extension AddExerciseViewController: UITextFieldDelegate, InstructionsWereShownDelegate {
+    
+    func instructionsWereShown() {
+        instructions.wereShown = true
+        UserDefaults.standard.set(instructions.wereShown, forKey: typeOfViewController.rawValue)
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         

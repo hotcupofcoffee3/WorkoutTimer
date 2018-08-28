@@ -9,6 +9,10 @@
 import UIKit
 
 class InstructionViewController: UIViewController {
+    
+    var instructions = "Instructions here."
+    
+    var instructionsWereShownDelegate: InstructionsWereShownDelegate?
 
     @IBOutlet weak var instructionView: UIView!
     
@@ -17,11 +21,13 @@ class InstructionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        instructionLabel.text = instructions
         instructionView.layer.cornerRadius = 12
         
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        instructionsWereShownDelegate?.instructionsWereShown()
         dismiss(animated: true, completion: nil)
     }
 

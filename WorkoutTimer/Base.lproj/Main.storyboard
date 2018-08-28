@@ -32,11 +32,6 @@
                                 </textAttributes>
                                 <items>
                                     <navigationItem title="Workout Timer" id="tx2-HS-MMP">
-                                        <barButtonItem key="leftBarButtonItem" title="Item" id="Xpk-e0-vdq">
-                                            <connections>
-                                                <action selector="popup:" destination="BYZ-38-t0r" id="wwO-1a-u72"/>
-                                            </connections>
-                                        </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" title="Reset" id="KOd-5W-DAT">
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <connections>
@@ -731,10 +726,10 @@ warning</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SwQ-tc-WbH" userLabel="Instruction View">
-                                <rect key="frame" x="67" y="273.5" width="240" height="120"/>
+                                <rect key="frame" x="67" y="311.5" width="240" height="44.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XUK-Gy-fhj">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="120"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XUK-Gy-fhj">
+                                        <rect key="frame" x="12" y="12" width="216" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.17254901959999999" green="0.24313725489999999" blue="0.43529411759999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -742,17 +737,25 @@ warning</string>
                                 </subviews>
                                 <color key="backgroundColor" red="0.77791219950000001" green="0.86615604160000004" blue="0.50749742980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="XUK-Gy-fhj" firstAttribute="top" secondItem="SwQ-tc-WbH" secondAttribute="top" id="Cey-rA-iPJ"/>
+                                    <constraint firstItem="XUK-Gy-fhj" firstAttribute="top" secondItem="SwQ-tc-WbH" secondAttribute="top" constant="12" id="Cey-rA-iPJ"/>
                                     <constraint firstAttribute="width" constant="240" id="VmJ-Cy-QXf"/>
-                                    <constraint firstAttribute="bottom" secondItem="XUK-Gy-fhj" secondAttribute="bottom" id="cJw-X6-3o9"/>
-                                    <constraint firstAttribute="height" constant="120" id="kwW-ok-yC1"/>
-                                    <constraint firstItem="XUK-Gy-fhj" firstAttribute="leading" secondItem="SwQ-tc-WbH" secondAttribute="leading" id="mFs-dz-73T"/>
-                                    <constraint firstAttribute="trailing" secondItem="XUK-Gy-fhj" secondAttribute="trailing" id="snb-DX-R0N"/>
+                                    <constraint firstAttribute="bottom" secondItem="XUK-Gy-fhj" secondAttribute="bottom" constant="12" id="cJw-X6-3o9"/>
+                                    <constraint firstItem="XUK-Gy-fhj" firstAttribute="leading" secondItem="SwQ-tc-WbH" secondAttribute="leading" constant="12" id="mFs-dz-73T"/>
+                                    <constraint firstAttribute="trailing" secondItem="XUK-Gy-fhj" secondAttribute="trailing" constant="12" id="snb-DX-R0N"/>
                                 </constraints>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="closeButton" translatesAutoresizingMaskIntoConstraints="NO" id="vZk-fC-rxz">
+                                <rect key="frame" x="157" y="380" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="CBG-Ve-c25"/>
+                                    <constraint firstAttribute="width" constant="60" id="XfY-yj-xGA"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.32507491438356162" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="vZk-fC-rxz" firstAttribute="centerX" secondItem="cqD-zf-cfR" secondAttribute="centerX" id="aw7-2h-faq"/>
+                            <constraint firstItem="vZk-fC-rxz" firstAttribute="top" secondItem="SwQ-tc-WbH" secondAttribute="bottom" constant="24" id="eRh-vR-n2o"/>
                             <constraint firstItem="SwQ-tc-WbH" firstAttribute="centerX" secondItem="cqD-zf-cfR" secondAttribute="centerX" id="nKC-ke-9gU"/>
                             <constraint firstItem="SwQ-tc-WbH" firstAttribute="centerY" secondItem="cqD-zf-cfR" secondAttribute="centerY" id="oXH-9g-ehI"/>
                         </constraints>
@@ -765,7 +768,7 @@ warning</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HUy-gS-4HL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2286" y="-276"/>
+            <point key="canvasLocation" x="2285.5999999999999" y="-276.61169415292358"/>
         </scene>
         <!--Routine View Controller-->
         <scene sceneID="wMW-J5-WFT">
@@ -961,9 +964,10 @@ warning</string>
     </scenes>
     <resources>
         <image name="WorkoutTimer-OpeningBackground" width="1024" height="1024"/>
+        <image name="closeButton" width="120" height="120"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Uig-b2-Unb"/>
-        <segue reference="Cb6-O6-2Pd"/>
+        <segue reference="Z7v-f9-gbo"/>
     </inferredMetricsTieBreakers>
 </document>

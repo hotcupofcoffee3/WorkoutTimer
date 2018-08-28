@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum TypeOfViewController: String {
     
@@ -28,7 +29,7 @@ struct InstructionItem {
     
     var message: String
     
-    var wasShown: Bool
+    var wereShown = false
     
     init(type: TypeOfViewController) {
         
@@ -36,28 +37,27 @@ struct InstructionItem {
             
         case .Main:
             segueKey = keywords.mainToInstructionsSegue
-            message = "Main"
-            wasShown = UserDefaults.standard.object(forKey: type.rawValue) ?? false
+            message = "Click any item on the screen to edit its settings."
             
         case .Exercise:
             segueKey = keywords.exercisesToInstructionsSegue
-            message = "Exercise"
+            message = "Add up to 10 Exercises for each Routine, or edit old ones."
             
         case .Routine:
             segueKey = keywords.routinesToInstructionsSegue
-            message = "Routine"
+            message = "Add some new Routines, or edit old ones."
             
         case .AddExercise:
             segueKey = keywords.addExerciseToInstructionsSegue
-            message = "Add Exercise"
+            message = "Choose either Time or Reps for each Exercise."
             
         case .AddRoutine:
             segueKey = keywords.addRoutineToInstructionsSegue
-            message = "Add Routine"
+            message = "Add multiple Routines, each with its own set of Exercises."
             
         case .SetsTransitionAndRest:
             segueKey = keywords.setsTransitionAndRestToInstructionsSegue
-            message = "Sets, Transition, and Rest"
+            message = "For each Routine, you can set the Sets, Transitions between Exercises, and Rests between Sets."
 
         }
         

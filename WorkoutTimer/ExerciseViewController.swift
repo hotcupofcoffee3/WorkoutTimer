@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutineExercisesDelegate {
+class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutineExercisesDelegate, InstructionsWereShownDelegate {
     
     
     
@@ -21,6 +21,8 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
     let keywords = Keywords()
     let workout = Workout()
     let timerForWorkout = TimerForWorkout()
+    let typeOfViewController = TypeOfViewController.Exercise
+    var instructions = InstructionItem(type: .Exercise)
     
     
     
@@ -122,7 +124,15 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == keywords.exerciseToAddExerciseSegue {
+        if segue.identifier == keywords.exercisesToInstructionsSegue {
+            
+            let destinationVC = segue.destination as! InstructionViewController
+            
+            destinationVC.instructionsWereShownDelegate = self
+            
+            destinationVC.instructions = instructions.message
+            
+        } else if segue.identifier == keywords.exerciseToAddExerciseSegue {
             
             let destinationVC = segue.destination as! AddExerciseViewController
             
@@ -178,6 +188,24 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
         toggleIsTenExercises()
         
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+
+        if UserDefaults.standard.object(forKey: typeOfViewController.rawValue) == nil {
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+
+                self.performSegue(withIdentifier: self.instructions.segueKey, sender: self)
+
+            }
+
+        } else {
+
+            //            UserDefaults.standard.set(nil, forKey: typeOfViewController.rawValue)
+
+        }
+        
+    }
 
     
     
@@ -221,6 +249,11 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
     // ******
     
     
+    
+    func instructionsWereShown() {
+        instructions.wereShown = true
+        UserDefaults.standard.set(instructions.wereShown, forKey: typeOfViewController.rawValue)
+    }
     
     func setExercise(oldName: String, newName: String, minutes: Int, seconds: Int, reps: Int, isNew: Bool) {
         

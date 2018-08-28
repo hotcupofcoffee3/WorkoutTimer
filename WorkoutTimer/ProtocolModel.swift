@@ -34,3 +34,9 @@ protocol SetSetsTransitionsAndRestDelegate {
     func setRest(minutes: Int, seconds: Int)
     
 }
+
+protocol InstructionsWereShownDelegate {
+    
+    func instructionsWereShown()
+    
+}

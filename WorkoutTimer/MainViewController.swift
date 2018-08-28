@@ -49,11 +49,6 @@ import AVFoundation
 
 class MainViewController: UIViewController {
     
-    @IBAction func popup(_ sender: UIBarButtonItem) {
-        performSegue(withIdentifier: keywords.mainToInstructionsSegue, sender: self)
-    }
-    
-    
     // ******
     // *** MARK: - Variables
     // ******
@@ -65,7 +60,8 @@ class MainViewController: UIViewController {
     let keywords = Keywords()
     let workout = Workout()
     let timerForWorkout = TimerForWorkout()
-    let instructions = InstructionItem(type: .Main)
+    let typeOfViewController = TypeOfViewController.Main
+    var instructions = InstructionItem(type: .Main)
     
     var currentTimer = Workout.CurrentTimer.interval
     
@@ -189,7 +185,15 @@ class MainViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == keywords.mainToRoutinesSegue {
+        if segue.identifier == keywords.mainToInstructionsSegue {
+            
+            let destinationVC = segue.destination as! InstructionViewController
+            
+            destinationVC.instructionsWereShownDelegate = self
+            
+            destinationVC.instructions = instructions.message
+            
+        } else if segue.identifier == keywords.mainToRoutinesSegue {
             
             let destinationVC = segue.destination as! RoutineViewController
             
@@ -240,9 +244,6 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(instructions.message)
-        print(instructions.segueKey)
-        
         setCollectionView.register(UINib(nibName: "SetsCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "setCell")
         exerciseCollectionView.register(UINib(nibName: "ExerciseCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "exerciseCell")
         
@@ -270,6 +271,24 @@ class MainViewController: UIViewController {
         toggleStartStopButton()
         toggleNavBarTitle()
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+
+        if UserDefaults.standard.object(forKey: typeOfViewController.rawValue) == nil {
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                
+                self.performSegue(withIdentifier: self.instructions.segueKey, sender: self)
+                
+            }
+            
+        } else {
+            
+//            UserDefaults.standard.set(nil, forKey: typeOfViewController.rawValue)
+            
+        }
+
     }
 
     
@@ -1006,7 +1025,13 @@ class MainViewController: UIViewController {
 // *** MARK: - Delegates
 // ******
 
-extension MainViewController: SetSetsTransitionsAndRestDelegate, LoadRoutineExercisesDelegate {
+extension MainViewController: SetSetsTransitionsAndRestDelegate, LoadRoutineExercisesDelegate, InstructionsWereShownDelegate {
+    
+    func instructionsWereShown() {
+        instructions.wereShown = true
+        UserDefaults.standard.set(instructions.wereShown, forKey: typeOfViewController.rawValue)
+    }
+    
     
     func setSets(numberOfSets: Int) {
         

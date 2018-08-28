@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SetsTransitionAndRestViewController: UIViewController {
+class SetsTransitionAndRestViewController: UIViewController, InstructionsWereShownDelegate {
     
     
     
@@ -19,6 +19,10 @@ class SetsTransitionAndRestViewController: UIViewController {
     
     
     let timerForWorkout = TimerForWorkout()
+    let typeOfViewController = TypeOfViewController.SetsTransitionAndRest
+    var instructions = InstructionItem(type: .SetsTransitionAndRest)
+    
+    let keywords = Keywords()
     
     var setSetsTransitionsAndRestDelegate: SetSetsTransitionsAndRestDelegate?
     
@@ -88,6 +92,25 @@ class SetsTransitionAndRestViewController: UIViewController {
         
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == keywords.setsTransitionAndRestToInstructionsSegue {
+            
+            let destinationVC = segue.destination as! InstructionViewController
+            
+            destinationVC.instructionsWereShownDelegate = self
+            
+            destinationVC.instructions = instructions.message
+            
+        }
+        
+    }
+    
+    func instructionsWereShown() {
+        instructions.wereShown = true
+        UserDefaults.standard.set(instructions.wereShown, forKey: typeOfViewController.rawValue)
+    }
+    
     
     
     // ******
@@ -122,6 +145,24 @@ class SetsTransitionAndRestViewController: UIViewController {
         }
         
         chosenPickerInfoLabel.text = isTime ? "\(timerForWorkout.zero(unit: minutes)):\(timerForWorkout.zero(unit: seconds))" : "\(numberOfSets)"
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        if UserDefaults.standard.object(forKey: typeOfViewController.rawValue) == nil {
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                
+                self.performSegue(withIdentifier: self.instructions.segueKey, sender: self)
+                
+            }
+            
+        } else {
+            
+            //            UserDefaults.standard.set(nil, forKey: typeOfViewController.rawValue)
+            
+        }
         
     }
     

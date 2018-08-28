@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RoutineViewController: UIViewController, SetRoutineDelegate {
+class RoutineViewController: UIViewController, SetRoutineDelegate, InstructionsWereShownDelegate {
     
     
     
@@ -19,8 +19,9 @@ class RoutineViewController: UIViewController, SetRoutineDelegate {
     
     
     let keywords = Keywords()
-    
     let workout = Workout()
+    let typeOfViewController = TypeOfViewController.Routine
+    var instructions = InstructionItem(type: .Routine)
     
     
     
@@ -96,7 +97,15 @@ class RoutineViewController: UIViewController, SetRoutineDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == keywords.routineToAddRoutineSegue {
+        if segue.identifier == keywords.routinesToInstructionsSegue {
+            
+            let destinationVC = segue.destination as! InstructionViewController
+            
+            destinationVC.instructionsWereShownDelegate = self
+            
+            destinationVC.instructions = instructions.message
+            
+        } else if segue.identifier == keywords.routineToAddRoutineSegue {
             
             let destinationVC = segue.destination as! AddRoutineViewController
             
@@ -136,6 +145,24 @@ class RoutineViewController: UIViewController, SetRoutineDelegate {
         if isNew && !newRoutineWasCanceled {
             
             loadWorkoutInfoAndReturnToMain(routine: routineName)
+            
+        }
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        if UserDefaults.standard.object(forKey: typeOfViewController.rawValue) == nil {
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                
+                self.performSegue(withIdentifier: self.instructions.segueKey, sender: self)
+                
+            }
+            
+        } else {
+            
+            //            UserDefaults.standard.set(nil, forKey: typeOfViewController.rawValue)
             
         }
         
@@ -194,6 +221,11 @@ class RoutineViewController: UIViewController, SetRoutineDelegate {
     // ******
     
     
+    
+    func instructionsWereShown() {
+        instructions.wereShown = true
+        UserDefaults.standard.set(instructions.wereShown, forKey: typeOfViewController.rawValue)
+    }
     
     func setRoutine(oldName: String, newName: String, isNew: Bool) {
         
