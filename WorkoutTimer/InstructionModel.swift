@@ -31,6 +31,10 @@ struct InstructionItem {
     
     var wereShown = false
     
+    let timeBeforeShowing = 0.6
+    
+    var typeOfViewController: TypeOfViewController
+    
     init(type: TypeOfViewController) {
         
         switch type {
@@ -59,6 +63,20 @@ struct InstructionItem {
             segueKey = keywords.setsTransitionAndRestToInstructionsSegue
             message = "For each Routine, you can set the Sets, Transitions between Exercises, and Rests between Sets."
 
+        }
+        
+        self.typeOfViewController = type
+        
+    }
+    
+    func presentInstructions(segue: @escaping () -> Void) {
+        
+        if UserDefaults.standard.object(forKey: typeOfViewController.rawValue) == nil {
+            DispatchQueue.main.asyncAfter(deadline: .now() + timeBeforeShowing) {
+                segue()
+            }
+        } else {
+            //            UserDefaults.standard.set(nil, forKey: typeOfViewController.rawValue)
         }
         
     }

@@ -735,7 +735,7 @@ warning</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.77791219950000001" green="0.86615604160000004" blue="0.50749742980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="0.84136284722222221" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="XUK-Gy-fhj" firstAttribute="top" secondItem="SwQ-tc-WbH" secondAttribute="top" constant="12" id="Cey-rA-iPJ"/>
                                     <constraint firstAttribute="width" constant="240" id="VmJ-Cy-QXf"/>

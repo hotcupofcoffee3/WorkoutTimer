@@ -228,19 +228,17 @@ class AddExerciseViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         
-        if UserDefaults.standard.object(forKey: typeOfViewController.rawValue) == nil {
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                
-                self.performSegue(withIdentifier: self.instructions.segueKey, sender: self)
-                
-            }
-            
-        } else {
-            
-            //            UserDefaults.standard.set(nil, forKey: typeOfViewController.rawValue)
-            
+        instructions.presentInstructions {
+            self.performSegue(withIdentifier: self.instructions.segueKey, sender: self)
         }
+        
+//        if UserDefaults.standard.object(forKey: typeOfViewController.rawValue) == nil {
+//            DispatchQueue.main.asyncAfter(deadline: .now() + instructions.timeBeforeShowing) {
+//                self.performSegue(withIdentifier: self.instructions.segueKey, sender: self)
+//            }
+//        } else {
+//            //            UserDefaults.standard.set(nil, forKey: typeOfViewController.rawValue)
+//        }
         
     }
     
@@ -307,7 +305,8 @@ extension AddExerciseViewController: UITextFieldDelegate, InstructionsWereShownD
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        exerciseNameTextField.resignFirstResponder()
+//        exerciseNameTextField.resignFirstResponder()
+        self.view.endEditing(true)
         
     }
     
