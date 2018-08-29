@@ -527,18 +527,20 @@ class Workout {
             
         }
         
+        workoutInfoArray[0].routine = newName
+
         loadRoutines()
-        
+
         for i in routineArray.indices {
-            
+
             if routineArray[i] == oldName {
-                
+
                 routineArray.remove(at: i)
-                
+
                 break
-                
+
             }
-            
+
         }
         
         loadRoutines()
