@@ -21,6 +21,19 @@
 // ******
 
 
+
+/* BUG: Crashes when a new name is set for the Default Routine. Change to account for this when loading, as the function failed in the return:
+ 
+    func getWorkoutInfo(routine: String) -> WorkoutInfo {
+
+        loadWorkoutDataPerRoutine(routine: routine)
+
+        return workoutInfoArray[0]
+
+    }
+ 
+ */
+
 // MEDIUM: Make Keywords() a singleton.
 
 // MEDIUM: Merge with master and switch to master.

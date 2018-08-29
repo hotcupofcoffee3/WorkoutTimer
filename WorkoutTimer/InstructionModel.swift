@@ -44,7 +44,7 @@ struct InstructionItem {
             
         case .Exercise:
             segueKey = keywords.exercisesToInstructionsSegue
-            message = "Add up to 10 Exercises for each Routine, or edit old ones."
+            message = "Add up to 12 Exercises for each Routine, or edit old ones."
             
         case .Routine:
             segueKey = keywords.routinesToInstructionsSegue

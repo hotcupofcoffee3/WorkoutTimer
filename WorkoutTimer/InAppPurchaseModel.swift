@@ -62,7 +62,7 @@ class InAppPurchaseService: NSObject {
     
     func inAppPurchaseAlert() -> UIAlertController {
         
-        let alert = UIAlertController(title: "Unlock Multiple Routines", message: "Get an unlimited amount of customizable Routines for $1.99?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Unlock Unlimited Routines", message: "Get an unlimited amount of customizable Routines", preferredStyle: .alert)
         
         let purchase = UIAlertAction(title: "Purchase for $1.99", style: .default) { (action) in
             
