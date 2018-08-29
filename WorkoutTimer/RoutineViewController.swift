@@ -12,10 +12,13 @@ class RoutineViewController: UIViewController, SetRoutineDelegate, InstructionsW
     
     @IBAction func purchasesPopup(_ sender: UIBarButtonItem) {
         
+        InAppPurchaseService.shared.getProducts()
+        
         let alert = UIAlertController(title: "Purchase", message: "It costs $1.99", preferredStyle: .alert)
         
         let purchase = UIAlertAction(title: "Purchase", style: .default) { (action) in
             print("Purchase")
+            InAppPurchaseService.shared.purchaseProduct(product: self.keywords.inAppPurchaseProductID)
         }
         
         let restorePurchase = UIAlertAction(title: "Restore Purchase", style: .default) { (action) in

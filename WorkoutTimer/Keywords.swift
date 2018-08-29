@@ -32,6 +32,11 @@ class Keywords {
     let defaultKey = "Default"
     
     
+    // In App Purchase Product ID
+    
+    let inAppPurchaseProductID = "com.luneofthepune.FIT.MultipleRoutines"
+    
+    
     
     // Instructions
     

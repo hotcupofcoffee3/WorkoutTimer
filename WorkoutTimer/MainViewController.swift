@@ -21,6 +21,9 @@
 // ******
 
 
+// MEDIUM: Make Keywords() a singleton.
+
+// MEDIUM: Merge with master and switch to master.
 
 // REALLY LONG: Add InApp purchase for more than 1 routine.
 

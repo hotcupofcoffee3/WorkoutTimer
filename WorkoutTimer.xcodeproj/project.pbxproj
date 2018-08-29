@@ -16,6 +16,7 @@
 		B529CB7C210BC894005A0488 /* SetsTransitionAndRestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B529CB7B210BC894005A0488 /* SetsTransitionAndRestViewController.swift */; };
 		B551DA1821347D80007F34B1 /* InstructionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B551DA1721347D80007F34B1 /* InstructionViewController.swift */; };
 		B56BD57B212C644D009F8189 /* ProtocolModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56BD57A212C644D009F8189 /* ProtocolModel.swift */; };
+		B586EB782136F0EE00C7164D /* InAppPurchaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B586EB772136F0EE00C7164D /* InAppPurchaseModel.swift */; };
 		B58B2B08212B202E003F8C6C /* TimerForWorkoutModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58B2B07212B202E003F8C6C /* TimerForWorkoutModel.swift */; };
 		B5A07C9C21124C81006B0C5E /* RoutineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A07C9A21124C81006B0C5E /* RoutineTableViewCell.swift */; };
 		B5A07C9D21124C81006B0C5E /* RoutineTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A07C9B21124C81006B0C5E /* RoutineTableViewCell.xib */; };
@@ -45,6 +46,7 @@
 		B529CB7B210BC894005A0488 /* SetsTransitionAndRestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetsTransitionAndRestViewController.swift; sourceTree = "<group>"; };
 		B551DA1721347D80007F34B1 /* InstructionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionViewController.swift; sourceTree = "<group>"; };
 		B56BD57A212C644D009F8189 /* ProtocolModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolModel.swift; sourceTree = "<group>"; };
+		B586EB772136F0EE00C7164D /* InAppPurchaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchaseModel.swift; sourceTree = "<group>"; };
 		B58B2B07212B202E003F8C6C /* TimerForWorkoutModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerForWorkoutModel.swift; sourceTree = "<group>"; };
 		B5A07C9A21124C81006B0C5E /* RoutineTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineTableViewCell.swift; sourceTree = "<group>"; };
 		B5A07C9B21124C81006B0C5E /* RoutineTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoutineTableViewCell.xib; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 				B5C3251D21065A3E00A88FDB /* AppDelegate.swift */,
 				B5C3253221065DDF00A88FDB /* Keywords.swift */,
 				B5C3253A21068B5800A88FDB /* WorkoutModel.swift */,
+				B586EB772136F0EE00C7164D /* InAppPurchaseModel.swift */,
 				B56BD57A212C644D009F8189 /* ProtocolModel.swift */,
 				B5D851082134D15E00A82F2F /* InstructionModel.swift */,
 				B58B2B07212B202E003F8C6C /* TimerForWorkoutModel.swift */,
@@ -226,6 +229,7 @@
 			files = (
 				B5C3253521065FD300A88FDB /* AddExerciseViewController.swift in Sources */,
 				B56BD57B212C644D009F8189 /* ProtocolModel.swift in Sources */,
+				B586EB782136F0EE00C7164D /* InAppPurchaseModel.swift in Sources */,
 				B5C3253821066B3000A88FDB /* SetsCollectionViewCell.swift in Sources */,
 				B5F659B1210C24C000099131 /* ExerciseTableViewCell.swift in Sources */,
 				B5D851092134D15E00A82F2F /* InstructionModel.swift in Sources */,
