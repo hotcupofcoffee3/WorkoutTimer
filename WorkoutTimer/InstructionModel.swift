@@ -15,7 +15,6 @@ enum TypeOfViewController: String {
     case Exercise
     case Routine
     case AddExercise
-    case AddRoutine
     case SetsTransitionAndRest
     
 }
@@ -31,7 +30,7 @@ struct InstructionItem {
     
     var wereShown = false
     
-    let timeBeforeShowing = 0.6
+    let timeBeforeShowing = 0.3
     
     var typeOfViewController: TypeOfViewController
     
@@ -54,11 +53,7 @@ struct InstructionItem {
         case .AddExercise:
             segueKey = keywords.addExerciseToInstructionsSegue
             message = "Choose either Time or Reps for each Exercise."
-            
-        case .AddRoutine:
-            segueKey = keywords.addRoutineToInstructionsSegue
-            message = "Add multiple Routines, each with its own set of Exercises."
-            
+           
         case .SetsTransitionAndRest:
             segueKey = keywords.setsTransitionAndRestToInstructionsSegue
             message = "For each Routine, you can set the Sets, Transitions between Exercises, and Rests between Sets."

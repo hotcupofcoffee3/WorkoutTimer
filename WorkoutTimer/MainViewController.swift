@@ -25,6 +25,10 @@
 
 // MEDIUM: Merge with master and switch to master.
 
+// MEDIUM: Remove Add Routine instructions.
+
+// LONG: Add checks of UserDefaults for multiple routines.
+
 // REALLY LONG: Add InApp purchase for more than 1 routine.
 
 // LAST: Record Gif of app use for screenshots.

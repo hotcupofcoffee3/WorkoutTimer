@@ -13,6 +13,7 @@ class InAppPurchaseService: NSObject {
     
     // Overrides the init() and makes it private, so that no other instance can be made.
     private override init() {}
+    
     // Creates the singleton for it.
     static let shared = InAppPurchaseService()
     
@@ -47,7 +48,7 @@ class InAppPurchaseService: NSObject {
         
         // Converts the 'product', which will be the ProductID, into an 'SKPayment'
         let payment = SKPayment(product: productToPurchase)
-        
+
         // Adds the converted 'payment' above to the payment queue.
         paymentQueue.add(payment)
         
@@ -55,9 +56,44 @@ class InAppPurchaseService: NSObject {
     
     func restorePurchases() {
         
-        print("Restoring Purchases")
-        
         paymentQueue.restoreCompletedTransactions()
+        
+    }
+    
+    func inAppPurchaseAlert() -> UIAlertController {
+        
+        let alert = UIAlertController(title: "Unlock Multiple Routines", message: "Get an unlimited amount of customizable Routines for $1.99?", preferredStyle: .alert)
+        
+        let purchase = UIAlertAction(title: "Purchase for $1.99", style: .default) { (action) in
+            
+            self.purchaseProduct(product: self.keywords.inAppPurchaseProductID)
+        
+        }
+        
+        let restorePurchase = UIAlertAction(title: "Restore Purchase", style: .default) { (action) in
+
+            self.restorePurchases()
+        }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(purchase)
+        alert.addAction(restorePurchase)
+        alert.addAction(cancel)
+        
+        return alert
+        
+    }
+    
+    func purchaseCongratulationsAlert() -> UIAlertController {
+        
+        let alert = UIAlertController(title: "Congratulations!", message: "You can now add as many routines as you'd like!", preferredStyle: .alert)
+        
+        let ok = UIAlertAction(title: "OK!", style: .default, handler: nil)
+        
+        alert.addAction(ok)
+        
+        return alert
         
     }
     
@@ -72,11 +108,11 @@ extension InAppPurchaseService: SKProductsRequestDelegate {
         self.products = response.products
         
         // Cycles through the products that come back from the response.
-        for product in response.products {
-            
-            print(product.localizedTitle)
-            
-        }
+//        for product in response.products {
+//
+//            print(product.localizedTitle)
+//
+//        }
         
     }
     
@@ -91,7 +127,11 @@ extension InAppPurchaseService: SKPaymentTransactionObserver {
         for transaction in transactions {
             
 //            print("\(transaction.transactionState.status()): \(transaction.payment.productIdentifier)")
+            if transaction.transactionState == .purchased || transaction.transactionState == .restored {
+                
+                UserDefaults.standard.set(true, forKey: keywords.isPurchasedKey)
             
+            }
             switch transaction.transactionState {
                 
             case .purchasing: break
@@ -113,11 +153,20 @@ extension SKPaymentTransactionState {
         
         switch self {
             
-        case .deferred : return "Deferred"
-        case .failed : return "Failed"
-        case .purchased : return "Purchased"
-        case .purchasing : return "Purchasing"
-        case .restored : return "Restored"
+        case .deferred:
+            return "Deferred"
+            
+        case .failed:
+            return "Failed"
+            
+        case .purchased:
+            return "Purchased"
+            
+        case .purchasing:
+            return "Purchasing"
+            
+        case .restored:
+            return "Restored"
             
         }
         

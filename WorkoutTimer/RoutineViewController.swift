@@ -10,36 +10,6 @@ import UIKit
 
 class RoutineViewController: UIViewController, SetRoutineDelegate, InstructionsWereShownDelegate {
     
-    @IBAction func purchasesPopup(_ sender: UIBarButtonItem) {
-        
-        InAppPurchaseService.shared.getProducts()
-        
-        let alert = UIAlertController(title: "Purchase", message: "It costs $1.99", preferredStyle: .alert)
-        
-        let purchase = UIAlertAction(title: "Purchase", style: .default) { (action) in
-            print("Purchase")
-            InAppPurchaseService.shared.purchaseProduct(product: self.keywords.inAppPurchaseProductID)
-        }
-        
-        let restorePurchase = UIAlertAction(title: "Restore Purchase", style: .default) { (action) in
-            print("Restore Purchase")
-            InAppPurchaseService.shared.restorePurchases()
-        }
-        
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        alert.addAction(purchase)
-        alert.addAction(restorePurchase)
-        alert.addAction(cancel)
-        
-        present(alert, animated: true) {
-            print("In App Purchase popup presented.")
-        }
-        
-    }
-    
-    
-    
     
     
     // ******
@@ -89,15 +59,25 @@ class RoutineViewController: UIViewController, SetRoutineDelegate, InstructionsW
     // *** MARK: - IBActions
     // ******
     
-    
-    
     @IBAction func addRoutine(_ sender: UIBarButtonItem) {
         
-        isNew = true
-        
-        toggleEditAndDoneFunction(edit: false)
-        
-        performSegue(withIdentifier: keywords.routineToAddRoutineSegue, sender: self)
+        if UserDefaults.standard.object(forKey: keywords.isPurchasedKey) == nil {
+            
+            InAppPurchaseService.shared.getProducts()
+            
+            let alert = InAppPurchaseService.shared.inAppPurchaseAlert()
+            
+            present(alert, animated: true, completion: nil)
+            
+        } else {
+            
+            isNew = true
+            
+            toggleEditAndDoneFunction(edit: false)
+            
+            performSegue(withIdentifier: keywords.routineToAddRoutineSegue, sender: self)
+            
+        }
         
     }
     
@@ -185,14 +165,6 @@ class RoutineViewController: UIViewController, SetRoutineDelegate, InstructionsW
         instructions.presentInstructions {
             self.performSegue(withIdentifier: self.instructions.segueKey, sender: self)
         }
-        
-//        if UserDefaults.standard.object(forKey: typeOfViewController.rawValue) == nil {
-//            DispatchQueue.main.asyncAfter(deadline: .now() + instructions.timeBeforeShowing) {
-//                self.performSegue(withIdentifier: self.instructions.segueKey, sender: self)
-//            }
-//        } else {
-//            //            UserDefaults.standard.set(nil, forKey: typeOfViewController.rawValue)
-//        }
         
     }
     

@@ -19,8 +19,6 @@ class AddRoutineViewController: UIViewController {
     
     
     let workout = Workout()
-    let typeOfViewController = TypeOfViewController.AddRoutine
-    var instructions = InstructionItem(type: .AddRoutine)
     
     let keywords = Keywords()
     
@@ -100,20 +98,6 @@ class AddRoutineViewController: UIViewController {
         
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == keywords.addRoutineToInstructionsSegue {
-            
-            let destinationVC = segue.destination as! InstructionViewController
-            
-            destinationVC.instructionsWereShownDelegate = self
-            
-            destinationVC.instructions = instructions.message
-            
-        }
-        
-    }
-    
 
     
     // ******
@@ -136,32 +120,11 @@ class AddRoutineViewController: UIViewController {
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        
-        instructions.presentInstructions {
-            self.performSegue(withIdentifier: self.instructions.segueKey, sender: self)
-        }
-        
-//        if UserDefaults.standard.object(forKey: typeOfViewController.rawValue) == nil {
-//            DispatchQueue.main.asyncAfter(deadline: .now() + instructions.timeBeforeShowing) {
-//                self.performSegue(withIdentifier: self.instructions.segueKey, sender: self)
-//            }
-//        } else {
-//            //            UserDefaults.standard.set(nil, forKey: typeOfViewController.rawValue)
-//        }
-        
-    }
-    
 }
 
 
 
-extension AddRoutineViewController: UITextFieldDelegate, InstructionsWereShownDelegate {
-    
-    func instructionsWereShown() {
-        instructions.wereShown = true
-        UserDefaults.standard.set(instructions.wereShown, forKey: typeOfViewController.rawValue)
-    }
+extension AddRoutineViewController: UITextFieldDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
