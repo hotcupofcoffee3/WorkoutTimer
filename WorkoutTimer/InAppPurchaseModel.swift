@@ -42,14 +42,22 @@ class InAppPurchaseService: NSObject {
     
     func purchaseProduct(product: String) {
         
-        // Has to be converted to an NSObject
-        let productToPurchase = product as NSObject
+        // Filters through the 'products' array that was filled with the 'productsRequest' function below, and checks to see if it matches the 'product' that is passed into this function. If it does, then that means that the 'productIdentifier' of the 'SKProduct' array matches what we put in, so then that gets added to the payment queue.
+        guard let productToPurchase = products.filter({ $0.productIdentifier == product}).first else { return }
         
         // Converts the 'product', which will be the ProductID, into an 'SKPayment'
-        let payment = SKPayment(product: productToPurchase as! SKProduct)
+        let payment = SKPayment(product: productToPurchase)
         
         // Adds the converted 'payment' above to the payment queue.
         paymentQueue.add(payment)
+        
+    }
+    
+    func restorePurchases() {
+        
+        print("Restoring Purchases")
+        
+        paymentQueue.restoreCompletedTransactions()
         
     }
     
@@ -82,7 +90,14 @@ extension InAppPurchaseService: SKPaymentTransactionObserver {
         // Merely prints out the transaction states as they happen.
         for transaction in transactions {
             
-            print("\(transaction.transactionState.status()): \(transaction.payment.productIdentifier)")
+//            print("\(transaction.transactionState.status()): \(transaction.payment.productIdentifier)")
+            
+            switch transaction.transactionState {
+                
+            case .purchasing: break
+            default: queue.finishTransaction(transaction)
+                
+            }
             
         }
         

@@ -23,6 +23,7 @@ class RoutineViewController: UIViewController, SetRoutineDelegate, InstructionsW
         
         let restorePurchase = UIAlertAction(title: "Restore Purchase", style: .default) { (action) in
             print("Restore Purchase")
+            InAppPurchaseService.shared.restorePurchases()
         }
         
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
