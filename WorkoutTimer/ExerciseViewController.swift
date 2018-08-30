@@ -184,7 +184,7 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
         
         goToRoutinesButton.setTitle(editCells ? "Edit Routines" : workout.exerciseArray[0].routine!, for: .normal)
         
-        toggleIsTenExercises()
+        toggleIsTwelveExercises()
         
     }
     
@@ -212,7 +212,7 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
     
     
     
-    func toggleIsTenExercises() {
+    func toggleIsTwelveExercises() {
         
         isTwelveExercises = (workout.exerciseArray.count == 12)
         
@@ -225,8 +225,6 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
         editButton.title = edit ? "Done" : "Edit"
         
         exerciseTable.setEditing(edit, animated: true)
-        
-        exerciseTable.reloadData()
         
     }
     
@@ -270,7 +268,7 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
         
         workout.loadExercisesPerRoutine(routine: workout.lastUsedRoutine)
         
-        toggleIsTenExercises()
+        toggleIsTwelveExercises()
         
         exerciseTable.reloadData()
         
@@ -317,8 +315,6 @@ extension ExerciseViewController: UITableViewDelegate, UITableViewDataSource {
             
         }
         
-        
-        
         return cell
     }
     
@@ -352,7 +348,7 @@ extension ExerciseViewController: UITableViewDelegate, UITableViewDataSource {
                 
                 tableView.deleteRows(at: [indexPath], with: .left)
                 
-                toggleIsTenExercises()
+                toggleIsTwelveExercises()
                 
             } else {
                 
