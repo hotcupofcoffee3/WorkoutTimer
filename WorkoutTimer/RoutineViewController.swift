@@ -258,6 +258,12 @@ class RoutineViewController: UIViewController, SetRoutineDelegate, InstructionsW
         
         newRoutineWasCanceled = wasCanceled
         
+        editCells = false
+        
+        editButton.title = editCells ? "Done" : "Edit"
+        
+        routineTable.reloadData()
+        
     }
     
 }

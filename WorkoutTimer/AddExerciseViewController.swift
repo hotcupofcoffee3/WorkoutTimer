@@ -39,7 +39,7 @@ class AddExerciseViewController: UIViewController {
     
     var isNew = Bool()
     
-    let maxReps = 30
+    let maxReps = 60
     
     let pickerMinutesAndSeconds = Array(0...59)
     
@@ -87,7 +87,7 @@ class AddExerciseViewController: UIViewController {
         
         toggleMinAndSecLabels()
         
-        chosenPickerInfoLabel.text = isTime ? "\(timerForWorkout.zero(unit: minutes)):\(timerForWorkout.zero(unit: seconds))" : "\(reps)"
+        chosenPickerInfoLabel.text = isTime ? "\(timerForWorkout.zero(unit: minutes)):\(timerForWorkout.zero(unit: seconds))" : (reps == 1) ? "\(reps) rep" : "\(reps) reps"
         
         numberPicker.reloadAllComponents()
         
@@ -98,7 +98,7 @@ class AddExerciseViewController: UIViewController {
             
         } else {
             
-            numberPicker.selectRow(reps, inComponent: 0, animated: true)
+            numberPicker.selectRow(reps - 1, inComponent: 0, animated: true)
             
         }
         
@@ -214,7 +214,7 @@ class AddExerciseViewController: UIViewController {
         
         toggleMinAndSecLabels()
         
-        chosenPickerInfoLabel.text = isTime ? "\(timerForWorkout.zero(unit: minutes)):\(timerForWorkout.zero(unit: seconds))" : "\(reps)"
+        chosenPickerInfoLabel.text = isTime ? "\(timerForWorkout.zero(unit: minutes)):\(timerForWorkout.zero(unit: seconds))" : (reps == 1) ? "\(reps) rep" : "\(reps) reps"
         
         exerciseNameTextField.delegate = self
         
@@ -259,7 +259,7 @@ extension AddExerciseViewController: UIPickerViewDelegate, UIPickerViewDataSourc
     }
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        let titleString = "\(row)"
+        let titleString = isTime ? "\(row)" : "\(row + 1)"
         let title = NSAttributedString(string: titleString, attributes: [NSAttributedStringKey.foregroundColor:UIColor.white])
         return title
     }
@@ -282,9 +282,9 @@ extension AddExerciseViewController: UIPickerViewDelegate, UIPickerViewDataSourc
             
         } else {
             
-            reps = row
+            reps = row + 1
             
-            chosenPickerInfoLabel.text = "\(reps) reps"
+            chosenPickerInfoLabel.text = (row == 0) ? "\(reps) rep" : "\(reps) reps"
             
         }
         

@@ -22,9 +22,20 @@
 
 
 
-// LAST: Screenshot of InApp Purchase screen.
+// GIF:
+
+    // Start exercise and do reps.
+    // Click exercises to reset.
+    // Click "Leg lefts" exercise to edit.
+    // Toggle the time and reps.
+    // Set it to reps.
+    // Go back to exercises and click Sets, Transition, and Rest.
+    // Click Routine
+    // Edit Routine name and set it to something new.
+
+
+
 // LAST: Record Gif of app use for screenshots.
-// LAST: Make sure the other updated screenshots match what you seen on the current version of the app.
 
 
 
@@ -901,6 +912,8 @@ class MainViewController: UIViewController {
             if beganWorkout {
                 
                 resetEverythingAlert(isTime: nil, isTransition: nil, isExercise: nil)
+                
+                performSegue(withIdentifier: Keywords.shared.mainToRoutinesSegue, sender: self)
                 
             } else {
                 

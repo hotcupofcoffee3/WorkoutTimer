@@ -42,10 +42,10 @@
                                 </items>
                             </navigationBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q0y-ug-7KD" userLabel="Sets View">
-                                <rect key="frame" x="0.0" y="97.5" width="375" height="88.5"/>
+                                <rect key="frame" x="0.0" y="109.5" width="375" height="88.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sets" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RWl-t6-qp6">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="28.5"/>
+                                        <rect key="frame" x="0.0" y="6" width="375" height="28.5"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="28.5" id="EJv-fg-HrS"/>
                                         </constraints>
@@ -81,18 +81,19 @@
                                         </connections>
                                     </collectionView>
                                 </subviews>
+                                <color key="backgroundColor" red="0.17254901959999999" green="0.24313725489999999" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="nkh-tL-cwp" secondAttribute="bottom" id="9GP-v6-vRX"/>
-                                    <constraint firstItem="nkh-tL-cwp" firstAttribute="top" secondItem="RWl-t6-qp6" secondAttribute="bottom" constant="12" id="Dkq-hb-EXM"/>
+                                    <constraint firstItem="nkh-tL-cwp" firstAttribute="top" secondItem="RWl-t6-qp6" secondAttribute="bottom" constant="6" id="Dkq-hb-EXM"/>
                                     <constraint firstAttribute="trailing" secondItem="RWl-t6-qp6" secondAttribute="trailing" id="Sfg-14-5bB"/>
                                     <constraint firstItem="nkh-tL-cwp" firstAttribute="leading" secondItem="q0y-ug-7KD" secondAttribute="leading" id="WNv-Fe-CEH"/>
                                     <constraint firstItem="RWl-t6-qp6" firstAttribute="leading" secondItem="q0y-ug-7KD" secondAttribute="leading" id="XhW-Zr-30H"/>
-                                    <constraint firstItem="RWl-t6-qp6" firstAttribute="top" secondItem="q0y-ug-7KD" secondAttribute="top" id="sFd-lB-OYo"/>
+                                    <constraint firstItem="RWl-t6-qp6" firstAttribute="top" secondItem="q0y-ug-7KD" secondAttribute="top" constant="6" id="sFd-lB-OYo"/>
                                     <constraint firstAttribute="trailing" secondItem="nkh-tL-cwp" secondAttribute="trailing" id="xCo-dY-4D5"/>
                                 </constraints>
                             </view>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="3nI-nB-5oa">
-                                <rect key="frame" x="0.0" y="186.5" width="375" height="11"/>
+                                <rect key="frame" x="0.0" y="198.5" width="375" height="11"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="10" id="af3-gm-U3j"/>
                                 </constraints>
@@ -100,7 +101,7 @@
                                 <color key="trackTintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </progressView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="d6J-5j-EFY" userLabel="Exercise Collection View">
-                                <rect key="frame" x="0.0" y="196.5" width="375" height="252"/>
+                                <rect key="frame" x="0.0" y="208.5" width="375" height="252"/>
                                 <color key="backgroundColor" red="0.17254901959999999" green="0.24313725489999999" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="252" id="YyE-Dk-Tb1"/>
@@ -273,7 +274,7 @@
                         <color key="backgroundColor" red="0.2733489871" green="0.42662027479999998" blue="0.4372464418" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="djs-xr-7Kt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="0GO-q0-9Ak"/>
-                            <constraint firstItem="q0y-ug-7KD" firstAttribute="top" secondItem="djs-xr-7Kt" secondAttribute="bottom" id="3MM-fr-ixc"/>
+                            <constraint firstItem="q0y-ug-7KD" firstAttribute="top" secondItem="djs-xr-7Kt" secondAttribute="bottom" constant="12" id="3MM-fr-ixc"/>
                             <constraint firstItem="J3b-HB-qcu" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="4Jx-df-vBA"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="q0y-ug-7KD" secondAttribute="trailing" id="8Fj-YV-02Q"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="d6J-5j-EFY" secondAttribute="trailing" id="9qy-A4-ILN"/>
@@ -786,7 +787,7 @@ warning</string>
                                 </textAttributes>
                                 <items>
                                     <navigationItem title="Routines" id="bsF-pk-SxL">
-                                        <barButtonItem key="leftBarButtonItem" title="Done" id="3aU-nG-YpH">
+                                        <barButtonItem key="leftBarButtonItem" title="Back" id="3aU-nG-YpH">
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <connections>
                                                 <action selector="back:" destination="0WI-Oe-cVr" id="CLm-ou-9gu"/>
@@ -968,6 +969,6 @@ warning</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Uig-b2-Unb"/>
-        <segue reference="mWe-AA-iiW"/>
+        <segue reference="Z7v-f9-gbo"/>
     </inferredMetricsTieBreakers>
 </document>
