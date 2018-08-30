@@ -11,6 +11,10 @@ import UIKit
 
 class Keywords {
     
+    private init() {}
+    
+    static let shared = Keywords()
+    
     let mainToExerciseSegue = "mainToExerciseSegue"
     
     let mainToSetsSegue = "mainToSetsSegue"

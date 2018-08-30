@@ -36,7 +36,6 @@ class Workout {
     var exerciseArray = [Exercise]()
     var routineArray = [String]()
     
-    let keywords = Keywords()
     let timerForWorkout = TimerForWorkout()
     
     var currentSet = 1
@@ -210,7 +209,7 @@ class Workout {
     
     func saveLastUsedRoutine(routine: String) {
         
-        UserDefaults.standard.set(routine, forKey: keywords.routineKey)
+        UserDefaults.standard.set(routine, forKey: Keywords.shared.routineKey)
         
         lastUsedRoutine = routine
         
@@ -228,7 +227,7 @@ class Workout {
         
         let request: NSFetchRequest<WorkoutInfo> = WorkoutInfo.fetchRequest()
         
-        let workoutPredicate = NSPredicate(format: keywords.routineMatchesKey, routine)
+        let workoutPredicate = NSPredicate(format: Keywords.shared.routineMatchesKey, routine)
         
         request.predicate = workoutPredicate
         
@@ -312,11 +311,11 @@ class Workout {
         
         let request: NSFetchRequest<Exercise> = Exercise.fetchRequest()
         
-        let routinePredicate = NSPredicate(format: keywords.routineMatchesKey, routine)
+        let routinePredicate = NSPredicate(format: Keywords.shared.routineMatchesKey, routine)
         
         request.predicate = routinePredicate
         
-        request.sortDescriptors = [NSSortDescriptor(key: keywords.orderNumberKey, ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(key: Keywords.shared.orderNumberKey, ascending: true)]
         
         do {
             
@@ -344,11 +343,11 @@ class Workout {
         
         let request: NSFetchRequest<Exercise> = Exercise.fetchRequest()
         
-        let routinePredicate = NSPredicate(format: keywords.routineMatchesKey, routine)
+        let routinePredicate = NSPredicate(format: Keywords.shared.routineMatchesKey, routine)
         
         request.predicate = routinePredicate
         
-        request.sortDescriptors = [NSSortDescriptor(key: keywords.orderNumberKey, ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(key: Keywords.shared.orderNumberKey, ascending: true)]
         
         do {
             
@@ -416,13 +415,13 @@ class Workout {
     
     func loadLastUsedRoutine() {
         
-        if UserDefaults.standard.object(forKey: keywords.routineKey) == nil {
+        if UserDefaults.standard.object(forKey: Keywords.shared.routineKey) == nil {
             
-            saveLastUsedRoutine(routine: keywords.defaultKey)
+            saveLastUsedRoutine(routine: Keywords.shared.defaultKey)
             
         } else {
             
-            if let routine = UserDefaults.standard.object(forKey: keywords.routineKey) as? String {
+            if let routine = UserDefaults.standard.object(forKey: Keywords.shared.routineKey) as? String {
                 
                 lastUsedRoutine = routine
                 
@@ -1060,13 +1059,13 @@ class Workout {
         
         if self.workoutInfoArray.count == 0 {
             
-            saveNewExercise(named: "Exercise 1", minutes: 0, seconds: 30, routine: keywords.defaultKey)
+            saveNewExercise(named: "Exercise 1", minutes: 0, seconds: 30, routine: Keywords.shared.defaultKey)
             
-            saveNewWorkoutInfo(routine: keywords.defaultKey)
+            saveNewWorkoutInfo(routine: Keywords.shared.defaultKey)
             
-            loadWorkoutDataPerRoutine(routine: keywords.defaultKey)
+            loadWorkoutDataPerRoutine(routine: Keywords.shared.defaultKey)
             
-            loadExercisesPerRoutine(routine: keywords.defaultKey)
+            loadExercisesPerRoutine(routine: Keywords.shared.defaultKey)
             
         }
         

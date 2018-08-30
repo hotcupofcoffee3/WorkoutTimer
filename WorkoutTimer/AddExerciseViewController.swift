@@ -23,8 +23,6 @@ class AddExerciseViewController: UIViewController {
     let typeOfViewController = TypeOfViewController.AddExercise
     var instructions = InstructionItem(type: .AddExercise)
     
-    let keywords = Keywords()
-    
     var setExerciseDelegate: SetExerciseDelegate?
     
     var exerciseName = String()
@@ -174,7 +172,7 @@ class AddExerciseViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
       
-        if segue.identifier == keywords.addExerciseToInstructionsSegue {
+        if segue.identifier == Keywords.shared.addExerciseToInstructionsSegue {
             
             let destinationVC = segue.destination as! InstructionViewController
             

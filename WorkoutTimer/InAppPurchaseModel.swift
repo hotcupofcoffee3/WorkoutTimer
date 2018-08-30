@@ -17,8 +17,6 @@ class InAppPurchaseService: NSObject {
     // Creates the singleton for it.
     static let shared = InAppPurchaseService()
     
-    let keywords = Keywords()
-    
     // Gets filled with the products from the product request called below.
     var products = [SKProduct]()
     
@@ -28,7 +26,7 @@ class InAppPurchaseService: NSObject {
     func getProducts() {
         
         // Have to have the product id for the particular type of purchase, including the specific detail of the ID, the suffix added to the end of the app's bundle ID.
-        let products: Set = [keywords.inAppPurchaseProductID]
+        let products: Set = [Keywords.shared.inAppPurchaseProductID]
         
         // Sets up a purchase request, and gives it the products that we set above.
         let request = SKProductsRequest(productIdentifiers: products)
@@ -66,7 +64,7 @@ class InAppPurchaseService: NSObject {
         
         let purchase = UIAlertAction(title: "Purchase for $1.99", style: .default) { (action) in
             
-            self.purchaseProduct(product: self.keywords.inAppPurchaseProductID)
+            self.purchaseProduct(product: Keywords.shared.inAppPurchaseProductID)
         
         }
         
@@ -129,7 +127,7 @@ extension InAppPurchaseService: SKPaymentTransactionObserver {
 //            print("\(transaction.transactionState.status()): \(transaction.payment.productIdentifier)")
             if transaction.transactionState == .purchased || transaction.transactionState == .restored {
                 
-                UserDefaults.standard.set(true, forKey: keywords.isPurchasedKey)
+                UserDefaults.standard.set(true, forKey: Keywords.shared.isPurchasedKey)
             
             }
             switch transaction.transactionState {

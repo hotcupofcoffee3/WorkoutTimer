@@ -22,9 +22,6 @@
 
 
 
-// MEDIUM: Make Keywords() a singleton.
-// MEDIUM: Merge with master and switch to master.
-
 // LAST: Screenshot of InApp Purchase screen.
 // LAST: Record Gif of app use for screenshots.
 // LAST: Make sure the other updated screenshots match what you seen on the current version of the app.
@@ -46,7 +43,6 @@ class MainViewController: UIViewController {
     
     let viewWidth = UIScreen.main.bounds.maxX
     
-    let keywords = Keywords()
     let workout = Workout()
     let timerForWorkout = TimerForWorkout()
     let typeOfViewController = TypeOfViewController.Main
@@ -174,7 +170,7 @@ class MainViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == keywords.mainToInstructionsSegue {
+        if segue.identifier == Keywords.shared.mainToInstructionsSegue {
             
             let destinationVC = segue.destination as! InstructionViewController
             
@@ -182,7 +178,7 @@ class MainViewController: UIViewController {
             
             destinationVC.instructions = instructions.message
             
-        } else if segue.identifier == keywords.mainToRoutinesSegue {
+        } else if segue.identifier == Keywords.shared.mainToRoutinesSegue {
             
             let destinationVC = segue.destination as! RoutineViewController
             
@@ -190,13 +186,13 @@ class MainViewController: UIViewController {
             
             destinationVC.setSetsTransitionsAndRestDelegate = self
             
-        } else if segue.identifier == keywords.mainToExerciseSegue {
+        } else if segue.identifier == Keywords.shared.mainToExerciseSegue {
             
             let destinationVC = segue.destination as! ExerciseViewController
             
             destinationVC.loadRoutineExercisesDelegate = self
             
-        } else if segue.identifier == keywords.mainToSetsSegue {
+        } else if segue.identifier == Keywords.shared.mainToSetsSegue {
             
             let destinationVC = segue.destination as! SetsTransitionAndRestViewController
             
@@ -530,9 +526,9 @@ class MainViewController: UIViewController {
         
         let alert = UIAlertController(title: "\(exercise)", message: "\(reps)", preferredStyle: .alert)
         
-        let title = NSAttributedString(string: "\(exercise)", attributes: [NSAttributedStringKey.foregroundColor:keywords.darkBluishColor, NSAttributedStringKey.font:UIFont(name: "Helvetica", size: 24)!])
+        let title = NSAttributedString(string: "\(exercise)", attributes: [NSAttributedStringKey.foregroundColor:Keywords.shared.darkBluishColor, NSAttributedStringKey.font:UIFont(name: "Helvetica", size: 24)!])
         
-        let message = NSAttributedString(string: "\n\(reps)", attributes: [NSAttributedStringKey.foregroundColor:keywords.mainBackgroundColor, NSAttributedStringKey.font:UIFont(name: "Helvetica", size: 21)!])
+        let message = NSAttributedString(string: "\n\(reps)", attributes: [NSAttributedStringKey.foregroundColor:Keywords.shared.mainBackgroundColor, NSAttributedStringKey.font:UIFont(name: "Helvetica", size: 21)!])
         
         alert.setValue(title, forKey: "attributedTitle")
         
@@ -592,7 +588,7 @@ class MainViewController: UIViewController {
             
         })
         
-        action.setValue(keywords.lighterTealishColor, forKey: "titleTextColor")
+        action.setValue(Keywords.shared.lighterTealishColor, forKey: "titleTextColor")
         
         alert.addAction(action)
         
@@ -680,7 +676,7 @@ class MainViewController: UIViewController {
                     
                     if !self.wasResetClicked {
                         
-                        self.performSegue(withIdentifier: self.keywords.mainToRoutinesSegue, sender: self)
+                        self.performSegue(withIdentifier: Keywords.shared.mainToRoutinesSegue, sender: self)
                         
                     }
                     
@@ -740,11 +736,11 @@ class MainViewController: UIViewController {
         
         if isExercise {
             
-            performSegue(withIdentifier: keywords.mainToExerciseSegue, sender: self)
+            performSegue(withIdentifier: Keywords.shared.mainToExerciseSegue, sender: self)
             
         } else {
             
-            performSegue(withIdentifier: keywords.mainToSetsSegue, sender: self)
+            performSegue(withIdentifier: Keywords.shared.mainToSetsSegue, sender: self)
             
         }
         
@@ -761,12 +757,12 @@ class MainViewController: UIViewController {
         if timerIsStarted {
     
             startStopButtonOutlet.setTitle("Stop", for: .normal)
-            startStopButtonOutlet.layer.backgroundColor = keywords.stopColor.cgColor
+            startStopButtonOutlet.layer.backgroundColor = Keywords.shared.stopColor.cgColor
             
         } else {
             
             startStopButtonOutlet.setTitle("Start", for: .normal)
-            startStopButtonOutlet.layer.backgroundColor = keywords.startColor.cgColor
+            startStopButtonOutlet.layer.backgroundColor = Keywords.shared.startColor.cgColor
             
         }
         
@@ -910,7 +906,7 @@ class MainViewController: UIViewController {
                 
             } else {
                 
-                performSegue(withIdentifier: keywords.mainToRoutinesSegue, sender: self)
+                performSegue(withIdentifier: Keywords.shared.mainToRoutinesSegue, sender: self)
                 
             }
             
@@ -1129,7 +1125,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
                     
                     cell.backgroundColor = UIColor.white
                     cell.setNumberLabel.isEnabled = true
-                    cell.setNumberLabel.textColor = keywords.darkBluishColor
+                    cell.setNumberLabel.textColor = Keywords.shared.darkBluishColor
                     
                 } else {
                     
@@ -1192,8 +1188,8 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 } else if workout.currentExerciseIndex > indexPath.row {
                     
                     cell.backgroundColor = UIColor.white
-                    cell.exerciseNameLabel.textColor = keywords.darkBluishColor
-                    cell.exerciseTimeLabel.textColor = keywords.darkBluishColor
+                    cell.exerciseNameLabel.textColor = Keywords.shared.darkBluishColor
+                    cell.exerciseTimeLabel.textColor = Keywords.shared.darkBluishColor
                     
                     cell.exerciseNameLabel.isEnabled = true
                     cell.exerciseTimeLabel.isEnabled = true

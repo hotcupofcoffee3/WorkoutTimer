@@ -22,8 +22,6 @@ class SetsTransitionAndRestViewController: UIViewController, InstructionsWereSho
     let typeOfViewController = TypeOfViewController.SetsTransitionAndRest
     var instructions = InstructionItem(type: .SetsTransitionAndRest)
     
-    let keywords = Keywords()
-    
     var setSetsTransitionsAndRestDelegate: SetSetsTransitionsAndRestDelegate?
     
     var isTime = Bool()
@@ -94,7 +92,7 @@ class SetsTransitionAndRestViewController: UIViewController, InstructionsWereSho
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == keywords.setsTransitionAndRestToInstructionsSegue {
+        if segue.identifier == Keywords.shared.setsTransitionAndRestToInstructionsSegue {
             
             let destinationVC = segue.destination as! InstructionViewController
             

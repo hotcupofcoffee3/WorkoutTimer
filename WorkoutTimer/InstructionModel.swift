@@ -22,8 +22,6 @@ enum TypeOfViewController: String {
 
 struct InstructionItem {
     
-    private var keywords = Keywords()
-    
     var segueKey: String
     
     var message: String
@@ -39,23 +37,23 @@ struct InstructionItem {
         switch type {
             
         case .Main:
-            segueKey = keywords.mainToInstructionsSegue
+            segueKey = Keywords.shared.mainToInstructionsSegue
             message = "Click any item on the screen to edit its settings."
             
         case .Exercise:
-            segueKey = keywords.exercisesToInstructionsSegue
+            segueKey = Keywords.shared.exercisesToInstructionsSegue
             message = "Add up to 12 Exercises for each Routine, or edit old ones."
             
         case .Routine:
-            segueKey = keywords.routinesToInstructionsSegue
+            segueKey = Keywords.shared.routinesToInstructionsSegue
             message = "Add some new Routines, or edit old ones."
             
         case .AddExercise:
-            segueKey = keywords.addExerciseToInstructionsSegue
+            segueKey = Keywords.shared.addExerciseToInstructionsSegue
             message = "Choose either Time or Reps for each Exercise."
            
         case .SetsTransitionAndRest:
-            segueKey = keywords.setsTransitionAndRestToInstructionsSegue
+            segueKey = Keywords.shared.setsTransitionAndRestToInstructionsSegue
             message = "For each Routine, you can set the Sets, Transitions between Exercises, and Rests between Sets."
 
         }

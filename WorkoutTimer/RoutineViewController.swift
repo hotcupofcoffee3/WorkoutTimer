@@ -18,7 +18,6 @@ class RoutineViewController: UIViewController, SetRoutineDelegate, InstructionsW
     
     
     
-    let keywords = Keywords()
     let workout = Workout()
     let typeOfViewController = TypeOfViewController.Routine
     var instructions = InstructionItem(type: .Routine)
@@ -61,7 +60,7 @@ class RoutineViewController: UIViewController, SetRoutineDelegate, InstructionsW
     
     @IBAction func addRoutine(_ sender: UIBarButtonItem) {
         
-        if UserDefaults.standard.object(forKey: keywords.isPurchasedKey) == nil {
+        if UserDefaults.standard.object(forKey: Keywords.shared.isPurchasedKey) == nil {
             
             InAppPurchaseService.shared.getProducts()
             
@@ -75,7 +74,7 @@ class RoutineViewController: UIViewController, SetRoutineDelegate, InstructionsW
             
             toggleEditAndDoneFunction(edit: false)
             
-            performSegue(withIdentifier: keywords.routineToAddRoutineSegue, sender: self)
+            performSegue(withIdentifier: Keywords.shared.routineToAddRoutineSegue, sender: self)
             
         }
         
@@ -107,7 +106,7 @@ class RoutineViewController: UIViewController, SetRoutineDelegate, InstructionsW
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == keywords.routinesToInstructionsSegue {
+        if segue.identifier == Keywords.shared.routinesToInstructionsSegue {
             
             let destinationVC = segue.destination as! InstructionViewController
             
@@ -115,7 +114,7 @@ class RoutineViewController: UIViewController, SetRoutineDelegate, InstructionsW
             
             destinationVC.instructions = instructions.message
             
-        } else if segue.identifier == keywords.routineToAddRoutineSegue {
+        } else if segue.identifier == Keywords.shared.routineToAddRoutineSegue {
             
             let destinationVC = segue.destination as! AddRoutineViewController
             
@@ -297,7 +296,7 @@ extension RoutineViewController: UITableViewDelegate, UITableViewDataSource {
             
             isNew = false
             
-            performSegue(withIdentifier: keywords.routineToAddRoutineSegue, sender: self)
+            performSegue(withIdentifier: Keywords.shared.routineToAddRoutineSegue, sender: self)
             
         } else {
             

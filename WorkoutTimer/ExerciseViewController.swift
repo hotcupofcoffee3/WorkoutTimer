@@ -18,7 +18,6 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
     
     
     
-    let keywords = Keywords()
     let workout = Workout()
     let timerForWorkout = TimerForWorkout()
     let typeOfViewController = TypeOfViewController.Exercise
@@ -72,7 +71,7 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
     
     @IBAction func goToRoutines(_ sender: UIButton) {
         
-        performSegue(withIdentifier: keywords.exerciseToRoutineSegue, sender: self)
+        performSegue(withIdentifier: Keywords.shared.exerciseToRoutineSegue, sender: self)
         
     }
     
@@ -92,7 +91,7 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
             
             isNew = true
             
-            performSegue(withIdentifier: keywords.exerciseToAddExerciseSegue, sender: self)
+            performSegue(withIdentifier: Keywords.shared.exerciseToAddExerciseSegue, sender: self)
             
         }
 
@@ -124,7 +123,7 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == keywords.exercisesToInstructionsSegue {
+        if segue.identifier == Keywords.shared.exercisesToInstructionsSegue {
             
             let destinationVC = segue.destination as! InstructionViewController
             
@@ -132,7 +131,7 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
             
             destinationVC.instructions = instructions.message
             
-        } else if segue.identifier == keywords.exerciseToAddExerciseSegue {
+        } else if segue.identifier == Keywords.shared.exerciseToAddExerciseSegue {
             
             let destinationVC = segue.destination as! AddExerciseViewController
             
@@ -160,7 +159,7 @@ class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutine
                 
             }
             
-        } else if segue.identifier == keywords.exerciseToRoutineSegue {
+        } else if segue.identifier == Keywords.shared.exerciseToRoutineSegue {
             
             let destinationVC = segue.destination as! RoutineViewController
             
@@ -339,7 +338,7 @@ extension ExerciseViewController: UITableViewDelegate, UITableViewDataSource {
         
         isTime = (exercise.reps == 0)
         
-        performSegue(withIdentifier: keywords.exerciseToAddExerciseSegue, sender: self)
+        performSegue(withIdentifier: Keywords.shared.exerciseToAddExerciseSegue, sender: self)
         
     }
     

@@ -16,7 +16,6 @@ class ExerciseCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var exerciseTimeLabel: UILabel!
     
-
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

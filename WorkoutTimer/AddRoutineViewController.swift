@@ -20,8 +20,6 @@ class AddRoutineViewController: UIViewController {
     
     let workout = Workout()
     
-    let keywords = Keywords()
-    
     var setRoutineDelegate: SetRoutineDelegate?
     
     var routineName = String()
