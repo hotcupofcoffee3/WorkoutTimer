@@ -83,18 +83,6 @@ class InAppPurchaseService: NSObject {
         
     }
     
-    func purchaseCongratulationsAlert() -> UIAlertController {
-        
-        let alert = UIAlertController(title: "Congratulations!", message: "You can now add as many routines as you'd like!", preferredStyle: .alert)
-        
-        let ok = UIAlertAction(title: "OK!", style: .default, handler: nil)
-        
-        alert.addAction(ok)
-        
-        return alert
-        
-    }
-    
 }
 
 // Necessary delegate for sending a products request

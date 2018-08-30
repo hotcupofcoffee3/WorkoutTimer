@@ -24,14 +24,13 @@
 
 // GIF:
 
-    // Start exercise and do reps.
-    // Click exercises to reset.
-    // Click "Leg lefts" exercise to edit.
-    // Toggle the time and reps.
-    // Set it to reps.
-    // Go back to exercises and click Sets, Transition, and Rest.
+    // Start exercise.
+    // Stop after reps.
+    // Go to Exercises.
+    // Leg Lifts to 30 reps.
+    // Click 2 Sets, 0:10 Transition, and 0:30 Rest.
     // Click Routine
-    // Edit Routine name and set it to something new.
+    // Edit name to Abs
 
 
 
@@ -1181,7 +1180,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
             } else {
 
-                cell.exerciseTimeLabel.text = "\(Int(currentExercise.reps)) reps"
+                cell.exerciseTimeLabel.text = (Int(currentExercise.reps) == 1) ? "\(Int(currentExercise.reps)) rep" : "\(Int(currentExercise.reps)) reps"
 
             }
             

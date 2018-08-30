@@ -307,7 +307,7 @@ extension ExerciseViewController: UITableViewDelegate, UITableViewDataSource {
         
         if currentExercise.reps != 0 {
             
-            cell.exerciseTimeLabel.text = "\(Int(currentExercise.reps)) reps"
+            cell.exerciseTimeLabel.text = (Int(currentExercise.reps) == 1) ? "\(Int(currentExercise.reps)) rep" : "\(Int(currentExercise.reps)) reps"
             
         } else {
             

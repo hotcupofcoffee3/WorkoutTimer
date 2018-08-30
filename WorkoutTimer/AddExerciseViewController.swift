@@ -87,7 +87,7 @@ class AddExerciseViewController: UIViewController {
         
         toggleMinAndSecLabels()
         
-        chosenPickerInfoLabel.text = isTime ? "\(timerForWorkout.zero(unit: minutes)):\(timerForWorkout.zero(unit: seconds))" : (reps == 1) ? "\(reps) rep" : "\(reps) reps"
+        chosenPickerInfoLabel.text = isTime ? "\(timerForWorkout.zero(unit: minutes)):\(timerForWorkout.zero(unit: seconds))" : (reps == 1 || reps == 0) ? "1 rep" : "\(reps) reps"
         
         numberPicker.reloadAllComponents()
         
@@ -208,7 +208,7 @@ class AddExerciseViewController: UIViewController {
         } else {
             
             timeOrRepSegment.selectedSegmentIndex = 1
-            numberPicker.selectRow(reps, inComponent: 0, animated: true)
+            numberPicker.selectRow(reps - 1, inComponent: 0, animated: true)
             
         }
         
