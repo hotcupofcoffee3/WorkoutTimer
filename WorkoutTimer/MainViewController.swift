@@ -25,11 +25,9 @@
 // MEDIUM: Make Keywords() a singleton.
 // MEDIUM: Merge with master and switch to master.
 
-// LONG: Add checks of UserDefaults for multiple routines.
-
-// REALLY LONG: Add InApp purchase for more than 1 routine.
-
+// LAST: Screenshot of InApp Purchase screen.
 // LAST: Record Gif of app use for screenshots.
+// LAST: Make sure the other updated screenshots match what you seen on the current version of the app.
 
 // EXTRA: Animate reload cells (watch video).
 // EXTRA: Edit animation.
