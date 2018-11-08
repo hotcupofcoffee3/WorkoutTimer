@@ -43,6 +43,8 @@ import AVFoundation
 
 class MainViewController: UIViewController {
     
+    override var preferredStatusBarStyle: UIStatusBarStyle = .lightContent
+    
     // ******
     // *** MARK: - Variables
     // ******
@@ -534,9 +536,9 @@ class MainViewController: UIViewController {
         
         let alert = UIAlertController(title: "\(exercise)", message: "\(reps)", preferredStyle: .alert)
         
-        let title = NSAttributedString(string: "\(exercise)", attributes: [NSAttributedStringKey.foregroundColor:Keywords.shared.darkBluishColor, NSAttributedStringKey.font:UIFont(name: "Helvetica", size: 24)!])
+        let title = NSAttributedString(string: "\(exercise)", attributes: [NSAttributedString.Key.foregroundColor:Keywords.shared.darkBluishColor, NSAttributedString.Key.font:UIFont(name: "Helvetica", size: 24)!])
         
-        let message = NSAttributedString(string: "\n\(reps)", attributes: [NSAttributedStringKey.foregroundColor:Keywords.shared.mainBackgroundColor, NSAttributedStringKey.font:UIFont(name: "Helvetica", size: 21)!])
+        let message = NSAttributedString(string: "\n\(reps)", attributes: [NSAttributedString.Key.foregroundColor:Keywords.shared.mainBackgroundColor, NSAttributedString.Key.font:UIFont(name: "Helvetica", size: 21)!])
         
         alert.setValue(title, forKey: "attributedTitle")
         

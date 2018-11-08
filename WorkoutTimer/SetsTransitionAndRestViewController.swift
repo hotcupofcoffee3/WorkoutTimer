@@ -182,7 +182,7 @@ extension SetsTransitionAndRestViewController: UIPickerViewDelegate, UIPickerVie
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         let titleString = isTime ? "\(row)" : "\(row + 1)"
-        let title = NSAttributedString(string: titleString, attributes: [NSAttributedStringKey.foregroundColor:UIColor.white])
+        let title = NSAttributedString(string: titleString, attributes: [NSAttributedString.Key.foregroundColor:UIColor.white])
         return title
     }
     

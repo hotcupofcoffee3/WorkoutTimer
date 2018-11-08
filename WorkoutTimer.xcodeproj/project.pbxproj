@@ -179,6 +179,7 @@
 				TargetAttributes = {
 					B5C3251921065A3E00A88FDB = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1010;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 1;
@@ -399,7 +400,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.luneofthepune.FIT;
 				PRODUCT_NAME = FIT;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -418,7 +419,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.luneofthepune.FIT;
 				PRODUCT_NAME = FIT;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
