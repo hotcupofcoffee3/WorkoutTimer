@@ -43,7 +43,7 @@ import AVFoundation
 
 class MainViewController: UIViewController {
     
-    override var preferredStatusBarStyle: UIStatusBarStyle = .lightContent
+//    override var preferredStatusBarStyle: UIStatusBarStyle = .lightContent
     
     // ******
     // *** MARK: - Variables
@@ -856,6 +856,8 @@ class MainViewController: UIViewController {
                 
             } else {
                 
+                workout.setRemainingToSetAmounts(forTimer: .interval, withIndex: workout.currentExerciseIndex)
+                
                 workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: workout.currentExerciseIndex)
                 
             }
@@ -871,6 +873,8 @@ class MainViewController: UIViewController {
                 restLabel.text = workout.setLabelTextForTimer(forTimer: .rest, isRemaining: false)
                 
             } else {
+                
+                workout.setRemainingToSetAmounts(forTimer: .interval, withIndex: workout.currentExerciseIndex)
                 
                 workout.totalSecondsForProgress = workout.setTotalSecondsForProgressForExercise(index: workout.currentExerciseIndex)
                 
@@ -1170,13 +1174,13 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             cell.exerciseNameLabel.text = "\(currentExercise.name!)"
             
             if currentExercise.reps == 0 {
-
+                
                 // This one resets the starting times.
                 cell.exerciseTimeLabel.text = workout.setLabelTextForTimer(forTimer: .interval, withIndex: indexPath.row, isRemaining: false)
                 
                 if timerIsStarted && workout.currentExerciseIndex == indexPath.row {
                     
-                    cell.exerciseTimeLabel.text = workout.setLabelTextForTimer(forTimer: .interval, isRemaining: true)
+                    cell.exerciseTimeLabel.text = workout.setLabelTextForTimer(forTimer: .interval, withIndex: indexPath.row, isRemaining: true)
                     
                 }
 

@@ -920,20 +920,20 @@ class Workout {
         
     }
     
-    func setRemainingToSetAmounts() {
-        
-        setTotalIntervalSeconds = Double(exerciseArray[0].intervalMinutes * 60) + Double(exerciseArray[0].intervalSeconds)
-        
-        remainingIntervalMinutes = Int(exerciseArray[0].intervalMinutes)
-        remainingIntervalSeconds = Double(exerciseArray[0].intervalSeconds)
-        
-        remainingTransitionMinutes = setTransitionMinutes
-        remainingTransitionSeconds = setTransitionSeconds
-        
-        remainingRestMinutes = setRestMinutes
-        remainingRestSeconds = setRestSeconds
-        
-    }
+//    func setRemainingToSetAmounts() {
+//
+//        setTotalIntervalSeconds = Double(exerciseArray[0].intervalMinutes * 60) + Double(exerciseArray[0].intervalSeconds)
+//
+//        remainingIntervalMinutes = Int(exerciseArray[0].intervalMinutes)
+//        remainingIntervalSeconds = Double(exerciseArray[0].intervalSeconds)
+//
+//        remainingTransitionMinutes = setTransitionMinutes
+//        remainingTransitionSeconds = setTransitionSeconds
+//
+//        remainingRestMinutes = setRestMinutes
+//        remainingRestSeconds = setRestSeconds
+//
+//    }
     
     func setTotalSecondsForProgressForExercise(index: Int) -> Double {
         
