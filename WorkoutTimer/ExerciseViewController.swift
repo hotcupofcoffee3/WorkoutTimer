@@ -10,7 +10,9 @@ import UIKit
 
 class ExerciseViewController: UIViewController, SetExerciseDelegate, LoadRoutineExercisesDelegate, InstructionsWereShownDelegate {
     
-    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     // ******
     // *** MARK: - Variables

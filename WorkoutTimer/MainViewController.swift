@@ -43,7 +43,9 @@ import AVFoundation
 
 class MainViewController: UIViewController {
     
-//    override var preferredStatusBarStyle: UIStatusBarStyle = .lightContent
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     // ******
     // *** MARK: - Variables

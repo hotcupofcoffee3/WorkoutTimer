@@ -10,7 +10,9 @@ import UIKit
 
 class AddExerciseViewController: UIViewController {
     
-    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     // ******
     // *** MARK: - Variables

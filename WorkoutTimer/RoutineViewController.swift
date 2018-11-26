@@ -10,7 +10,9 @@ import UIKit
 
 class RoutineViewController: UIViewController, SetRoutineDelegate, InstructionsWereShownDelegate {
     
-    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     // ******
     // *** MARK: - Variables

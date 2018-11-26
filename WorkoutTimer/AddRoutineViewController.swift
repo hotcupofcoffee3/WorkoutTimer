@@ -10,7 +10,9 @@ import UIKit
 
 class AddRoutineViewController: UIViewController {
     
-    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     // ******
     // *** MARK: - Variables
